@@ -1,1 +1,104 @@
-# tngd-commercial-weekly-performance
+# Weekly Performance Snapshot System
+### AI-Powered Commercial Revenue Commentary
+
+---
+
+## What This Is
+
+This system enables an AI assistant (ChatGPT Project) to ingest a weekly Excel revenue report from SharePoint and generate a structured, executive-ready performance snapshot. It replaces manual commentary with consistent, data-driven narrative across five report sections: executive header, overall revenue performance, category deep dive, risk signals, and opportunities.
+
+---
+
+## File Inventory
+
+| File | Description |
+|---|---|
+| `README.md` | This file. Project overview, setup, and usage guide. |
+| `instructions_full.md` | Complete AI knowledge base. Upload to ChatGPT Project knowledge. |
+| `instructions_condensed.md` | Short instruction set. Paste into ChatGPT Project "Instructions" field. |
+| `ignition_prompt.md` | Opening prompt the user pastes at the start of each weekly session. |
+| `template.html` | Outlook-safe HTML report template with `{{PLACEHOLDERS}}`. |
+| `template.md` | Word-compatible Markdown report template with `{{PLACEHOLDERS}}`. |
+| `template_schema.md` | Defines every `{{PLACEHOLDER}}` token, its source, and expected format. |
+| `data_validation.md` | Pre-analysis checklist the AI must run before generating any output. |
+| `changelog_format.md` | Standard format for the changelog block appended to every report. |
+| `guardrails.md` | Hard rules, constraints, and failure modes the AI must always respect. |
+
+---
+
+## How to Use
+
+### Step 1 — Set up the ChatGPT Project
+1. Go to [chatgpt.com](https://chatgpt.com) → **Projects** → **New Project**
+2. Name it: `Weekly Performance Snapshot`
+3. Under **Instructions**, paste the contents of `instructions_condensed.md`
+4. Under **Knowledge**, upload `instructions_full.md`
+5. Also upload `template_schema.md`, `data_validation.md`, `guardrails.md`, and `changelog_format.md` to Knowledge
+
+### Step 2 — Each week: upload your data
+1. Export your Excel file from SharePoint
+2. Upload it directly into the ChatGPT Project conversation
+3. Do not rename or reformat the file — let the AI infer the schema
+
+### Step 3 — Run the ignition prompt
+1. Open `ignition_prompt.md`
+2. Copy the full prompt
+3. Paste it as your first message in the Project conversation (after uploading the file)
+4. The AI will run the data validation checklist, confirm the schema it detected, then generate the full report
+
+### Step 4 — Review and export
+1. Review the output against your knowledge of the week
+2. If anything looks off, ask the AI to revise a specific section
+3. For Outlook: copy the HTML output and paste into an Outlook email (HTML compose mode)
+4. For Word: copy the Markdown output and open via Word or convert using Pandoc
+
+---
+
+## ChatGPT Project Setup — Where to Paste What
+
+```
+PROJECT INSTRUCTIONS FIELD  →  instructions_condensed.md (full text)
+PROJECT KNOWLEDGE UPLOADS   →  instructions_full.md
+                               template_schema.md
+                               data_validation.md
+                               guardrails.md
+                               changelog_format.md
+EACH SESSION (user pastes)  →  ignition_prompt.md + Excel file upload
+```
+
+---
+
+## Updating Instructions When Schema Changes
+
+If your Excel schema changes (new columns, renamed headers, restructured hierarchy):
+
+1. Open `instructions_full.md`
+2. Go to the **Data Handling** section
+3. Add a note describing the new column(s) and their role
+4. Re-upload the updated `instructions_full.md` to Project Knowledge (delete the old version first)
+5. No changes needed to `instructions_condensed.md` unless the output structure itself changes
+
+The AI is designed to be schema-adaptive — it infers column roles from headers. Schema notes in the knowledge base help it handle edge cases.
+
+---
+
+## Troubleshooting
+
+| Issue | Likely Cause | Fix |
+|---|---|---|
+| AI says it cannot find budget/stretch data | Column headers are ambiguous | Rename columns clearly in Excel or add a note in `instructions_full.md` |
+| Momentum signals missing | Fewer than 3 weeks of data uploaded | Upload a file with at least 3 prior weeks included |
+| Merchant names inconsistent week-on-week | Source data has naming variations | Clean merchant names in Excel before uploading |
+| AI applies wrong noise threshold | Data distribution is unusual | Tell AI the threshold explicitly in your session message |
+| HTML template looks broken in Outlook | External CSS used | Ensure all CSS in `template.html` is inline only |
+| Output structure varies week to week | Ignition prompt not used | Always start with the ignition prompt — do not freestyle |
+
+---
+
+## Target Timeline
+
+| Milestone | Date |
+|---|---|
+| First cut ready | 31 March 2025 |
+| Review and finalise | 1–4 April 2025 |
+| Live for MBR | 6 April 2025 |
