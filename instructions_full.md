@@ -1,4 +1,5 @@
 # Full Knowledge Base Instructions
+
 ## Weekly Performance Snapshot — AI Analysis System
 
 **Version:** 1.0  
@@ -28,6 +29,7 @@ Generate output in exactly this order. Do not skip sections. Do not add sections
 **Format:** 1–2 lines maximum. Ultra-compressed executive summary.
 
 **Must cover:**
+
 - Overall performance vs budget and vs stretch (above/below, by how much)
 - Primary driver at commercial L2 level
 - Primary downside or risk at commercial L2 level
@@ -36,26 +38,39 @@ Generate output in exactly this order. Do not skip sections. Do not add sections
 **Tone:** Board-room tight. Think Bloomberg terminal headline, not a paragraph.
 
 **Example structure (not to be copied verbatim):**
+
 > Revenue RM X.XM, Y% vs budget (Z% vs stretch); [L2 category] driving upside while [L2 category] remains the key drag. Watch [merchant/category] — [signal].
 
 ---
 
 ### SECTION 2 — Overall Revenue Performance
 
-**Format:** Table + narrative commentary below.
+**Format:** Two tables + narrative commentary below.
 
-**Table rows (columns: Metric | Actual RM | Budget/Stretch RM | Variance RM | Variance %):**
+**Table 1A — Performance vs Targets (columns: Metric | Actual RM | Target RM | Variance RM | Variance %):**
 
-| Metric | Actual (RM) | Target (RM) | Variance (RM) | Variance (%) |
-|---|---|---|---|---|
-| YTD vs Budget | | | | |
-| MTD vs Budget | | | | |
-| MTD vs Stretch | | | | |
-| WoW | | | | |
+| Metric         | Actual (RM) | Target (RM) | Variance (RM) | Variance (%) |
+| -------------- | ----------- | ----------- | ------------- | ------------ |
+| YTD vs Budget  |             |             |               |              |
+| MTD vs Budget  |             |             |               |              |
+| MTD vs Stretch |             |             |               |              |
 
-For WoW row: Actual = this week revenue, Target = last week revenue, Variance = WoW change.
+**Table 1B — Week-on-Week by Commercial Pillar (L2) (separate table, columns: Pillar | Last Week RM | This Week RM | Variance RM | Variance %):**
+
+| Pillar (Commercial L2) | Last Week (RM) | This Week (RM) | Variance (RM) | Variance (%) |
+| ---------------------- | -------------- | -------------- | ------------- | ------------ |
+| SME                    |                |                |               |              |
+| Mobility               |                |                |               |              |
+| Government Services    |                |                |               |              |
+| Category Management    |                |                |               |              |
+| Crossborder            |                |                |               |              |
+| Foreign Worker Segment |                |                |               |              |
+| **Total Commercial**   |                |                |               |              |
+
+The Total Commercial row uses a highlighted style (yellow variance in HTML template). WoW is NOT in Table 1A — it has its own dedicated Table 1B with L2 pillar breakdown.
 
 **Narrative commentary (3–5 sentences) answering:**
+
 1. What changed vs last week?
 2. Are we accelerating or slowing?
 3. Is performance broad-based or concentrated in specific categories/merchants?
@@ -64,29 +79,47 @@ For WoW row: Actual = this week revenue, Target = last week revenue, Variance = 
 
 ### SECTION 3 — Category Deep Dive
 
-**Scope:** L2 category code "04 Category Management" only. Do not include other L2 categories in this section.
+**Scope:** L2 category code "04 Category Management" only. Section header is simply "Category Deep Dive" — do not include "04 Category Management" in the heading.
 
 **Noise filter:** Apply a dynamic minimum revenue threshold before analysis. Exclude merchants whose weekly revenue falls below 1% of total L2 weekly revenue OR below the 25th percentile of all active merchants in that L2, whichever threshold is lower. State the threshold value and method used at the top of this section.
 
-**L3 Level:**
-For each L3 subcategory within scope, write 2–3 sentences summarising performance. At this level, reference only L4 category names or segments — never individual merchant names. Explain what is driving the L3 total up or down.
+**The 6 fixed L3 categories (always present, always in this order):**
 
-**L4 Level:**
-For each L3, list the L4 merchants in a table:
+1. Telco
+2. Digital Lifestyle
+3. Online Marketplaces & Fast Fashion
+4. Daily Essentials & Retail
+5. Everyday F&B and Lifestyle
+6. Travel
 
-| Merchant | Weekly Revenue (RM) | % of L2 Total | WoW Change (RM) | WoW Change (%) |
-|---|---|---|---|---|
+**For each L3, produce in order:**
 
-Then segment merchants into buckets. Only include buckets where merchants qualify — omit empty buckets:
+**A. Narrative block (4 sub-elements):**
 
-- 🏆 **Biggest Winners** — top 3–5 merchants by absolute RM WoW gain
-- 📉 **Biggest Losers** — top 3–5 merchants by absolute RM WoW decline
-- 📈 **Rising Momentum** — merchants with ≥3 consecutive weeks of WoW growth (requires 3+ weeks of data)
-- 📉 **Declining Momentum** — merchants with ≥3 consecutive weeks of WoW decline (requires 3+ weeks of data)
-- 🔄 **Reactivated** — merchants who had zero or no revenue in prior week(s) and are now active
-- 🆕 **New Entrants** — merchants with zero lifetime revenue prior to this week
+- **Overview:** 2–3 sentences of overall commentary. No merchant names. No bias toward positive or negative framing — neutral factual summary.
+- **Scale:** 1 sentence on rising momentum merchants in this L3.
+- **Attention Needed:** 1 sentence on biggest losers and/or declining momentum merchants.
+- **Watch List:** 1 sentence on reactivated and new entrant merchants.
 
-If fewer than 3 weeks of data are available, state: *"Momentum signals unavailable — minimum 3 weeks of data required."* and omit Rising/Declining Momentum buckets.
+**B. Top Merchants table** — Top 5 by YTD revenue (descending), plus a Total L3 row:
+
+| Merchant | YTD ↓ | MTD | LW  | TW  | WoW RM | WoW % |
+| -------- | ----- | --- | --- | --- | ------ | ----- |
+| ...      |       |     |     |     |        |       |
+| Total L3 |       |     |     |     |        |       |
+
+**C. Bucket tables** — Top 5 per bucket, all with columns: Merchant | YTD | MTD | LW | TW | WoW RM | WoW %
+
+| Bucket                | Sort Logic                                           | Eligibility                                       |
+| --------------------- | ---------------------------------------------------- | ------------------------------------------------- |
+| 🏆 Biggest Winners    | Sort #1: WoW RM descending · Sort #2: YTD            | Any positive WoW                                  |
+| 📉 Biggest Losers     | Sort #1: WoW RM ascending · Sort #2: YTD             | Any negative WoW                                  |
+| 📈 Rising Momentum    | Sort #1: consecutive weeks descending · Sort #2: YTD | ≥3 consecutive WoW growth weeks                   |
+| 📉 Declining Momentum | Sort #1: consecutive weeks descending · Sort #2: YTD | ≥3 consecutive WoW decline weeks                  |
+| 🔄 Reactivated        | Sort #1: YTD descending                              | Transaction this week, zero revenue prior week(s) |
+| 🆕 New Entrants       | Sort #1: YTD descending                              | Zero lifetime transactions before this week       |
+
+If fewer than 3 weeks of data: omit Rising/Declining Momentum and state: _"Momentum signals unavailable — minimum 3 weeks of data required."_
 
 ---
 
@@ -97,6 +130,7 @@ Identify merchants whose WoW revenue swing exceeds 2 standard deviations from th
 
 **Concentration Risk:**
 Calculate cumulative revenue contribution of top merchants. Flag with these defaults:
+
 - 🟡 Caution: top 3 merchants > 50% of L2 total
 - 🔴 High Risk: top 5 merchants > 70% of L2 total
 
@@ -104,6 +138,7 @@ Show a small table: Rank | Merchant | Weekly Revenue (RM) | Cumulative %.
 
 **Early Warning Signals:**
 Flag any merchant showing:
+
 - 2 consecutive WoW declines (not yet at 3 — these are watch items, not confirmed trends)
 - Single-week drop >20% WoW
 - Re-entry after ≥3 weeks of inactivity
@@ -130,7 +165,9 @@ Merchants/categories where the signal is mixed or early. Flag for next week's wa
 ## 3. Data Handling Rules
 
 ### Schema Detection
+
 You must infer column roles from header names. Do not hardcode column names. Map columns to these logical roles:
+
 - Merchant identifier (name or ID)
 - L2 / L3 / L4 category hierarchy
 - Current week revenue
@@ -145,14 +182,17 @@ You must infer column roles from header names. Do not hardcode column names. Map
 If a column's role is genuinely ambiguous after inspection, ask the user to clarify before generating the report. Do not guess on financial figures.
 
 ### Currency
+
 All revenue figures are RM. The raw data contains no currency symbol. Always display outputs as "RM X,XXX" or "RM X.XM" (millions) for readability. Use millions format (e.g., RM 2.4M) for figures above RM 500,000.
 
 ### Missing Data
+
 - If YTD or MTD columns are missing, compute from available weekly data if possible, or flag as unavailable.
 - If budget/stretch is missing, output the revenue table without those rows and note the gap.
 - If prior week data is absent, WoW metrics cannot be computed — state this.
 
 ### Data Quality
+
 Run the full data validation checklist (see `data_validation.md`) before generating any section of the report.
 
 ---

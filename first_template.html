@@ -1,0 +1,1538 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weekly Performance Snapshot</title>
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f9;
+      font-family: Arial, sans-serif;
+    "
+  >
+    <table
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      border="0"
+      style="background-color: #f4f6f9"
+    >
+      <tr>
+        <td align="center" style="padding: 24px 0">
+          <!-- OUTER WRAPPER -->
+          <table
+            width="700"
+            cellpadding="0"
+            cellspacing="0"
+            border="0"
+            style="
+              max-width: 700px;
+              background-color: #ffffff;
+              border-radius: 4px;
+              overflow: hidden;
+              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            "
+          >
+            <!-- ═══════════════════════════════════════════ -->
+            <!-- HEADER BANNER                               -->
+            <!-- ═══════════════════════════════════════════ -->
+            <tr>
+              <td
+                style="background-color: #1b3a5c; padding: 28px 32px 24px 32px"
+              >
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td>
+                      <p
+                        style="
+                          margin: 0 0 4px 0;
+                          font-size: 11px;
+                          color: #7eb8d4;
+                          text-transform: uppercase;
+                          letter-spacing: 1.5px;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        Commercial Intelligence
+                      </p>
+                      <h1
+                        style="
+                          margin: 0;
+                          font-size: 22px;
+                          font-weight: 700;
+                          color: #ffffff;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        Weekly Performance Snapshot
+                      </h1>
+                    </td>
+                    <td align="right" valign="top">
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 11px;
+                          color: #7eb8d4;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        Week Ending
+                      </p>
+                      <p
+                        style="
+                          margin: 4px 0 0 0;
+                          font-size: 15px;
+                          font-weight: 700;
+                          color: #ffffff;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        {{WEEK_ENDING}}
+                      </p>
+                      <p
+                        style="
+                          margin: 4px 0 0 0;
+                          font-size: 10px;
+                          color: #7eb8d4;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        {{REPORT_VERSION}} &nbsp;|&nbsp; Generated
+                        {{REPORT_DATE}}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- ═══════════════════════════════════════════ -->
+            <!-- SECTION 1: MAIN HEADER                     -->
+            <!-- ═══════════════════════════════════════════ -->
+            <tr>
+              <td
+                style="
+                  background-color: #ebf4fa;
+                  padding: 20px 32px;
+                  border-left: 4px solid #1b3a5c;
+                "
+              >
+                <p
+                  style="
+                    margin: 0;
+                    font-size: 15px;
+                    font-weight: 700;
+                    color: #1b3a5c;
+                    line-height: 1.5;
+                    font-family: Arial, sans-serif;
+                  "
+                >
+                  {{HEADLINE_SUMMARY}}
+                </p>
+                <p
+                  style="
+                    margin: 10px 0 0 0;
+                    font-size: 12px;
+                    color: #4a6b82;
+                    font-style: italic;
+                    font-family: Arial, sans-serif;
+                  "
+                >
+                  &#128204; {{FORWARD_SIGNAL}}
+                </p>
+              </td>
+            </tr>
+
+            <!-- SECTION DIVIDER -->
+            <tr>
+              <td style="padding: 0 32px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td style="border-top: 1px solid #e0e7ef; padding: 0"></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- ═══════════════════════════════════════════ -->
+            <!-- SECTION 2: OVERALL REVENUE PERFORMANCE     -->
+            <!-- ═══════════════════════════════════════════ -->
+            <tr>
+              <td style="padding: 24px 32px 0 32px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      style="
+                        background-color: #1b3a5c;
+                        padding: 8px 14px;
+                        border-radius: 2px;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 12px;
+                          font-weight: 700;
+                          color: #ffffff;
+                          text-transform: uppercase;
+                          letter-spacing: 1px;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        1 &nbsp; Overall Revenue Performance
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 16px 32px 0 32px">
+                <table
+                  width="100%"
+                  cellpadding="8"
+                  cellspacing="0"
+                  border="0"
+                  style="border-collapse: collapse"
+                >
+                  <!-- Table Header -->
+                  <tr style="background-color: #1b3a5c">
+                    <td
+                      style="
+                        padding: 8px 10px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: #ffffff;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #2a5080;
+                      "
+                    >
+                      Metric
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: #ffffff;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #2a5080;
+                      "
+                    >
+                      Actual (RM)
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: #ffffff;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #2a5080;
+                      "
+                    >
+                      Target (RM)
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: #ffffff;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #2a5080;
+                      "
+                    >
+                      Variance (RM)
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: #ffffff;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #2a5080;
+                      "
+                    >
+                      Variance (%)
+                    </td>
+                  </tr>
+                  <!-- YTD vs Budget -->
+                  <tr style="background-color: #ffffff">
+                    <td
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      YTD vs Budget
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{YTD_ACTUAL}}
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{YTD_BUDGET}}
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        font-weight: 700;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{YTD_VAR_ABS}}
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        font-weight: 700;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{YTD_VAR_PCT}}
+                    </td>
+                  </tr>
+                  <!-- MTD vs Budget -->
+                  <tr style="background-color: #f8fafc">
+                    <td
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      MTD vs Budget
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{MTD_ACTUAL}}
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{MTD_BUDGET}}
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        font-weight: 700;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{MTD_VAR_ABS}}
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        font-weight: 700;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{MTD_VAR_PCT}}
+                    </td>
+                  </tr>
+                  <!-- MTD vs Stretch -->
+                  <tr style="background-color: #ffffff">
+                    <td
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      MTD vs Stretch
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{MTD_ACTUAL}}
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{MTD_STRETCH}}
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        font-weight: 700;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{MTD_STR_VAR_ABS}}
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        font-weight: 700;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{MTD_STR_VAR_PCT}}
+                    </td>
+                  </tr>
+                  <!-- WoW -->
+                  <tr style="background-color: #f8fafc">
+                    <td
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      WoW
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{WOW_ACTUAL}}
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{WOW_PRIOR}}
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        font-weight: 700;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{WOW_VAR_ABS}}
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        font-weight: 700;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{WOW_VAR_PCT}}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <!-- Commentary -->
+            <tr>
+              <td style="padding: 14px 32px 24px 32px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      style="
+                        background-color: #f0f5fa;
+                        padding: 14px 16px;
+                        border-left: 3px solid #2e86ab;
+                        border-radius: 0 2px 2px 0;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 12px;
+                          color: #2c3e50;
+                          line-height: 1.7;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        {{REVENUE_NARRATIVE}}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- ═══════════════════════════════════════════ -->
+            <!-- SECTION 3: CATEGORY DEEP DIVE              -->
+            <!-- ═══════════════════════════════════════════ -->
+            <tr>
+              <td style="padding: 0 32px 0 32px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      style="
+                        background-color: #1b3a5c;
+                        padding: 8px 14px;
+                        border-radius: 2px;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 12px;
+                          font-weight: 700;
+                          color: #ffffff;
+                          text-transform: uppercase;
+                          letter-spacing: 1px;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        2 &nbsp; Category Deep Dive &mdash; 04 Category
+                        Management
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <!-- Noise filter note -->
+            <tr>
+              <td style="padding: 10px 32px 0 32px">
+                <p
+                  style="
+                    margin: 0;
+                    font-size: 11px;
+                    color: #7f8c8d;
+                    font-style: italic;
+                    font-family: Arial, sans-serif;
+                  "
+                >
+                  &#128295; Noise filter applied: RM {{NOISE_THRESHOLD_VALUE}}
+                  minimum weekly revenue ({{NOISE_THRESHOLD_METHOD}})
+                </p>
+              </td>
+            </tr>
+
+            <!-- L3 Block (repeat pattern for each L3) -->
+            <tr>
+              <td style="padding: 16px 32px 0 32px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      style="
+                        background-color: #e8f4f8;
+                        padding: 7px 12px;
+                        border-radius: 2px;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 12px;
+                          font-weight: 700;
+                          color: #1b3a5c;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        {{L3_NAME_1}}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 32px 0 32px">
+                <p
+                  style="
+                    margin: 0;
+                    font-size: 12px;
+                    color: #2c3e50;
+                    line-height: 1.7;
+                    font-family: Arial, sans-serif;
+                  "
+                >
+                  {{L3_NARRATIVE_1}}
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 32px 16px 32px">
+                <table
+                  width="100%"
+                  cellpadding="7"
+                  cellspacing="0"
+                  border="0"
+                  style="border-collapse: collapse"
+                >
+                  <tr style="background-color: #2e86ab">
+                    <td
+                      style="
+                        padding: 7px 10px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: #ffffff;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #246b8a;
+                      "
+                    >
+                      Merchant
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 7px 10px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: #ffffff;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #246b8a;
+                      "
+                    >
+                      Weekly Rev (RM)
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 7px 10px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: #ffffff;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #246b8a;
+                      "
+                    >
+                      % of L2
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 7px 10px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: #ffffff;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #246b8a;
+                      "
+                    >
+                      WoW (RM)
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 7px 10px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: #ffffff;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #246b8a;
+                      "
+                    >
+                      WoW (%)
+                    </td>
+                  </tr>
+                  <tr style="background-color: #ffffff">
+                    <td
+                      style="
+                        padding: 7px 10px;
+                        font-size: 12px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{L4_MERCHANT_NAME}}
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 7px 10px;
+                        font-size: 12px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{L4_WEEKLY_REV}}
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 7px 10px;
+                        font-size: 12px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{L4_PCT_CONTRIBUTION}}
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 7px 10px;
+                        font-size: 12px;
+                        font-weight: 700;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{L4_WOW_ABS}}
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 7px 10px;
+                        font-size: 12px;
+                        font-weight: 700;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{L4_WOW_PCT}}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Merchant Buckets -->
+            <tr>
+              <td style="padding: 0 32px 8px 32px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      style="
+                        background-color: #fff8e1;
+                        padding: 10px 14px;
+                        border-left: 3px solid #f39c12;
+                        margin-bottom: 8px;
+                        border-radius: 0 2px 2px 0;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0 0 4px 0;
+                          font-size: 11px;
+                          font-weight: 700;
+                          color: #795000;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        &#127942; BIGGEST WINNERS
+                      </p>
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 12px;
+                          color: #2c3e50;
+                          line-height: 1.6;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        {{WINNERS_LIST}}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 0 32px 8px 32px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      style="
+                        background-color: #fdedec;
+                        padding: 10px 14px;
+                        border-left: 3px solid #e74c3c;
+                        border-radius: 0 2px 2px 0;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0 0 4px 0;
+                          font-size: 11px;
+                          font-weight: 700;
+                          color: #7b241c;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        &#128197; BIGGEST LOSERS
+                      </p>
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 12px;
+                          color: #2c3e50;
+                          line-height: 1.6;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        {{LOSERS_LIST}}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 0 32px 8px 32px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      style="
+                        background-color: #eafaf1;
+                        padding: 10px 14px;
+                        border-left: 3px solid #27ae60;
+                        border-radius: 0 2px 2px 0;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0 0 4px 0;
+                          font-size: 11px;
+                          font-weight: 700;
+                          color: #1d6a3a;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        &#128200; RISING MOMENTUM (3+ weeks)
+                      </p>
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 12px;
+                          color: #2c3e50;
+                          line-height: 1.6;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        {{RISING_MOMENTUM_LIST}}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 0 32px 8px 32px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      style="
+                        background-color: #fdedec;
+                        padding: 10px 14px;
+                        border-left: 3px solid #c0392b;
+                        border-radius: 0 2px 2px 0;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0 0 4px 0;
+                          font-size: 11px;
+                          font-weight: 700;
+                          color: #7b241c;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        &#128197; DECLINING MOMENTUM (3+ weeks)
+                      </p>
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 12px;
+                          color: #2c3e50;
+                          line-height: 1.6;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        {{DECLINING_MOMENTUM_LIST}}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 0 32px 8px 32px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      style="
+                        background-color: #ebf5fb;
+                        padding: 10px 14px;
+                        border-left: 3px solid #2980b9;
+                        border-radius: 0 2px 2px 0;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0 0 4px 0;
+                          font-size: 11px;
+                          font-weight: 700;
+                          color: #1a4a6b;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        &#128260; REACTIVATED
+                      </p>
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 12px;
+                          color: #2c3e50;
+                          line-height: 1.6;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        {{REACTIVATED_LIST}}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 0 32px 24px 32px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      style="
+                        background-color: #f4ecf7;
+                        padding: 10px 14px;
+                        border-left: 3px solid #8e44ad;
+                        border-radius: 0 2px 2px 0;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0 0 4px 0;
+                          font-size: 11px;
+                          font-weight: 700;
+                          color: #5b2c6f;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        &#127381; NEW ENTRANTS
+                      </p>
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 12px;
+                          color: #2c3e50;
+                          line-height: 1.6;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        {{NEW_ENTRANTS_LIST}}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- ═══════════════════════════════════════════ -->
+            <!-- SECTION 4: RISKY BUSINESS                  -->
+            <!-- ═══════════════════════════════════════════ -->
+            <tr>
+              <td style="padding: 0 32px 0 32px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      style="
+                        background-color: #1b3a5c;
+                        padding: 8px 14px;
+                        border-radius: 2px;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 12px;
+                          font-weight: 700;
+                          color: #ffffff;
+                          text-transform: uppercase;
+                          letter-spacing: 1px;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        3 &nbsp; Risky Business
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 16px 32px 0 32px">
+                <p
+                  style="
+                    margin: 0 0 6px 0;
+                    font-size: 12px;
+                    font-weight: 700;
+                    color: #1b3a5c;
+                    font-family: Arial, sans-serif;
+                  "
+                >
+                  Volatile Movers
+                </p>
+                <p
+                  style="
+                    margin: 0;
+                    font-size: 12px;
+                    color: #2c3e50;
+                    line-height: 1.7;
+                    font-family: Arial, sans-serif;
+                  "
+                >
+                  {{VOLATILE_MOVERS}}
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 14px 32px 0 32px">
+                <p
+                  style="
+                    margin: 0 0 6px 0;
+                    font-size: 12px;
+                    font-weight: 700;
+                    color: #1b3a5c;
+                    font-family: Arial, sans-serif;
+                  "
+                >
+                  Concentration Risk &nbsp; {{CONCENTRATION_FLAG}}
+                </p>
+                <table
+                  width="100%"
+                  cellpadding="6"
+                  cellspacing="0"
+                  border="0"
+                  style="border-collapse: collapse"
+                >
+                  <tr style="background-color: #1b3a5c">
+                    <td
+                      style="
+                        padding: 6px 10px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: #ffffff;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #2a5080;
+                      "
+                    >
+                      Rank
+                    </td>
+                    <td
+                      style="
+                        padding: 6px 10px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: #ffffff;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #2a5080;
+                      "
+                    >
+                      Merchant
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 6px 10px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: #ffffff;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #2a5080;
+                      "
+                    >
+                      Weekly Rev (RM)
+                    </td>
+                    <td
+                      align="right"
+                      style="
+                        padding: 6px 10px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: #ffffff;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #2a5080;
+                      "
+                    >
+                      Cumulative %
+                    </td>
+                  </tr>
+                  <!-- Rows generated by AI using {{CONCENTRATION_TABLE}} -->
+                  <tr style="background-color: #f8fafc">
+                    <td
+                      colspan="4"
+                      style="
+                        padding: 8px 10px;
+                        font-size: 12px;
+                        color: #7f8c8d;
+                        font-style: italic;
+                        font-family: Arial, sans-serif;
+                        border: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{CONCENTRATION_TABLE}}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 14px 32px 24px 32px">
+                <p
+                  style="
+                    margin: 0 0 6px 0;
+                    font-size: 12px;
+                    font-weight: 700;
+                    color: #1b3a5c;
+                    font-family: Arial, sans-serif;
+                  "
+                >
+                  Early Warning Signals
+                </p>
+                <p
+                  style="
+                    margin: 0;
+                    font-size: 12px;
+                    color: #2c3e50;
+                    line-height: 1.7;
+                    font-family: Arial, sans-serif;
+                  "
+                >
+                  {{EARLY_WARNINGS}}
+                </p>
+              </td>
+            </tr>
+
+            <!-- ═══════════════════════════════════════════ -->
+            <!-- SECTION 5: OPPORTUNITIES & ACTIONS         -->
+            <!-- ═══════════════════════════════════════════ -->
+            <tr>
+              <td style="padding: 0 32px 0 32px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      style="
+                        background-color: #1b3a5c;
+                        padding: 8px 14px;
+                        border-radius: 2px;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 12px;
+                          font-weight: 700;
+                          color: #ffffff;
+                          text-transform: uppercase;
+                          letter-spacing: 1px;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        4 &nbsp; Opportunities &amp; Actions
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 16px 32px 8px 32px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      style="
+                        background-color: #eafaf1;
+                        padding: 12px 16px;
+                        border-left: 4px solid #27ae60;
+                        border-radius: 0 2px 2px 0;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0 0 6px 0;
+                          font-size: 12px;
+                          font-weight: 700;
+                          color: #1d6a3a;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        &#9889; Scale &mdash; Double Down on Winners
+                      </p>
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 12px;
+                          color: #2c3e50;
+                          line-height: 1.7;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        {{SCALE_ACTIONS}}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 0 32px 8px 32px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      style="
+                        background-color: #fdedec;
+                        padding: 12px 16px;
+                        border-left: 4px solid #e74c3c;
+                        border-radius: 0 2px 2px 0;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0 0 6px 0;
+                          font-size: 12px;
+                          font-weight: 700;
+                          color: #7b241c;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        &#128296; Fix &mdash; Address Declines
+                      </p>
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 12px;
+                          color: #2c3e50;
+                          line-height: 1.7;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        {{FIX_ACTIONS}}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 0 32px 24px 32px">
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                      style="
+                        background-color: #fef9e7;
+                        padding: 12px 16px;
+                        border-left: 4px solid #f39c12;
+                        border-radius: 0 2px 2px 0;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0 0 6px 0;
+                          font-size: 12px;
+                          font-weight: 700;
+                          color: #795000;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        &#128065; Monitor &mdash; Watch List
+                      </p>
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 12px;
+                          color: #2c3e50;
+                          line-height: 1.7;
+                          font-family: Arial, sans-serif;
+                        "
+                      >
+                        {{MONITOR_WATCHLIST}}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- ═══════════════════════════════════════════ -->
+            <!-- CHANGELOG                                   -->
+            <!-- ═══════════════════════════════════════════ -->
+            <tr>
+              <td
+                style="
+                  background-color: #f4f6f9;
+                  padding: 16px 32px;
+                  border-top: 1px solid #e0e7ef;
+                "
+              >
+                <p
+                  style="
+                    margin: 0 0 8px 0;
+                    font-size: 11px;
+                    font-weight: 700;
+                    color: #4a6b82;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    font-family: Arial, sans-serif;
+                  "
+                >
+                  &#128203; Report Changelog
+                </p>
+                <table
+                  width="100%"
+                  cellpadding="5"
+                  cellspacing="0"
+                  border="0"
+                  style="border-collapse: collapse"
+                >
+                  <tr>
+                    <td
+                      style="
+                        padding: 4px 8px;
+                        font-size: 11px;
+                        color: #7f8c8d;
+                        font-family: Arial, sans-serif;
+                        border-bottom: 1px solid #e0e7ef;
+                        width: 35%;
+                      "
+                    >
+                      Report Generated
+                    </td>
+                    <td
+                      style="
+                        padding: 4px 8px;
+                        font-size: 11px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border-bottom: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{CHANGELOG_DATE}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style="
+                        padding: 4px 8px;
+                        font-size: 11px;
+                        color: #7f8c8d;
+                        font-family: Arial, sans-serif;
+                        border-bottom: 1px solid #e0e7ef;
+                      "
+                    >
+                      Week Covered
+                    </td>
+                    <td
+                      style="
+                        padding: 4px 8px;
+                        font-size: 11px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border-bottom: 1px solid #e0e7ef;
+                      "
+                    >
+                      Week ending {{WEEK_ENDING}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style="
+                        padding: 4px 8px;
+                        font-size: 11px;
+                        color: #7f8c8d;
+                        font-family: Arial, sans-serif;
+                        border-bottom: 1px solid #e0e7ef;
+                      "
+                    >
+                      Noise Filter
+                    </td>
+                    <td
+                      style="
+                        padding: 4px 8px;
+                        font-size: 11px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border-bottom: 1px solid #e0e7ef;
+                      "
+                    >
+                      RM {{NOISE_THRESHOLD_VALUE}} ({{NOISE_THRESHOLD_METHOD}})
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style="
+                        padding: 4px 8px;
+                        font-size: 11px;
+                        color: #7f8c8d;
+                        font-family: Arial, sans-serif;
+                        border-bottom: 1px solid #e0e7ef;
+                      "
+                    >
+                      New Merchants
+                    </td>
+                    <td
+                      style="
+                        padding: 4px 8px;
+                        font-size: 11px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                        border-bottom: 1px solid #e0e7ef;
+                      "
+                    >
+                      {{NEW_MERCHANTS}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style="
+                        padding: 4px 8px;
+                        font-size: 11px;
+                        color: #7f8c8d;
+                        font-family: Arial, sans-serif;
+                      "
+                    >
+                      Data Quality Flags
+                    </td>
+                    <td
+                      style="
+                        padding: 4px 8px;
+                        font-size: 11px;
+                        color: #2c3e50;
+                        font-family: Arial, sans-serif;
+                      "
+                    >
+                      {{DATA_FLAGS}}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- FOOTER -->
+            <tr>
+              <td
+                style="
+                  background-color: #1b3a5c;
+                  padding: 12px 32px;
+                  text-align: center;
+                "
+              >
+                <p
+                  style="
+                    margin: 0;
+                    font-size: 10px;
+                    color: #7eb8d4;
+                    font-family: Arial, sans-serif;
+                  "
+                >
+                  Generated by Weekly Performance Snapshot AI System
+                  &nbsp;|&nbsp; Commercial Intelligence
+                </p>
+              </td>
+            </tr>
+          </table>
+          <!-- END OUTER WRAPPER -->
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
