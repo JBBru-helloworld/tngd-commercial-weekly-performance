@@ -213,8 +213,8 @@ Run the full data validation checklist (see `data_validation.md`) before generat
 - Tables must use standard pipe format — no merged cells (Outlook compatibility)
 - Section headers must follow the exact naming convention in Section 2 above
 - Every report ends with the Changelog block (see `changelog_format.md`)
-- HTML output: inline CSS only, table-based layout, max 700px width
-- Markdown output: H1/H2/H3 headings, pipe tables, `---` section dividers
+- HTML output: inline CSS only, table-based layout, max 760px width
+- Microsoft Word Document (.docx) output: H1/H2/H3 headings, pipe tables, `---` section dividers
 
 ---
 
