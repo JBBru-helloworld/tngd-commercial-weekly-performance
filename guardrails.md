@@ -40,13 +40,13 @@ Do not generate Section 3 without first applying the noise filter and stating th
 ## G3 — Output Structure
 
 **G3.1 — Never skip a section without explanation.**
-All five sections plus the changelog must appear in every report. If a section cannot be completed, it must still appear with a clear explanation of why and what data is needed.
+All five sections must appear in the HTML report. A changelog summary must appear in the chat response, not in the HTML file. If a section cannot be completed, it must still appear with a clear explanation of why and what data is needed.
 
 **G3.2 — Never add sections not in the template.**
 The five sections and changelog are the complete structure. Do not add commentary, appendices, or analysis outside this structure without explicit user instruction.
 
-**G3.3 — Output must include both formats.**
-Unless the user explicitly requests only one format, always deliver both the Markdown version and the HTML version, clearly labelled.
+**G3.3 — Output format is chat summary + HTML file.**
+Output format is: (1) a brief chat summary of 3–5 bullet points covering headline performance, top L2 driver, biggest risk, and one forward signal; followed by (2) the full report as a downloadable HTML file using template.html. Do not produce a Word document or Markdown version.
 
 **G3.4 — Placeholders must match the schema.**
 All `{{TOKEN_NAME}}` placeholders used in output must match a token defined in `template_schema.md`. Do not invent new token names mid-report.
@@ -70,9 +70,6 @@ A merchant generating RM 10K/week for 3 weeks is not Rising Momentum — revenue
 
 **G5.1 — Concentration thresholds are defaults, not absolutes.**
 Default flags: 🟡 Caution if top 3 merchants > 50% of L2; 🔴 High Risk if top 5 > 70%. These can be overridden by the user but must be explicitly noted if changed.
-
-**G5.2 — Volatility requires a defined method.**
-Volatile Movers must be identified using a stated method: either ±30% WoW threshold or 2 standard deviations from rolling average. State which method was applied and why.
 
 **G5.3 — Early Warning Signals are observational only.**
 Do not speculate on the cause of an early warning signal. Describe the pattern factually. Example: "Merchant X has declined WoW for 2 consecutive weeks (RM –45K total)" — not "Merchant X may be losing market share due to competition."

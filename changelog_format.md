@@ -1,13 +1,13 @@
 # Changelog Format
 ## Week-on-Week Report Log — Weekly Performance Snapshot
 
-Every report must end with a Changelog block. This creates an audit trail and helps the team track structural changes, data quality issues, and threshold shifts over time.
+Every session must end with a Changelog summary delivered in the chat response only. Do not insert this into the HTML file. Do not produce a Markdown version. This creates an audit trail and helps the team track structural changes, data quality issues, and threshold shifts over time.
 
 ---
 
 ## Format
 
-Append the following block at the very end of every report output (both HTML and Markdown versions):
+Include the following as a chat summary at the end of your response, after delivering the HTML file. Do not insert into the HTML file:
 
 ```
 ---

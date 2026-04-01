@@ -2,7 +2,7 @@
 
 ## Token Reference — Weekly Performance Snapshot
 
-All placeholders in `template.html` and `template.md` use `{{TOKEN_NAME}}` format.
+All placeholders in `template.html` use `{{TOKEN_NAME}}` format.
 This file defines every token in JSON for machine-readability, with a legend below.
 
 ---
@@ -24,7 +24,7 @@ This file defines every token in JSON for machine-readability, with a legend bel
 ```json
 {
   "schema_version": "2.0",
-  "last_updated": "2025-03-31",
+  "last_updated": "2026-04-01",
   "currency": "RM",
   "number_formats": {
     "large": "RM X.XM (above 500,000)",
@@ -65,14 +65,16 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "source": "ai_generated",
         "format": "plain text, max 2 sentences",
         "required": true,
-        "notes": "Ultra-compressed exec summary covering budget, stretch, L2 driver, L2 risk"
+        "status": "chat_only",
+        "notes": "Ultra-compressed exec summary covering budget, stretch, L2 driver, L2 risk — chat summary only, no longer an HTML placeholder."
       },
       {
         "token": "FORWARD_SIGNAL",
         "source": "ai_generated",
         "format": "plain text, 1 sentence",
         "required": true,
-        "notes": "One forward-looking observation"
+        "status": "chat_only",
+        "notes": "One forward-looking observation — chat summary only, no longer an HTML placeholder."
       }
     ],
 
@@ -100,6 +102,27 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "source": "calculated",
         "format": "±X.X%",
         "required": true
+      },
+      {
+        "token": "YTD_STRETCH",
+        "source": "excel",
+        "format": "RM X.XM",
+        "required": false,
+        "notes": "YTD stretch target. If unavailable, omit YTD vs Stretch row and flag."
+      },
+      {
+        "token": "YTD_STR_VAR_ABS",
+        "source": "calculated",
+        "format": "±RM X.XM",
+        "required": false,
+        "notes": "YTD Actual minus YTD Stretch target."
+      },
+      {
+        "token": "YTD_STR_VAR_PCT",
+        "source": "calculated",
+        "format": "±X.X%",
+        "required": false,
+        "notes": "YTD variance vs Stretch as a percentage."
       },
       {
         "token": "MTD_ACTUAL",
@@ -130,7 +153,7 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "source": "excel",
         "format": "RM X.XM",
         "required": false,
-        "notes": "If unavailable, omit MTD vs Stretch row and flag"
+        "notes": "If YTD Stretch or MTD Stretch targets are unavailable, omit those rows and flag."
       },
       {
         "token": "MTD_STR_VAR_ABS",
@@ -162,7 +185,7 @@ This file defines every token in JSON for machine-readability, with a legend bel
       "prefix": "WOW_",
       "source": "excel + calculated",
       "required": true,
-      "notes": "TOTAL row shows yellow variance text in HTML template"
+      "notes": "TOTAL row uses light blue background (#dbeafe) with dark navy text (#1e3a5f)"
     },
 
     "section_1_narrative": [
@@ -170,8 +193,9 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "token": "REVENUE_NARRATIVE",
         "source": "ai_generated",
         "format": "3-5 sentences",
-        "required": true,
-        "notes": "Answers: what changed vs LW, accelerating or slowing, broad-based or concentrated"
+        "required": false,
+        "status": "removed",
+        "notes": "Removed — Revenue Narrative block removed from template.html as of April 2026."
       }
     ],
 
@@ -303,8 +327,9 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "token": "VOLATILE_MOVERS",
         "source": "ai_generated",
         "format": "narrative list",
-        "required": true,
-        "notes": "Merchants with >±30% WoW or >2 SD from own rolling average"
+        "required": false,
+        "status": "removed",
+        "notes": "Removed — Volatile Movers section removed from template.html as of April 2026."
       },
       {
         "token": "CONCENTRATION_FLAG",
@@ -325,6 +350,13 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "format": "narrative list",
         "required": true,
         "notes": "2 consecutive declines, >20% single-week drop, re-entry after 3+ weeks absent"
+      },
+      {
+        "token": "EARLY_WARNING_THRESHOLD",
+        "source": "calculated",
+        "format": "X,XXX",
+        "required": true,
+        "notes": "Minimum weekly revenue threshold below which merchants are excluded from Early Warning Signals. Displayed as subtitle in HTML template."
       }
     ],
 
@@ -354,19 +386,42 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "token": "CHANGELOG_DATE",
         "source": "system",
         "format": "DD Month YYYY",
-        "required": true
+        "required": true,
+        "status": "chat_only",
+        "notes": " — changelog is chat-only, not an HTML placeholder."
       },
       {
         "token": "NEW_MERCHANTS",
         "source": "ai_detected",
         "format": "list or 'None'",
-        "required": true
+        "required": true,
+        "status": "chat_only",
+        "notes": " — changelog is chat-only, not an HTML placeholder."
       },
       {
         "token": "DATA_FLAGS",
         "source": "ai_detected",
         "format": "list or 'None'",
-        "required": true
+        "required": true,
+        "status": "chat_only",
+        "notes": " — changelog is chat-only, not an HTML placeholder."
+      }
+    ],
+
+    "quick_links": [
+      {
+        "token": "DASHBOARD_LINK_COMMERCIAL",
+        "source": "user_input",
+        "format": "URL",
+        "required": true,
+        "notes": "URL for the Commercial Dashboard. Appears in Quick Links section above Footer."
+      },
+      {
+        "token": "DASHBOARD_LINK_MERCHANT",
+        "source": "user_input",
+        "format": "URL",
+        "required": true,
+        "notes": "URL for the Merchant Search Dashboard. Appears in Quick Links section above Footer."
       }
     ]
   }

@@ -52,6 +52,7 @@ Generate output in exactly this order. Do not skip sections. Do not add sections
 | Metric         | Actual (RM) | Target (RM) | Variance (RM) | Variance (%) |
 | -------------- | ----------- | ----------- | ------------- | ------------ |
 | YTD vs Budget  |             |             |               |              |
+| YTD vs Stretch |             |             |               |              |
 | MTD vs Budget  |             |             |               |              |
 | MTD vs Stretch |             |             |               |              |
 
@@ -68,12 +69,6 @@ Generate output in exactly this order. Do not skip sections. Do not add sections
 | **Total Commercial**   |                |                |               |              |
 
 The Total Commercial row uses a highlighted style (yellow variance in HTML template). WoW is NOT in Table 1A — it has its own dedicated Table 1B with L2 pillar breakdown.
-
-**Narrative commentary (3–5 sentences) answering:**
-
-1. What changed vs last week?
-2. Are we accelerating or slowing?
-3. Is performance broad-based or concentrated in specific categories/merchants?
 
 ---
 
@@ -125,9 +120,6 @@ If fewer than 3 weeks of data: omit Rising/Declining Momentum and state: _"Momen
 
 ### SECTION 4 — Risky Business
 
-**Volatile Movers:**
-Identify merchants whose WoW revenue swing exceeds 2 standard deviations from their own rolling average, OR whose WoW % change exceeds ±30% (whichever catches more cases). List merchant name, weekly revenue, and WoW swing magnitude.
-
 **Concentration Risk:**
 Calculate cumulative revenue contribution of top merchants. Flag with these defaults:
 
@@ -143,7 +135,7 @@ Flag any merchant showing:
 - Single-week drop >20% WoW
 - Re-entry after ≥3 weeks of inactivity
 
-Label each signal clearly. Do not speculate on cause — describe the pattern only.
+Label each signal clearly. Do not speculate on cause — describe the pattern only. Document the materiality threshold applied as {{EARLY_WARNING_THRESHOLD}} — this value is displayed as a subtitle in the HTML template above the Early Warning Signals box.
 
 ---
 
@@ -212,9 +204,8 @@ Run the full data validation checklist (see `data_validation.md`) before generat
 - Use `{{TOKEN_NAME}}` placeholders exactly as defined in `template_schema.md`
 - Tables must use standard pipe format — no merged cells (Outlook compatibility)
 - Section headers must follow the exact naming convention in Section 2 above
-- Every report ends with the Changelog block (see `changelog_format.md`)
+- Every session ends with a changelog summary delivered in the chat only — do not insert it into the HTML file (see `changelog_format.md`)
 - HTML output: inline CSS only, table-based layout, max 760px width
-- Microsoft Word Document (.docx) output: H1/H2/H3 headings, pipe tables, `---` section dividers
 
 ---
 
