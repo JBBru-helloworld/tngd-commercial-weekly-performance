@@ -121,12 +121,15 @@ If fewer than 3 weeks of data: omit Rising/Declining Momentum and state: _"Momen
 ### SECTION 4 — Risky Business
 
 **Concentration Risk:**
-Calculate cumulative revenue contribution of top merchants. Flag with these defaults:
+Calculate the revenue concentration of the top 5 merchants within L2 Category Management (the scope of this section). The denominator for all percentages is the total weekly revenue of L2 Category Management for the current week — not the total commercial portfolio.
 
-- 🟡 Caution: top 3 merchants > 50% of L2 total
-- 🔴 High Risk: top 5 merchants > 70% of L2 total
+Show a 5-row table with these columns: Rank | Merchant | Weekly Revenue (RM) | Cumulative %. The Cumulative % column shows the running total contribution of merchants ranked 1 through N as a share of L2 Category Management total weekly revenue.
 
-Show a small table: Rank | Merchant | Weekly Revenue (RM) | Cumulative %.
+Flag with these defaults:
+- 🟡 Caution: top 3 merchants collectively exceed 50% of L2 Category Management weekly revenue
+- 🔴 High Risk: top 5 merchants collectively exceed 70% of L2 Category Management weekly revenue
+
+Use tokens: {{CONC_M1_NAME}}, {{CONC_M1_REV}}, {{CONC_M1_CUM_PCT}} through {{CONC_M5_NAME}}, {{CONC_M5_REV}}, {{CONC_M5_CUM_PCT}} for the 5 data rows.
 
 **Early Warning Signals:**
 Flag any merchant showing:
@@ -135,7 +138,9 @@ Flag any merchant showing:
 - Single-week drop >20% WoW
 - Re-entry after ≥3 weeks of inactivity
 
-Label each signal clearly. Do not speculate on cause — describe the pattern only. Document the materiality threshold applied as {{EARLY_WARNING_THRESHOLD}} — this value is displayed as a subtitle in the HTML template above the Early Warning Signals box.
+Label each signal clearly. Do not speculate on cause — describe the pattern only.
+
+**Materiality threshold:** The minimum absolute revenue threshold for Early Warning Signals is the same as the noise filter threshold already calculated during validation for the relevant L3 category. Merchants whose current-week revenue falls below this threshold are excluded from Early Warning Signals entirely — even if they show a qualifying pattern. The threshold is dynamic and will differ by L3 category and week. Document the exact RM value applied as {{EARLY_WARNING_THRESHOLD}} in the HTML template subtitle.
 
 ---
 

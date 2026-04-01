@@ -339,10 +339,109 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "notes": "✅ OK | 🟡 Caution (top 3 > 50%) | 🔴 High Risk (top 5 > 70%)"
       },
       {
-        "token": "CONCENTRATION_TABLE",
+        "token": "CONC_M1_NAME",
         "source": "calculated",
-        "format": "inline table rows: Rank | Merchant | Weekly Rev | Cumulative %",
-        "required": true
+        "format": "plain text",
+        "required": true,
+        "notes": "Rank 1 merchant by weekly revenue within L2 Category Management"
+      },
+      {
+        "token": "CONC_M1_REV",
+        "source": "calculated",
+        "format": "RM X.XM",
+        "required": true,
+        "notes": "Rank 1 merchant current week revenue"
+      },
+      {
+        "token": "CONC_M1_CUM_PCT",
+        "source": "calculated",
+        "format": "X.X%",
+        "required": true,
+        "notes": "Cumulative % contribution of top 1 merchant to L2 Category Management total weekly revenue"
+      },
+      {
+        "token": "CONC_M2_NAME",
+        "source": "calculated",
+        "format": "plain text",
+        "required": true,
+        "notes": "Rank 2 merchant by weekly revenue within L2 Category Management"
+      },
+      {
+        "token": "CONC_M2_REV",
+        "source": "calculated",
+        "format": "RM X.XM",
+        "required": true,
+        "notes": "Rank 2 merchant current week revenue"
+      },
+      {
+        "token": "CONC_M2_CUM_PCT",
+        "source": "calculated",
+        "format": "X.X%",
+        "required": true,
+        "notes": "Cumulative % contribution of top 2 merchants to L2 Category Management total weekly revenue"
+      },
+      {
+        "token": "CONC_M3_NAME",
+        "source": "calculated",
+        "format": "plain text",
+        "required": true,
+        "notes": "Rank 3 merchant by weekly revenue within L2 Category Management"
+      },
+      {
+        "token": "CONC_M3_REV",
+        "source": "calculated",
+        "format": "RM X.XM",
+        "required": true,
+        "notes": "Rank 3 merchant current week revenue"
+      },
+      {
+        "token": "CONC_M3_CUM_PCT",
+        "source": "calculated",
+        "format": "X.X%",
+        "required": true,
+        "notes": "Cumulative % contribution of top 3 merchants to L2 Category Management total weekly revenue. Flag 🟡 Caution if >50%."
+      },
+      {
+        "token": "CONC_M4_NAME",
+        "source": "calculated",
+        "format": "plain text",
+        "required": true,
+        "notes": "Rank 4 merchant by weekly revenue within L2 Category Management"
+      },
+      {
+        "token": "CONC_M4_REV",
+        "source": "calculated",
+        "format": "RM X.XM",
+        "required": true,
+        "notes": "Rank 4 merchant current week revenue"
+      },
+      {
+        "token": "CONC_M4_CUM_PCT",
+        "source": "calculated",
+        "format": "X.X%",
+        "required": true,
+        "notes": "Cumulative % contribution of top 4 merchants to L2 Category Management total weekly revenue"
+      },
+      {
+        "token": "CONC_M5_NAME",
+        "source": "calculated",
+        "format": "plain text",
+        "required": true,
+        "notes": "Rank 5 merchant by weekly revenue within L2 Category Management"
+      },
+      {
+        "token": "CONC_M5_REV",
+        "source": "calculated",
+        "format": "RM X.XM",
+        "required": true,
+        "notes": "Rank 5 merchant current week revenue"
+      },
+      {
+        "token": "CONC_M5_CUM_PCT",
+        "source": "calculated",
+        "format": "X.X%",
+        "required": true,
+        "notes": "Cumulative % contribution of top 5 merchants to L2 Category Management total weekly revenue. Flag 🔴 High Risk if >70%."
       },
       {
         "token": "EARLY_WARNINGS",

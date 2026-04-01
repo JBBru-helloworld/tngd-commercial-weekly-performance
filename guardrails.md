@@ -69,7 +69,10 @@ A merchant generating RM 10K/week for 3 weeks is not Rising Momentum — revenue
 ## G5 — Concentration and Risk
 
 **G5.1 — Concentration thresholds are defaults, not absolutes.**
-Default flags: 🟡 Caution if top 3 merchants > 50% of L2; 🔴 High Risk if top 5 > 70%. These can be overridden by the user but must be explicitly noted if changed.
+Default flags: 🟡 Caution if top 3 merchants > 50% of L2 Category Management weekly revenue; 🔴 High Risk if top 5 > 70%. The denominator is always L2 Category Management total weekly revenue — not the total commercial portfolio. These thresholds can be overridden by the user but must be explicitly noted if changed.
+
+**G5.2 — Early Warning Signals must respect the materiality threshold.**
+The minimum revenue threshold for Early Warning Signals is the noise filter threshold for the relevant L3 category, as calculated during the validation step. Do not flag merchants whose current-week revenue falls below this threshold — the signal is statistically immaterial. The threshold is dynamic, differs by L3 and by week, and must be documented as {{EARLY_WARNING_THRESHOLD}} in the report output.
 
 **G5.3 — Early Warning Signals are observational only.**
 Do not speculate on the cause of an early warning signal. Describe the pattern factually. Example: "Merchant X has declined WoW for 2 consecutive weeks (RM –45K total)" — not "Merchant X may be losing market share due to competition."
