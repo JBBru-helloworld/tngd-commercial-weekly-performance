@@ -343,7 +343,7 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "source": "calculated",
         "format": "plain text",
         "required": true,
-        "notes": "Rank 1 merchant by weekly revenue within L2 Category Management"
+        "notes": "Rank 1 merchant by weekly revenue across all commercial L2 pillars"
       },
       {
         "token": "CONC_M1_REV",
@@ -357,14 +357,14 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "source": "calculated",
         "format": "X.X%",
         "required": true,
-        "notes": "Cumulative % contribution of top 1 merchant to L2 Category Management total weekly revenue"
+        "notes": "Cumulative % contribution of top 1 merchant to total commercial portfolio weekly revenue"
       },
       {
         "token": "CONC_M2_NAME",
         "source": "calculated",
         "format": "plain text",
         "required": true,
-        "notes": "Rank 2 merchant by weekly revenue within L2 Category Management"
+        "notes": "Rank 2 merchant by weekly revenue across all commercial L2 pillars"
       },
       {
         "token": "CONC_M2_REV",
@@ -378,14 +378,14 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "source": "calculated",
         "format": "X.X%",
         "required": true,
-        "notes": "Cumulative % contribution of top 2 merchants to L2 Category Management total weekly revenue"
+        "notes": "Cumulative % contribution of top 2 merchants to total commercial portfolio weekly revenue"
       },
       {
         "token": "CONC_M3_NAME",
         "source": "calculated",
         "format": "plain text",
         "required": true,
-        "notes": "Rank 3 merchant by weekly revenue within L2 Category Management"
+        "notes": "Rank 3 merchant by weekly revenue across all commercial L2 pillars"
       },
       {
         "token": "CONC_M3_REV",
@@ -399,14 +399,14 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "source": "calculated",
         "format": "X.X%",
         "required": true,
-        "notes": "Cumulative % contribution of top 3 merchants to L2 Category Management total weekly revenue. Flag 🟡 Caution if >50%."
+        "notes": "Cumulative % contribution of top 3 merchants to total commercial portfolio weekly revenue. Flag 🟡 Caution if >50%."
       },
       {
         "token": "CONC_M4_NAME",
         "source": "calculated",
         "format": "plain text",
         "required": true,
-        "notes": "Rank 4 merchant by weekly revenue within L2 Category Management"
+        "notes": "Rank 4 merchant by weekly revenue across all commercial L2 pillars"
       },
       {
         "token": "CONC_M4_REV",
@@ -420,14 +420,14 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "source": "calculated",
         "format": "X.X%",
         "required": true,
-        "notes": "Cumulative % contribution of top 4 merchants to L2 Category Management total weekly revenue"
+        "notes": "Cumulative % contribution of top 4 merchants to total commercial portfolio weekly revenue"
       },
       {
         "token": "CONC_M5_NAME",
         "source": "calculated",
         "format": "plain text",
         "required": true,
-        "notes": "Rank 5 merchant by weekly revenue within L2 Category Management"
+        "notes": "Rank 5 merchant by weekly revenue across all commercial L2 pillars"
       },
       {
         "token": "CONC_M5_REV",
@@ -441,7 +441,7 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "source": "calculated",
         "format": "X.X%",
         "required": true,
-        "notes": "Cumulative % contribution of top 5 merchants to L2 Category Management total weekly revenue. Flag 🔴 High Risk if >70%."
+        "notes": "Cumulative % contribution of top 5 merchants to total commercial portfolio weekly revenue. Flag 🔴 High Risk if >70%."
       },
       {
         "token": "EARLY_WARNINGS",
@@ -464,19 +464,25 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "token": "SCALE_ACTIONS",
         "source": "ai_generated",
         "format": "narrative with named merchants + RM upside",
-        "required": true
+        "required": false,
+        "status": "removed",
+        "notes": "Section 5 Opportunities and Actions removed from report."
       },
       {
         "token": "FIX_ACTIONS",
         "source": "ai_generated",
         "format": "narrative with named merchants + magnitude",
-        "required": true
+        "required": false,
+        "status": "removed",
+        "notes": "Section 5 Opportunities and Actions removed from report."
       },
       {
         "token": "MONITOR_WATCHLIST",
         "source": "ai_generated",
         "format": "narrative with named merchants + signal",
-        "required": true
+        "required": false,
+        "status": "removed",
+        "notes": "Section 5 Opportunities and Actions removed from report."
       }
     ],
 

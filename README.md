@@ -5,7 +5,7 @@
 
 ## What This Is
 
-This system enables an AI assistant (ChatGPT Project) to ingest a weekly Excel revenue report from SharePoint and generate a structured, executive-ready performance snapshot. It replaces manual commentary with consistent, data-driven narrative across five report sections: executive header, overall revenue performance, category deep dive, risk signals, and opportunities.
+This system enables an AI assistant (ChatGPT Project) to ingest a weekly revenue report from SharePoint and generate a structured, executive-ready performance snapshot. It replaces manual commentary with consistent, data-driven narrative across four report sections: executive header, overall revenue performance, risky business (concentration risk and early warning signals), and category deep dive.
 
 ---
 

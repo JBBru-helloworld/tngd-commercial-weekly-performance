@@ -72,7 +72,32 @@ The Total Commercial row uses a highlighted style (yellow variance in HTML templ
 
 ---
 
-### SECTION 3 — Category Deep Dive
+### SECTION 3 — Risky Business
+
+**Concentration Risk:**
+Calculate the revenue concentration of the top 5 merchants across ALL commercial L2 pillars. The denominator for all percentages is the total weekly revenue of the full commercial portfolio for the current week.
+
+Show a 5-row table with these columns: Rank | Merchant | Weekly Revenue (RM) | Cumulative %. The Cumulative % column shows the running total contribution of merchants ranked 1 through N as a share of total commercial portfolio weekly revenue.
+
+Flag with these defaults:
+- 🟡 Caution: top 3 merchants collectively exceed 50% of total commercial portfolio weekly revenue
+- 🔴 High Risk: top 5 merchants collectively exceed 70% of total commercial portfolio weekly revenue
+
+Use tokens: {{CONC_M1_NAME}}, {{CONC_M1_REV}}, {{CONC_M1_CUM_PCT}} through {{CONC_M5_NAME}}, {{CONC_M5_REV}}, {{CONC_M5_CUM_PCT}} for the 5 data rows.
+
+**Early Warning Signals:**
+Flag any merchant showing:
+
+- 2 consecutive WoW declines (not yet at 3 — these are watch items, not confirmed trends)
+- Single-week drop >20% WoW
+- Re-entry after ≥3 weeks of inactivity
+
+Label each signal clearly. Do not speculate on cause — describe the pattern only.
+
+**Materiality threshold:** The minimum absolute revenue threshold for Early Warning Signals is the same as the noise filter threshold already calculated during validation for the relevant L3 category. Merchants whose current-week revenue falls below this threshold are excluded from Early Warning Signals entirely — even if they show a qualifying pattern. The threshold is dynamic and will differ by L3 category and week. Document the exact RM value applied as {{EARLY_WARNING_THRESHOLD}} in the HTML template subtitle.
+---
+
+### SECTION 4 — Category Deep Dive
 
 **Scope:** L2 category code "04 Category Management" only. Section header is simply "Category Deep Dive" — do not include "04 Category Management" in the heading.
 
@@ -116,46 +141,7 @@ The Total Commercial row uses a highlighted style (yellow variance in HTML templ
 
 If fewer than 3 weeks of data: omit Rising/Declining Momentum and state: _"Momentum signals unavailable — minimum 3 weeks of data required."_
 
----
 
-### SECTION 4 — Risky Business
-
-**Concentration Risk:**
-Calculate the revenue concentration of the top 5 merchants within L2 Category Management (the scope of this section). The denominator for all percentages is the total weekly revenue of L2 Category Management for the current week — not the total commercial portfolio.
-
-Show a 5-row table with these columns: Rank | Merchant | Weekly Revenue (RM) | Cumulative %. The Cumulative % column shows the running total contribution of merchants ranked 1 through N as a share of L2 Category Management total weekly revenue.
-
-Flag with these defaults:
-- 🟡 Caution: top 3 merchants collectively exceed 50% of L2 Category Management weekly revenue
-- 🔴 High Risk: top 5 merchants collectively exceed 70% of L2 Category Management weekly revenue
-
-Use tokens: {{CONC_M1_NAME}}, {{CONC_M1_REV}}, {{CONC_M1_CUM_PCT}} through {{CONC_M5_NAME}}, {{CONC_M5_REV}}, {{CONC_M5_CUM_PCT}} for the 5 data rows.
-
-**Early Warning Signals:**
-Flag any merchant showing:
-
-- 2 consecutive WoW declines (not yet at 3 — these are watch items, not confirmed trends)
-- Single-week drop >20% WoW
-- Re-entry after ≥3 weeks of inactivity
-
-Label each signal clearly. Do not speculate on cause — describe the pattern only.
-
-**Materiality threshold:** The minimum absolute revenue threshold for Early Warning Signals is the same as the noise filter threshold already calculated during validation for the relevant L3 category. Merchants whose current-week revenue falls below this threshold are excluded from Early Warning Signals entirely — even if they show a qualifying pattern. The threshold is dynamic and will differ by L3 category and week. Document the exact RM value applied as {{EARLY_WARNING_THRESHOLD}} in the HTML template subtitle.
-
----
-
-### SECTION 5 — Opportunities & Actions
-
-Three buckets. Each must name specific merchants or categories and quantify the opportunity or risk where possible.
-
-**⚡ Scale — Double down on winners**
-Merchants/categories with strong momentum where investment or focus could amplify returns. Explain why and by how much.
-
-**🔧 Fix — Address declines**
-Merchants/categories with clear negative trends requiring intervention. Name them, state the magnitude, and frame the urgency.
-
-**👁 Monitor — Uncertain trends**
-Merchants/categories where the signal is mixed or early. Flag for next week's watch list. Do not recommend action yet.
 
 ---
 
