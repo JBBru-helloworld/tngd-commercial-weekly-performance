@@ -59,6 +59,16 @@ This file defines every token in JSON for machine-readability, with a legend bel
       }
     ],
 
+    "section_1_data_rules": [
+      {
+        "token": "MERCHANT_IDENTIFIER_FIELD",
+        "value": "merchant_group",
+        "source": "excel",
+        "required": true,
+        "notes": "Always use merchant_group as the primary display name for merchants. Do not substitute with other name fields."
+      }
+    ],
+
     "section_1_headline": [
       {
         "token": "HEADLINE_SUMMARY",
@@ -317,9 +327,25 @@ This file defines every token in JSON for machine-readability, with a legend bel
             "eligibility": "lifetime transaction count = 0 before this week, but this week > 0",
             "sort": "primary: YTD descending",
             "columns": "NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT"
+          },
+          {
+            "code": "DDNQR",
+            "label": "DDNQR Top 5",
+            "eligibility": "Merchants filtered by MID = EP142731 within the L3 category scope",
+            "sort": "primary: YTD descending",
+            "columns": "NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
+            "token_pattern": "{PREFIX}_DDNQR{N}_{COL} where N=1-5",
+            "note": "Apply MID filter EP142731 first, then filter to L3 category, then sort by YTD descending. Use merchant_group as the display name."
           }
         ]
       }
+    },
+
+    "section_2_ddnqr_global": {
+      "note": "Top 10 DDNQR merchants across all Commercial L2 pillars. Filter: MID = EP142731. Sort: YTD descending.",
+      "token_pattern": "DDNQR_GLOBAL_R{N}_{COL} where N=1-10, COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
+      "source": "excel + calculated",
+      "required": true
     },
 
     "section_3_risky_business": [

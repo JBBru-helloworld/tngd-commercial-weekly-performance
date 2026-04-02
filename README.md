@@ -88,6 +88,7 @@ The AI is designed to be schema-adaptive — it infers column roles from headers
 | AI says it cannot find budget/stretch data | Column headers are ambiguous | Rename columns clearly in Excel or add a note in `instructions_full.md` |
 | Momentum signals missing | Fewer than 3 weeks of data uploaded | Upload a file with at least 3 prior weeks included |
 | Merchant names inconsistent week-on-week | Source data has naming variations | Clean merchant names in Excel before uploading |
+| Merchant names inconsistent across DDNQR or bucket tables | merchant_group field missing or mixed with other name fields | Ensure the source data has a merchant_group column and that it is consistently populated. The AI always uses merchant_group as the display name. |
 | AI applies wrong noise threshold | Data distribution is unusual | Tell AI the threshold explicitly in your session message |
 | HTML template looks broken in Outlook | External CSS used | Ensure all CSS in `template.html` is inline only |
 | Output structure varies week to week | Ignition prompt not used | Always start with the ignition prompt — do not freestyle |

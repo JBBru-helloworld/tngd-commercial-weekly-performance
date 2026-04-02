@@ -35,15 +35,18 @@ L3 is for category-level narrative only. Merchant names belong exclusively in L4
 **G2.4 — Noise filter must be applied and documented.**
 Do not generate Section 3 without first applying the noise filter and stating the threshold used. An undocumented threshold is a guardrail violation.
 
+**G2.5 — Always use merchant_group as the merchant identifier.**
+The source data contains a field called merchant_group which is the standardised and consistent naming for all merchants across weeks. Always use merchant_group as the merchant name displayed in all tables, bucket lists, and narrative text. Do not use any other merchant name field (such as merchant_name, merchant_id, or trade_name) as the display name unless merchant_group is absent, in which case flag the issue to the user before proceeding. Never mix merchant identifiers across the same report.
+
 ---
 
 ## G3 — Output Structure
 
 **G3.1 — Never skip a section without explanation.**
-All five sections must appear in the HTML report. A changelog summary must appear in the chat response, not in the HTML file. If a section cannot be completed, it must still appear with a clear explanation of why and what data is needed.
+All four sections must appear in the HTML report (Main Header, Overall Revenue Performance, Risky Business, Category Deep Dive). A changelog summary must appear in the chat response, not in the HTML file. If a section cannot be completed, it must still appear with a clear explanation of why and what data is needed.
 
 **G3.2 — Never add sections not in the template.**
-The five sections and changelog are the complete structure. Do not add commentary, appendices, or analysis outside this structure without explicit user instruction.
+The four report sections and changelog are the complete structure. Do not add commentary, appendices, or analysis outside this structure without explicit user instruction.
 
 **G3.3 — Output format is chat summary + HTML file.**
 Output format is: (1) a brief chat summary of 3–5 bullet points covering headline performance, top L2 driver, biggest risk, and one forward signal; followed by (2) the full report as a downloadable HTML file using template.html. Do not produce a Word document or Markdown version.

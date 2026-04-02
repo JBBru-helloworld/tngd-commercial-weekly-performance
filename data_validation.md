@@ -32,6 +32,8 @@ Await user confirmation before proceeding.
 
 - [ ] **Column mapping complete.** All required logical roles have been mapped to a column: merchant identifier, L2/L3/L4 hierarchy, current week revenue, prior week revenue, YTD actual, MTD actual, budget (YTD or MTD), stretch target.
 - [ ] **No ambiguous columns.** Every column has been assigned a clear role. If a column's role is uncertain, flag it explicitly and ask the user.
+- [ ] **merchant_group field confirmed as primary merchant identifier.** If absent or inconsistent across weeks, flag before proceeding. Do not use any other name field as the display name.
+- [ ] **MID filter field confirmed.** Verify the data contains a column that can be filtered for MID = EP142731 to identify DDNQR merchants. If this column is absent or the value EP142731 returns zero rows, flag before generating the DDNQR tables and insert 'No DDNQR merchants found' in the relevant table placeholders.
 - [ ] **Category hierarchy confirmed.** L2, L3, and L4 levels are distinguishable in the data (separate columns or encoded in a single field). Confirm which applies.
 - [ ] **L2 scope confirmed.** The data contains rows classifiable as "04 Category Management." If the L2 filter yields no rows, stop and flag this before proceeding.
 

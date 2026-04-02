@@ -116,6 +116,7 @@ For each file in the full source set, validate and report all of the following:
 1. Schema mapping
 - List every column role you have mapped and the exact source header used.
 - Do this file by file.
+  - Confirm merchant_group has been identified as the primary merchant identifier. If merchant_group is absent or inconsistent, flag before proceeding.
 
 2. Unmapped or ambiguous columns
 - List any columns that could not be cleanly mapped.
@@ -189,6 +190,8 @@ Otherwise, proceed automatically.
 Output format: produce a brief summary of key findings directly in the chat (3–5 bullet points covering headline performance, top L2 driver, biggest risk, and one forward signal), then generate the full report as a downloadable HTML file using the template.html file. Do not produce a Word document.
 
 Currency: all figures are RM. Display as RM X,XXX for amounts under RM 500K and RM X.XM for amounts above.
+
+Merchant naming: use merchant_group as the display name for all merchants in every table and narrative. Do not use any other name field.
 
 Do not skip any section. Do not add sections not listed. If a section cannot be completed, include it with a clear explanation of why and what data would be needed.
 

@@ -95,6 +95,10 @@ Flag any merchant showing:
 Label each signal clearly. Do not speculate on cause — describe the pattern only.
 
 **Materiality threshold:** The minimum absolute revenue threshold for Early Warning Signals is the same as the noise filter threshold already calculated during validation for the relevant L3 category. Merchants whose current-week revenue falls below this threshold are excluded from Early Warning Signals entirely — even if they show a qualifying pattern. The threshold is dynamic and will differ by L3 category and week. Document the exact RM value applied as {{EARLY_WARNING_THRESHOLD}} in the HTML template subtitle.
+
+**DDNQR Top 10 (Global):**
+After the Early Warning Signals block, insert a table of the top 10 DDNQR merchants across ALL commercial L2 pillars. Apply MID filter EP142731 to identify DDNQR merchants in the source data, then rank by YTD revenue descending. Use `merchant_group` as the display name. Columns: Merchant | YTD ↓ | MTD | LW | TW | WoW RM | WoW %. Tokens: `{{DDNQR_GLOBAL_R{N}_{COL}}}` where N = 1–10 and COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT. If MID EP142731 returns fewer than 10 merchants, populate the remaining rows with 'N/A'.
+
 ---
 
 ### SECTION 4 — Category Deep Dive
@@ -138,8 +142,11 @@ Label each signal clearly. Do not speculate on cause — describe the pattern on
 | 📉 Declining Momentum | Sort #1: consecutive weeks descending · Sort #2: YTD | ≥3 consecutive WoW decline weeks                  |
 | 🔄 Reactivated        | Sort #1: YTD descending                              | Transaction this week, zero revenue prior week(s) |
 | 🆕 New Entrants       | Sort #1: YTD descending                              | Zero lifetime transactions before this week       |
+| 📌 DDNQR Top 5        | Sort #1: YTD descending                              | MID = EP142731 within this L3 category scope       |
 
 If fewer than 3 weeks of data: omit Rising/Declining Momentum and state: _"Momentum signals unavailable — minimum 3 weeks of data required."_
+
+**D. DDNQR Top 5** — Always present regardless of week count. Apply MID filter EP142731 first, then filter to this L3 category, then sort by YTD revenue descending. Use `merchant_group` as the display name. Tokens: `{{[PREFIX]_DDNQR{N}_{COL}}}` where N = 1–5 and COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT. Prefixes: TELCO, DL, MKTPL, DAILY, FNB, TRAVEL.
 
 
 
@@ -151,7 +158,11 @@ If fewer than 3 weeks of data: omit Rising/Declining Momentum and state: _"Momen
 
 You must infer column roles from header names. Do not hardcode column names. Map columns to these logical roles:
 
+- merchant_group: PRIMARY merchant identifier. This is the standardised display name for all merchants and must be used in every table, bucket, and narrative reference throughout the report. Do not substitute with any other name field.
 - Merchant identifier (name or ID)
+
+IMPORTANT: If the data contains multiple merchant name columns (e.g. merchant_name, trade_name, merchant_id), always prioritise merchant_group. If merchant_group is missing or blank for any row, flag it in the data validation summary before generating the report.
+
 - L2 / L3 / L4 category hierarchy
 - Current week revenue
 - Prior week revenue (1 week ago)
