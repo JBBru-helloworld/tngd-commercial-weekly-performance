@@ -36,6 +36,7 @@ Await user confirmation before proceeding.
 - [ ] **MID filter field confirmed.** Verify the data contains a column that can be filtered for MID = EP142731 to identify DDNQR merchants. If this column is absent or the value EP142731 returns zero rows, flag before generating the DDNQR tables and insert 'No DDNQR merchants found' in the relevant table placeholders.
 - [ ] **Category hierarchy confirmed.** L2, L3, and L4 levels are distinguishable in the data (separate columns or encoded in a single field). Confirm which applies.
 - [ ] **L2 scope confirmed.** The data contains rows classifiable as "04 Category Management." If the L2 filter yields no rows, stop and flag this before proceeding.
+- [ ] **L3 category resolvable for all merchants flagged in Early Warning Signals and Concentration Risk table.** For every merchant that will appear in either the Early Warning Signals block or the Concentration Risk table, confirm their L3 category can be looked up from the data hierarchy. If any merchant's L3 category is unresolvable, flag the specific merchant name and the affected output section in the validation summary before generating the report.
 
 ---
 

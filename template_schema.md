@@ -524,11 +524,11 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "notes": "Cumulative % contribution of top 5 merchants to total commercial portfolio weekly revenue. Flag 🔴 High Risk if >70%."
       },
       {
-        "token_pattern": "CONCENTRATION_R{N}_L2",
+        "token_pattern": "CONCENTRATION_R{N}_L3",
         "source": "excel",
-        "format": "L2 pillar name (e.g. \"Category Management\", \"SME\", \"Mobility\")",
+        "format": "L3 category name",
         "required": true,
-        "notes": "L2 commercial pillar the merchant belongs to. Used in Concentration Risk table to show merchant origin across all commercial pillars. N = 1–5 matching the row rank."
+        "notes": "The specific L3 category the merchant belongs to (e.g. Telco, Digital Lifestyle, Online Marketplaces & Fast Fashion, Daily Essentials & Retail, Everyday F&B and Lifestyle, Travel). Do not use the L2 pillar name 'Category Management' here. N = 1–5 matching the row rank."
       },
       {
         "token": "EARLY_WARNINGS",

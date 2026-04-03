@@ -116,6 +116,7 @@ For each file in the full source set, validate and report all of the following:
 - List every column role you have mapped and the exact source header used.
 - Do this file by file.
   - Confirm merchant_group has been identified as the primary merchant identifier. If merchant_group is absent or inconsistent, flag before proceeding.
+  - Confirm L3 category is resolvable for all merchants. This is required for correct attribution in the Concentration Risk table (L3 Category column) and Early Warning Signals entries. Flag any merchant where L3 cannot be determined.
 
 2. Unmapped or ambiguous columns
 

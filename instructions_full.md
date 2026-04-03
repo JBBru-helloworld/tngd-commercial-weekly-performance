@@ -77,7 +77,16 @@ The Total Commercial row uses a highlighted style (yellow variance in HTML templ
 **Concentration Risk:**
 Calculate the revenue concentration of the top 5 merchants across ALL commercial L2 pillars. The denominator for all percentages is the total weekly revenue of the full commercial portfolio for the current week.
 
-Show a 5-row table with these columns: Rank | Merchant | L2 Pillar | Weekly Revenue (RM) | Cumulative %. The Cumulative % column shows the running total contribution of merchants ranked 1 through N as a share of total commercial portfolio weekly revenue.
+Show a 5-row table with these columns: Rank | Merchant | L3 Category | Weekly Revenue (RM) | Cumulative %. The Cumulative % column shows the running total contribution of merchants ranked 1 through N as a share of total commercial portfolio weekly revenue.
+
+For the L3 Category column, populate it with the merchant's specific L3 category name — NOT the L2 pillar name. The L3 category is the specific sub-category the merchant belongs to within Category Management, such as:
+  Telco
+  Digital Lifestyle
+  Online Marketplaces & Fast Fashion
+  Daily Essentials & Retail
+  Everyday F&B and Lifestyle
+  Travel
+Always look up the merchant's L3 category from the source data using the L3 hierarchy field. Never default to writing 'Category Management' — that is the L2 label, not the L3 category. If the L3 category cannot be determined from the data, write 'Unknown' and flag it in the validation summary.
 
 Flag with these defaults:
 - 🟡 Caution: top 3 merchants collectively exceed 50% of total commercial portfolio weekly revenue
@@ -93,6 +102,13 @@ Flag any merchant showing:
 - Re-entry after ≥3 weeks of inactivity
 
 Label each signal clearly. Do not speculate on cause — describe the pattern only.
+
+Each signal entry must follow this format:
+'[merchant_group value] ([L3 category name]) — [signal description with RM values]'
+
+The text in parentheses must always be the merchant's specific L3 category (Telco, Digital Lifestyle, Online Marketplaces & Fast Fashion, Daily Essentials & Retail, Everyday F&B and Lifestyle, or Travel).
+
+Never write 'Category Management' in the parentheses — that is the L2 pillar name, not the L3 category. Always look up the merchant's L3 category from the source data hierarchy before generating the signal entry. If the L3 category cannot be determined, write 'L3 Unknown' and flag it in the validation summary.
 
 **Materiality threshold:** The minimum absolute revenue threshold for Early Warning Signals is the same as the noise filter threshold already calculated during validation for the relevant L3 category. Merchants whose current-week revenue falls below this threshold are excluded from Early Warning Signals entirely — even if they show a qualifying pattern. The threshold is dynamic and will differ by L3 category and week. Document the exact RM value applied as {{EARLY_WARNING_THRESHOLD}} in the HTML template subtitle.
 
