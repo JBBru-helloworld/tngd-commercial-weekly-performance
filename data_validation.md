@@ -46,6 +46,7 @@ Await user confirmation before proceeding.
 - [ ] **YTD and MTD columns present.** If absent, note whether they can be computed from weekly data or must be flagged as unavailable.
 - [ ] **No duplicate merchant rows.** Check for repeated merchant entries in the same week. If duplicates exist, flag them — do not silently sum or drop.
 - [ ] **No negative revenue values** unless the data structure uses negatives intentionally (e.g., returns). Flag any negative values and ask the user to confirm treatment.
+- [ ] **Merchant attribution coverage assessed.** Count rows where merchant_group is blank, null, or unresolvable. If any such rows exist, calculate their combined TW revenue and express as a % of total TW commercial revenue. If this value is greater than RM 0, include the standard disclosure in the validation summary: 'Merchant-ranked signals exclude unresolved rows worth RM X (Y% of TW commercial revenue).' Do not block report generation on this basis — proceed after disclosure.
 
 ---
 
@@ -68,10 +69,10 @@ Await user confirmation before proceeding.
 
 ### E — Noise Filter Application
 
-- [ ] **Threshold computed.** Calculate: (a) 1% of total L2 weekly revenue, and (b) the 25th percentile of all active merchant weekly revenues within L2 scope. Apply whichever threshold is lower.
-- [ ] **Threshold stated.** Report the exact RM value of the threshold applied and the method used.
-- [ ] **Merchants excluded listed.** Provide a count of how many merchants were excluded by the threshold, and optionally list their names for the user's reference.
-- [ ] **Threshold is reasonable.** Sanity check: if the threshold excludes >40% of merchants, flag this as potentially too aggressive and offer the user an override.
+- [ ] **Per-L3 threshold computed.** For each of the 6 L3 categories independently, calculate: (a) 1% of that L3's total weekly revenue, and (b) the 25th percentile of active merchant weekly revenues within that L3. Apply the lower value as that L3's threshold. State each L3 threshold value separately in the validation summary.
+- [ ] **Thresholds stated.** Report the exact RM value of the threshold applied for each of the 6 L3 categories and the method used.
+- [ ] **Merchants excluded listed.** Provide a count of how many merchants were excluded per L3 threshold, and optionally list their names for the user's reference.
+- [ ] **Thresholds are reasonable.** Sanity check: if any L3 threshold excludes >40% of merchants in that L3, flag this as potentially too aggressive and offer the user an override.
 
 ---
 

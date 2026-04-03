@@ -5,7 +5,7 @@
 
 ## What This Is
 
-This system enables an AI assistant (ChatGPT Project) to ingest a weekly revenue report from SharePoint and generate a structured, executive-ready performance snapshot. It replaces manual commentary with consistent, data-driven narrative across four report sections: executive header, overall revenue performance, risky business (concentration risk and early warning signals), and category deep dive.
+This system enables an AI assistant (ChatGPT Project) to ingest a weekly revenue data file and generate a structured, executive-ready performance snapshot. It replaces manual commentary with consistent, data-driven narrative across four report sections: executive header, overall revenue performance, risky business (concentration risk and early warning signals), and category deep dive.
 
 ---
 
@@ -35,8 +35,8 @@ This system enables an AI assistant (ChatGPT Project) to ingest a weekly revenue
 5. Also upload `template_schema.md`, `data_validation.md`, `guardrails.md`, and `changelog_format.md` to Knowledge
 
 ### Step 2 — Each week: upload your data
-1. Export your Excel file from SharePoint
-2. Upload it directly into the ChatGPT Project conversation
+1. Prepare your weekly data file
+2. Upload it directly into the ChatGPT Project conversation (or add it to the project Sources)
 3. Do not rename or reformat the file — let the AI infer the schema
 
 ### Step 3 — Run the ignition prompt

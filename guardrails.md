@@ -108,3 +108,20 @@ After presenting the validation summary, wait for the user to confirm before pro
 
 **G7.3 — Report generation is all-or-nothing per session.**
 Do not generate partial reports across multiple messages without user instruction. Generate the complete report in one response (or clearly sequenced messages if length requires it), not section by section unless the user asks.
+
+---
+
+## G8 — Merchant Attribution Coverage
+
+**G8.1 — Coverage caveats are chat-only.**
+If merchant-ranked analysis excludes revenue because no usable merchant identifier (merchant_group) is available, do not insert any caveat, note, or disclaimer into the HTML template body. Do not add text to: Main Header, Overall Revenue Performance, Risky Business narrative, or any Category Deep Dive section.
+
+**G8.2 — Standard disclosure wording.**
+When unresolved merchant-attributable TW revenue is greater than RM 0, disclose once using exactly this wording:
+  'Merchant-ranked signals exclude unresolved rows worth RM X (Y% of TW commercial revenue).'
+
+**G8.3 — Placement.**
+Disclose in the validation summary if detected before generation. Disclose in the final chat changelog/summary if the report proceeds. Never in the HTML output.
+
+**G8.4 — Tables may still be generated.**
+Merchant-ranked tables (buckets, DDNQR, Top Merchants) may still be generated from rows with usable merchant_group identifiers. The coverage limitation is a logged disclosure only — it does not block report generation.

@@ -24,7 +24,7 @@ Include the following as a chat summary at the end of your response, after deliv
 | Item | Status |
 |---|---|
 | Schema changes vs last week | {{SCHEMA_CHANGE_NOTES}} |
-| Noise filter threshold applied | RM {{NOISE_THRESHOLD_VALUE}} ({{NOISE_THRESHOLD_METHOD}}) |
+| Noise filter thresholds applied (per L3) | {{L3_NOISE_THRESHOLDS}} |
 | Threshold change vs last week | {{THRESHOLD_CHANGE}} |
 | Sections fully generated | {{SECTIONS_COMPLETE}} |
 | Sections partially generated | {{SECTIONS_PARTIAL}} |
@@ -36,7 +36,14 @@ Include the following as a chat summary at the end of your response, after deliv
 | New entrants (first appearance ever) | {{NEW_MERCHANTS}} |
 | Reactivated (returned after absence) | {{REACTIVATED_MERCHANTS_LOG}} |
 | Newly inactive (absent this week) | {{NEWLY_INACTIVE}} |
-| Excluded by noise filter | {{EXCLUDED_COUNT}} merchants excluded (RM {{NOISE_THRESHOLD_VALUE}} threshold) |
+| Excluded by noise filter | {{EXCLUDED_COUNT}} merchants excluded across all L3 categories (per-L3 thresholds applied) |
+
+### Merchant Attribution Coverage
+| Field | Detail |
+|---|---|
+| Merchant Attribution Coverage | {{MERCHANT_ATTRIBUTION_NOTE}} |
+
+*(If unresolved merchant-attributable TW revenue > RM 0: 'Merchant-ranked signals exclude unresolved rows worth RM X (Y% of TW commercial revenue).' Otherwise: 'Full attribution — no unresolved rows detected.' This field appears in the CHAT changelog summary only, never in the HTML file.)*
 
 ### Data Quality Flags
 {{DATA_FLAGS}}
@@ -78,7 +85,7 @@ Bulleted list of any data quality issues encountered during validation. Examples
 
 ## Changelog Log (maintained manually by team)
 
-Keep a running log of changelogs outside the AI system for governance purposes. Recommended: a simple Excel or SharePoint table with one row per report week.
+Keep a running log of changelogs outside the AI system for governance purposes. Recommended: a simple Excel table with one row per report week.
 
 | Week Ending | Report Date | Threshold Applied | New Merchants | Data Flags | Sections Complete |
 |---|---|---|---|---|---|

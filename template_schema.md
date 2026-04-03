@@ -214,14 +214,62 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "token": "NOISE_THRESHOLD_VALUE",
         "source": "calculated",
         "format": "X,XXX",
-        "required": true
+        "required": false,
+        "status": "deprecated",
+        "notes": "Replaced by per-L3 threshold tokens. Do not use."
       },
       {
         "token": "NOISE_THRESHOLD_METHOD",
         "source": "ai_generated",
         "format": "plain text",
+        "required": false,
+        "status": "deprecated",
+        "notes": "Replaced by per-L3 threshold tokens. Do not use."
+      }
+    ],
+
+    "section_3_l3_noise_thresholds": [
+      {
+        "token": "TELCO_NOISE_THRESHOLD",
+        "source": "calculated",
+        "format": "RM X,XXX",
         "required": true,
-        "notes": "e.g. '1% of total L2 weekly revenue (lower of 1% or Q1)'"
+        "notes": "Dynamic noise filter threshold for Telco L3 category. Calculated as the lower of: 1% of total L3 weekly revenue or the 25th percentile of active merchant weekly revenues within this L3."
+      },
+      {
+        "token": "DL_NOISE_THRESHOLD",
+        "source": "calculated",
+        "format": "RM X,XXX",
+        "required": true,
+        "notes": "Dynamic noise filter threshold for Digital Lifestyle L3 category. Calculated as the lower of: 1% of total L3 weekly revenue or the 25th percentile of active merchant weekly revenues within this L3."
+      },
+      {
+        "token": "MKTPL_NOISE_THRESHOLD",
+        "source": "calculated",
+        "format": "RM X,XXX",
+        "required": true,
+        "notes": "Dynamic noise filter threshold for Online Marketplaces & Fast Fashion L3 category. Calculated as the lower of: 1% of total L3 weekly revenue or the 25th percentile of active merchant weekly revenues within this L3."
+      },
+      {
+        "token": "DAILY_NOISE_THRESHOLD",
+        "source": "calculated",
+        "format": "RM X,XXX",
+        "required": true,
+        "notes": "Dynamic noise filter threshold for Daily Essentials & Retail L3 category. Calculated as the lower of: 1% of total L3 weekly revenue or the 25th percentile of active merchant weekly revenues within this L3."
+      },
+      {
+        "token": "FNB_NOISE_THRESHOLD",
+        "source": "calculated",
+        "format": "RM X,XXX",
+        "required": true,
+        "notes": "Dynamic noise filter threshold for Everyday F&B and Lifestyle L3 category. Calculated as the lower of: 1% of total L3 weekly revenue or the 25th percentile of active merchant weekly revenues within this L3."
+      },
+      {
+        "token": "TRAVEL_NOISE_THRESHOLD",
+        "source": "calculated",
+        "format": "RM X,XXX",
+        "required": true,
+        "notes": "Dynamic noise filter threshold for Travel L3 category. Calculated as the lower of: 1% of total L3 weekly revenue or the 25th percentile of active merchant weekly revenues within this L3."
       }
     ],
 
@@ -262,19 +310,25 @@ This file defines every token in JSON for machine-readability, with a legend bel
           "token": "{PREFIX}_SCALE",
           "source": "ai_generated",
           "format": "1 sentence — rising momentum narrative",
-          "required": true
+          "required": false,
+          "status": "removed",
+          "notes": "Removed — narrative condensed to Overview only."
         },
         {
           "token": "{PREFIX}_ATTENTION",
           "source": "ai_generated",
           "format": "1 sentence — biggest losers / declining momentum",
-          "required": true
+          "required": false,
+          "status": "removed",
+          "notes": "Removed — narrative condensed to Overview only."
         },
         {
           "token": "{PREFIX}_WATCHLIST",
           "source": "ai_generated",
           "format": "1 sentence — reactivated and new entrants",
-          "required": true
+          "required": false,
+          "status": "removed",
+          "notes": "Removed — narrative condensed to Overview only."
         }
       ],
       "top_merchants_table": {
@@ -470,6 +524,13 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "notes": "Cumulative % contribution of top 5 merchants to total commercial portfolio weekly revenue. Flag 🔴 High Risk if >70%."
       },
       {
+        "token_pattern": "CONCENTRATION_R{N}_L2",
+        "source": "excel",
+        "format": "L2 pillar name (e.g. \"Category Management\", \"SME\", \"Mobility\")",
+        "required": true,
+        "notes": "L2 commercial pillar the merchant belongs to. Used in Concentration Risk table to show merchant origin across all commercial pillars. N = 1–5 matching the row rank."
+      },
+      {
         "token": "EARLY_WARNINGS",
         "source": "ai_generated",
         "format": "narrative list",
@@ -536,6 +597,14 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "required": true,
         "status": "chat_only",
         "notes": " — changelog is chat-only, not an HTML placeholder."
+      },
+      {
+        "token": "MERCHANT_ATTRIBUTION_NOTE",
+        "source": "ai_generated",
+        "format": "Standard disclosure wording or 'Full attribution — no unresolved rows detected.'",
+        "required": true,
+        "status": "chat_only",
+        "notes": "Chat changelog only — NEVER in the HTML file. If unresolved merchant-attributable TW revenue > RM 0, insert: 'Merchant-ranked signals exclude unresolved rows worth RM X (Y% of TW commercial revenue).' Otherwise insert: 'Full attribution — no unresolved rows detected.'"
       }
     ],
 

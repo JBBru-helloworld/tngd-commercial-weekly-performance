@@ -1588,6 +1588,19 @@
                       Merchant
                     </td>
                     <td
+                      style="
+                        padding: 7px 10px;
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: #ffffff;
+                        font-family:
+                          &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
+                        border: 1px solid #4b5563;
+                      "
+                    >
+                      L2 Pillar
+                    </td>
+                    <td
                       align="right"
                       style="
                         padding: 7px 10px;
@@ -1640,6 +1653,18 @@
                       "
                     >
                       {{CONC_M1_NAME}}
+                    </td>
+                    <td
+                      style="
+                        padding: 7px 10px;
+                        font-size: 8.5px;
+                        color: #1a1f2e;
+                        font-family:
+                          &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
+                        border: 1px solid #dce8f5;
+                      "
+                    >
+                      {{CONCENTRATION_R1_L2}}
                     </td>
                     <td
                       align="right"
@@ -1695,6 +1720,18 @@
                       {{CONC_M2_NAME}}
                     </td>
                     <td
+                      style="
+                        padding: 7px 10px;
+                        font-size: 8.5px;
+                        color: #1a1f2e;
+                        font-family:
+                          &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
+                        border: 1px solid #dce8f5;
+                      "
+                    >
+                      {{CONCENTRATION_R2_L2}}
+                    </td>
+                    <td
                       align="right"
                       style="
                         padding: 7px 10px;
@@ -1746,6 +1783,18 @@
                       "
                     >
                       {{CONC_M3_NAME}}
+                    </td>
+                    <td
+                      style="
+                        padding: 7px 10px;
+                        font-size: 8.5px;
+                        color: #1a1f2e;
+                        font-family:
+                          &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
+                        border: 1px solid #dce8f5;
+                      "
+                    >
+                      {{CONCENTRATION_R3_L2}}
                     </td>
                     <td
                       align="right"
@@ -1801,6 +1850,18 @@
                       {{CONC_M4_NAME}}
                     </td>
                     <td
+                      style="
+                        padding: 7px 10px;
+                        font-size: 8.5px;
+                        color: #1a1f2e;
+                        font-family:
+                          &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
+                        border: 1px solid #dce8f5;
+                      "
+                    >
+                      {{CONCENTRATION_R4_L2}}
+                    </td>
+                    <td
                       align="right"
                       style="
                         padding: 7px 10px;
@@ -1852,6 +1913,18 @@
                       "
                     >
                       {{CONC_M5_NAME}}
+                    </td>
+                    <td
+                      style="
+                        padding: 7px 10px;
+                        font-size: 8.5px;
+                        color: #1a1f2e;
+                        font-family:
+                          &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
+                        border: 1px solid #dce8f5;
+                      "
+                    >
+                      {{CONCENTRATION_R5_L2}}
                     </td>
                     <td
                       align="right"
@@ -3048,23 +3121,6 @@
               </td>
             </tr>
             <tr>
-              <td style="padding: 8px 20px 4px 20px">
-                <p
-                  style="
-                    margin: 0;
-                    font-size: 11px;
-                    color: #6b7280;
-                    font-style: italic;
-                    font-family:
-                      &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                  "
-                >
-                  &#128295; Noise filter applied: RM {{NOISE_THRESHOLD_VALUE}}
-                  minimum weekly revenue ({{NOISE_THRESHOLD_METHOD}})
-                </p>
-              </td>
-            </tr>
-            <tr>
               <td style="padding: 0; line-height: 0; font-size: 0">
                 <a
                   name="l3-telco"
@@ -3088,6 +3144,7 @@
                   cellpadding="0"
                   border="0"
                   width="100%"
+                  style="width:100%"
                 >
                   <tr>
                     <td
@@ -3125,13 +3182,42 @@
                   cellpadding="0"
                   border="0"
                   width="100%"
-                  style="border: 1px solid #dce8f5; border-top: 0"
+                  style="
+                    width: 100%;
+                    border: 1px solid #b8cef0;
+                    border-radius: 0 0 4px 4px;
+                    overflow: hidden;
+                    background-color: #ffffff;
+                    border-collapse: collapse;
+                  "
                 >
                   <tr>
                     <td
                       style="
+                        background-color: #e8f0fb;
+                        padding: 7px 14px;
+                        border-bottom: 1px solid #b8cef0;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 10px;
+                          color: #1e3a5f;
+                          font-style: italic;
+                          font-family:
+                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
+                        "
+                      >
+                        &#128295; Noise filter: RM {{TELCO_NOISE_THRESHOLD}} minimum weekly revenue
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style="
+                        background-color: #ffffff;
                         padding: 12px 14px;
-                        border-bottom: 1px solid #dce8f5;
                       "
                     >
                       <p
@@ -3159,108 +3245,6 @@
                         "
                       >
                         {{TELCO_NARRATIVE}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style="
-                        padding: 10px 14px;
-                        background-color: #f0f9ff;
-                        border-bottom: 1px solid #dce8f5;
-                      "
-                    >
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #005baa;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#128200; Scale
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{TELCO_SCALE}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style="
-                        padding: 10px 14px;
-                        background-color: #fff8f0;
-                        border-bottom: 1px solid #dce8f5;
-                      "
-                    >
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #b45309;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#9888; Attention Needed
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{TELCO_ATTENTION}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 10px 14px; background-color: #f9fafb">
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #374151;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#128065; Watch List
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{TELCO_WATCHLIST}}
                       </p>
                     </td>
                   </tr>
@@ -3991,7 +3975,7 @@
                       "
                     >
                       &#127942; Biggest Winners &mdash; Top 5 &nbsp;|&nbsp;
-                      Sort: WoW RM &#9660; (2nd: YTD)
+                      Sort: WoW RM &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #e6f5ec">
@@ -4590,7 +4574,7 @@
                       "
                     >
                       &#128197; Biggest Losers &mdash; Top 5 &nbsp;|&nbsp; Sort:
-                      WoW RM &#9650; (2nd: YTD)
+                      WoW RM &#9650;
                     </td>
                   </tr>
                   <tr style="background-color: #fde8e8">
@@ -5190,7 +5174,7 @@
                     >
                       &#128200; Rising Momentum &mdash; 3+ consecutive weeks
                       growth &mdash; Top 5 &nbsp;|&nbsp; Sort: consecutive wks
-                      &#9660; (2nd: YTD)
+                      &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #dbeafe">
@@ -5790,7 +5774,7 @@
                     >
                       &#128197; Declining Momentum &mdash; 3+ consecutive weeks
                       decline &mdash; Top 5 &nbsp;|&nbsp; Sort: consecutive wks
-                      &#9660; (2nd: YTD)
+                      &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #fde8e8">
@@ -7575,8 +7559,7 @@
                           &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
                       "
                     >
-                      &#128204; DDNQR Top 5 &mdash; Telco | MID: EP142731 |
-                      Sort: YTD &#9660;
+                      &#128204; DDNQR &mdash; Top 5 | MID: EP142731 | Sort: YTD &#9660;
                     </td>
                   </tr>
                   <tr>
@@ -8220,6 +8203,7 @@
                   cellpadding="0"
                   border="0"
                   width="100%"
+                  style="width:100%"
                 >
                   <tr>
                     <td
@@ -8257,13 +8241,42 @@
                   cellpadding="0"
                   border="0"
                   width="100%"
-                  style="border: 1px solid #dce8f5; border-top: 0"
+                  style="
+                    width: 100%;
+                    border: 1px solid #b8cef0;
+                    border-radius: 0 0 4px 4px;
+                    overflow: hidden;
+                    background-color: #ffffff;
+                    border-collapse: collapse;
+                  "
                 >
                   <tr>
                     <td
                       style="
+                        background-color: #e8f0fb;
+                        padding: 7px 14px;
+                        border-bottom: 1px solid #b8cef0;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 10px;
+                          color: #1e3a5f;
+                          font-style: italic;
+                          font-family:
+                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
+                        "
+                      >
+                        &#128295; Noise filter: RM {{DL_NOISE_THRESHOLD}} minimum weekly revenue
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style="
+                        background-color: #ffffff;
                         padding: 12px 14px;
-                        border-bottom: 1px solid #dce8f5;
                       "
                     >
                       <p
@@ -8291,108 +8304,6 @@
                         "
                       >
                         {{DL_NARRATIVE}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style="
-                        padding: 10px 14px;
-                        background-color: #f0f9ff;
-                        border-bottom: 1px solid #dce8f5;
-                      "
-                    >
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #005baa;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#128200; Scale
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{DL_SCALE}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style="
-                        padding: 10px 14px;
-                        background-color: #fff8f0;
-                        border-bottom: 1px solid #dce8f5;
-                      "
-                    >
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #b45309;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#9888; Attention Needed
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{DL_ATTENTION}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 10px 14px; background-color: #f9fafb">
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #374151;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#128065; Watch List
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{DL_WATCHLIST}}
                       </p>
                     </td>
                   </tr>
@@ -9123,7 +9034,7 @@
                       "
                     >
                       &#127942; Biggest Winners &mdash; Top 5 &nbsp;|&nbsp;
-                      Sort: WoW RM &#9660; (2nd: YTD)
+                      Sort: WoW RM &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #e6f5ec">
@@ -9722,7 +9633,7 @@
                       "
                     >
                       &#128197; Biggest Losers &mdash; Top 5 &nbsp;|&nbsp; Sort:
-                      WoW RM &#9650; (2nd: YTD)
+                      WoW RM &#9650;
                     </td>
                   </tr>
                   <tr style="background-color: #fde8e8">
@@ -10322,7 +10233,7 @@
                     >
                       &#128200; Rising Momentum &mdash; 3+ consecutive weeks
                       growth &mdash; Top 5 &nbsp;|&nbsp; Sort: consecutive wks
-                      &#9660; (2nd: YTD)
+                      &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #dbeafe">
@@ -10922,7 +10833,7 @@
                     >
                       &#128197; Declining Momentum &mdash; 3+ consecutive weeks
                       decline &mdash; Top 5 &nbsp;|&nbsp; Sort: consecutive wks
-                      &#9660; (2nd: YTD)
+                      &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #fde8e8">
@@ -12707,8 +12618,7 @@
                           &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
                       "
                     >
-                      &#128204; DDNQR Top 5 &mdash; Digital Lifestyle | MID:
-                      EP142731 | Sort: YTD &#9660;
+                      &#128204; DDNQR &mdash; Top 5 | MID: EP142731 | Sort: YTD &#9660;
                     </td>
                   </tr>
                   <tr>
@@ -13352,6 +13262,7 @@
                   cellpadding="0"
                   border="0"
                   width="100%"
+                  style="width:100%"
                 >
                   <tr>
                     <td
@@ -13389,13 +13300,42 @@
                   cellpadding="0"
                   border="0"
                   width="100%"
-                  style="border: 1px solid #dce8f5; border-top: 0"
+                  style="
+                    width: 100%;
+                    border: 1px solid #b8cef0;
+                    border-radius: 0 0 4px 4px;
+                    overflow: hidden;
+                    background-color: #ffffff;
+                    border-collapse: collapse;
+                  "
                 >
                   <tr>
                     <td
                       style="
+                        background-color: #e8f0fb;
+                        padding: 7px 14px;
+                        border-bottom: 1px solid #b8cef0;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 10px;
+                          color: #1e3a5f;
+                          font-style: italic;
+                          font-family:
+                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
+                        "
+                      >
+                        &#128295; Noise filter: RM {{MKTPL_NOISE_THRESHOLD}} minimum weekly revenue
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style="
+                        background-color: #ffffff;
                         padding: 12px 14px;
-                        border-bottom: 1px solid #dce8f5;
                       "
                     >
                       <p
@@ -13423,108 +13363,6 @@
                         "
                       >
                         {{MKTPL_NARRATIVE}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style="
-                        padding: 10px 14px;
-                        background-color: #f0f9ff;
-                        border-bottom: 1px solid #dce8f5;
-                      "
-                    >
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #005baa;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#128200; Scale
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{MKTPL_SCALE}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style="
-                        padding: 10px 14px;
-                        background-color: #fff8f0;
-                        border-bottom: 1px solid #dce8f5;
-                      "
-                    >
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #b45309;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#9888; Attention Needed
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{MKTPL_ATTENTION}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 10px 14px; background-color: #f9fafb">
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #374151;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#128065; Watch List
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{MKTPL_WATCHLIST}}
                       </p>
                     </td>
                   </tr>
@@ -14255,7 +14093,7 @@
                       "
                     >
                       &#127942; Biggest Winners &mdash; Top 5 &nbsp;|&nbsp;
-                      Sort: WoW RM &#9660; (2nd: YTD)
+                      Sort: WoW RM &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #e6f5ec">
@@ -14854,7 +14692,7 @@
                       "
                     >
                       &#128197; Biggest Losers &mdash; Top 5 &nbsp;|&nbsp; Sort:
-                      WoW RM &#9650; (2nd: YTD)
+                      WoW RM &#9650;
                     </td>
                   </tr>
                   <tr style="background-color: #fde8e8">
@@ -15454,7 +15292,7 @@
                     >
                       &#128200; Rising Momentum &mdash; 3+ consecutive weeks
                       growth &mdash; Top 5 &nbsp;|&nbsp; Sort: consecutive wks
-                      &#9660; (2nd: YTD)
+                      &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #dbeafe">
@@ -16054,7 +15892,7 @@
                     >
                       &#128197; Declining Momentum &mdash; 3+ consecutive weeks
                       decline &mdash; Top 5 &nbsp;|&nbsp; Sort: consecutive wks
-                      &#9660; (2nd: YTD)
+                      &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #fde8e8">
@@ -17839,8 +17677,7 @@
                           &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
                       "
                     >
-                      &#128204; DDNQR Top 5 &mdash; Online Marketplaces &amp;
-                      Fast Fashion | MID: EP142731 | Sort: YTD &#9660;
+                      &#128204; DDNQR &mdash; Top 5 | MID: EP142731 | Sort: YTD &#9660;
                     </td>
                   </tr>
                   <tr>
@@ -18484,6 +18321,7 @@
                   cellpadding="0"
                   border="0"
                   width="100%"
+                  style="width:100%"
                 >
                   <tr>
                     <td
@@ -18521,13 +18359,42 @@
                   cellpadding="0"
                   border="0"
                   width="100%"
-                  style="border: 1px solid #dce8f5; border-top: 0"
+                  style="
+                    width: 100%;
+                    border: 1px solid #b8cef0;
+                    border-radius: 0 0 4px 4px;
+                    overflow: hidden;
+                    background-color: #ffffff;
+                    border-collapse: collapse;
+                  "
                 >
                   <tr>
                     <td
                       style="
+                        background-color: #e8f0fb;
+                        padding: 7px 14px;
+                        border-bottom: 1px solid #b8cef0;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 10px;
+                          color: #1e3a5f;
+                          font-style: italic;
+                          font-family:
+                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
+                        "
+                      >
+                        &#128295; Noise filter: RM {{DAILY_NOISE_THRESHOLD}} minimum weekly revenue
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style="
+                        background-color: #ffffff;
                         padding: 12px 14px;
-                        border-bottom: 1px solid #dce8f5;
                       "
                     >
                       <p
@@ -18555,108 +18422,6 @@
                         "
                       >
                         {{DAILY_NARRATIVE}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style="
-                        padding: 10px 14px;
-                        background-color: #f0f9ff;
-                        border-bottom: 1px solid #dce8f5;
-                      "
-                    >
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #005baa;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#128200; Scale
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{DAILY_SCALE}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style="
-                        padding: 10px 14px;
-                        background-color: #fff8f0;
-                        border-bottom: 1px solid #dce8f5;
-                      "
-                    >
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #b45309;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#9888; Attention Needed
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{DAILY_ATTENTION}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 10px 14px; background-color: #f9fafb">
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #374151;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#128065; Watch List
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{DAILY_WATCHLIST}}
                       </p>
                     </td>
                   </tr>
@@ -19387,7 +19152,7 @@
                       "
                     >
                       &#127942; Biggest Winners &mdash; Top 5 &nbsp;|&nbsp;
-                      Sort: WoW RM &#9660; (2nd: YTD)
+                      Sort: WoW RM &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #e6f5ec">
@@ -19986,7 +19751,7 @@
                       "
                     >
                       &#128197; Biggest Losers &mdash; Top 5 &nbsp;|&nbsp; Sort:
-                      WoW RM &#9650; (2nd: YTD)
+                      WoW RM &#9650;
                     </td>
                   </tr>
                   <tr style="background-color: #fde8e8">
@@ -20586,7 +20351,7 @@
                     >
                       &#128200; Rising Momentum &mdash; 3+ consecutive weeks
                       growth &mdash; Top 5 &nbsp;|&nbsp; Sort: consecutive wks
-                      &#9660; (2nd: YTD)
+                      &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #dbeafe">
@@ -21186,7 +20951,7 @@
                     >
                       &#128197; Declining Momentum &mdash; 3+ consecutive weeks
                       decline &mdash; Top 5 &nbsp;|&nbsp; Sort: consecutive wks
-                      &#9660; (2nd: YTD)
+                      &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #fde8e8">
@@ -22971,8 +22736,7 @@
                           &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
                       "
                     >
-                      &#128204; DDNQR Top 5 &mdash; Daily Essentials &amp;
-                      Retail | MID: EP142731 | Sort: YTD &#9660;
+                      &#128204; DDNQR &mdash; Top 5 | MID: EP142731 | Sort: YTD &#9660;
                     </td>
                   </tr>
                   <tr>
@@ -23616,6 +23380,7 @@
                   cellpadding="0"
                   border="0"
                   width="100%"
+                  style="width:100%"
                 >
                   <tr>
                     <td
@@ -23653,13 +23418,42 @@
                   cellpadding="0"
                   border="0"
                   width="100%"
-                  style="border: 1px solid #dce8f5; border-top: 0"
+                  style="
+                    width: 100%;
+                    border: 1px solid #b8cef0;
+                    border-radius: 0 0 4px 4px;
+                    overflow: hidden;
+                    background-color: #ffffff;
+                    border-collapse: collapse;
+                  "
                 >
                   <tr>
                     <td
                       style="
+                        background-color: #e8f0fb;
+                        padding: 7px 14px;
+                        border-bottom: 1px solid #b8cef0;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 10px;
+                          color: #1e3a5f;
+                          font-style: italic;
+                          font-family:
+                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
+                        "
+                      >
+                        &#128295; Noise filter: RM {{FNB_NOISE_THRESHOLD}} minimum weekly revenue
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style="
+                        background-color: #ffffff;
                         padding: 12px 14px;
-                        border-bottom: 1px solid #dce8f5;
                       "
                     >
                       <p
@@ -23687,108 +23481,6 @@
                         "
                       >
                         {{FNB_NARRATIVE}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style="
-                        padding: 10px 14px;
-                        background-color: #f0f9ff;
-                        border-bottom: 1px solid #dce8f5;
-                      "
-                    >
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #005baa;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#128200; Scale
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{FNB_SCALE}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style="
-                        padding: 10px 14px;
-                        background-color: #fff8f0;
-                        border-bottom: 1px solid #dce8f5;
-                      "
-                    >
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #b45309;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#9888; Attention Needed
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{FNB_ATTENTION}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 10px 14px; background-color: #f9fafb">
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #374151;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#128065; Watch List
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{FNB_WATCHLIST}}
                       </p>
                     </td>
                   </tr>
@@ -24519,7 +24211,7 @@
                       "
                     >
                       &#127942; Biggest Winners &mdash; Top 5 &nbsp;|&nbsp;
-                      Sort: WoW RM &#9660; (2nd: YTD)
+                      Sort: WoW RM &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #e6f5ec">
@@ -25118,7 +24810,7 @@
                       "
                     >
                       &#128197; Biggest Losers &mdash; Top 5 &nbsp;|&nbsp; Sort:
-                      WoW RM &#9650; (2nd: YTD)
+                      WoW RM &#9650;
                     </td>
                   </tr>
                   <tr style="background-color: #fde8e8">
@@ -25718,7 +25410,7 @@
                     >
                       &#128200; Rising Momentum &mdash; 3+ consecutive weeks
                       growth &mdash; Top 5 &nbsp;|&nbsp; Sort: consecutive wks
-                      &#9660; (2nd: YTD)
+                      &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #dbeafe">
@@ -26318,7 +26010,7 @@
                     >
                       &#128197; Declining Momentum &mdash; 3+ consecutive weeks
                       decline &mdash; Top 5 &nbsp;|&nbsp; Sort: consecutive wks
-                      &#9660; (2nd: YTD)
+                      &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #fde8e8">
@@ -28103,8 +27795,7 @@
                           &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
                       "
                     >
-                      &#128204; DDNQR Top 5 &mdash; Everyday F&amp;B and
-                      Lifestyle | MID: EP142731 | Sort: YTD &#9660;
+                      &#128204; DDNQR &mdash; Top 5 | MID: EP142731 | Sort: YTD &#9660;
                     </td>
                   </tr>
                   <tr>
@@ -28748,6 +28439,7 @@
                   cellpadding="0"
                   border="0"
                   width="100%"
+                  style="width:100%"
                 >
                   <tr>
                     <td
@@ -28785,13 +28477,42 @@
                   cellpadding="0"
                   border="0"
                   width="100%"
-                  style="border: 1px solid #dce8f5; border-top: 0"
+                  style="
+                    width: 100%;
+                    border: 1px solid #b8cef0;
+                    border-radius: 0 0 4px 4px;
+                    overflow: hidden;
+                    background-color: #ffffff;
+                    border-collapse: collapse;
+                  "
                 >
                   <tr>
                     <td
                       style="
+                        background-color: #e8f0fb;
+                        padding: 7px 14px;
+                        border-bottom: 1px solid #b8cef0;
+                      "
+                    >
+                      <p
+                        style="
+                          margin: 0;
+                          font-size: 10px;
+                          color: #1e3a5f;
+                          font-style: italic;
+                          font-family:
+                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
+                        "
+                      >
+                        &#128295; Noise filter: RM {{TRAVEL_NOISE_THRESHOLD}} minimum weekly revenue
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style="
+                        background-color: #ffffff;
                         padding: 12px 14px;
-                        border-bottom: 1px solid #dce8f5;
                       "
                     >
                       <p
@@ -28819,108 +28540,6 @@
                         "
                       >
                         {{TRAVEL_NARRATIVE}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style="
-                        padding: 10px 14px;
-                        background-color: #f0f9ff;
-                        border-bottom: 1px solid #dce8f5;
-                      "
-                    >
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #005baa;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#128200; Scale
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{TRAVEL_SCALE}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style="
-                        padding: 10px 14px;
-                        background-color: #fff8f0;
-                        border-bottom: 1px solid #dce8f5;
-                      "
-                    >
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #b45309;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#9888; Attention Needed
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{TRAVEL_ATTENTION}}
-                      </p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 10px 14px; background-color: #f9fafb">
-                      <p
-                        style="
-                          margin: 0 0 2px 0;
-                          font-size: 10px;
-                          font-weight: 700;
-                          color: #374151;
-                          text-transform: uppercase;
-                          letter-spacing: 1px;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        &#128065; Watch List
-                      </p>
-                      <p
-                        style="
-                          margin: 0;
-                          font-size: 12px;
-                          color: #1a1f2e;
-                          line-height: 1.6;
-                          font-family:
-                            &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
-                        "
-                      >
-                        {{TRAVEL_WATCHLIST}}
                       </p>
                     </td>
                   </tr>
@@ -29651,7 +29270,7 @@
                       "
                     >
                       &#127942; Biggest Winners &mdash; Top 5 &nbsp;|&nbsp;
-                      Sort: WoW RM &#9660; (2nd: YTD)
+                      Sort: WoW RM &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #e6f5ec">
@@ -30250,7 +29869,7 @@
                       "
                     >
                       &#128197; Biggest Losers &mdash; Top 5 &nbsp;|&nbsp; Sort:
-                      WoW RM &#9650; (2nd: YTD)
+                      WoW RM &#9650;
                     </td>
                   </tr>
                   <tr style="background-color: #fde8e8">
@@ -30850,7 +30469,7 @@
                     >
                       &#128200; Rising Momentum &mdash; 3+ consecutive weeks
                       growth &mdash; Top 5 &nbsp;|&nbsp; Sort: consecutive wks
-                      &#9660; (2nd: YTD)
+                      &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #dbeafe">
@@ -31450,7 +31069,7 @@
                     >
                       &#128197; Declining Momentum &mdash; 3+ consecutive weeks
                       decline &mdash; Top 5 &nbsp;|&nbsp; Sort: consecutive wks
-                      &#9660; (2nd: YTD)
+                      &#9660;
                     </td>
                   </tr>
                   <tr style="background-color: #fde8e8">
@@ -33235,8 +32854,7 @@
                           &quot;Segoe UI&quot;, Tahoma, Arial, sans-serif;
                       "
                     >
-                      &#128204; DDNQR Top 5 &mdash; Travel | MID: EP142731 |
-                      Sort: YTD &#9660;
+                      &#128204; DDNQR &mdash; Top 5 | MID: EP142731 | Sort: YTD &#9660;
                     </td>
                   </tr>
                   <tr>

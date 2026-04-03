@@ -77,7 +77,7 @@ The Total Commercial row uses a highlighted style (yellow variance in HTML templ
 **Concentration Risk:**
 Calculate the revenue concentration of the top 5 merchants across ALL commercial L2 pillars. The denominator for all percentages is the total weekly revenue of the full commercial portfolio for the current week.
 
-Show a 5-row table with these columns: Rank | Merchant | Weekly Revenue (RM) | Cumulative %. The Cumulative % column shows the running total contribution of merchants ranked 1 through N as a share of total commercial portfolio weekly revenue.
+Show a 5-row table with these columns: Rank | Merchant | L2 Pillar | Weekly Revenue (RM) | Cumulative %. The Cumulative % column shows the running total contribution of merchants ranked 1 through N as a share of total commercial portfolio weekly revenue.
 
 Flag with these defaults:
 - 🟡 Caution: top 3 merchants collectively exceed 50% of total commercial portfolio weekly revenue
@@ -105,7 +105,7 @@ After the Early Warning Signals block, insert a table of the top 10 DDNQR mercha
 
 **Scope:** L2 category code "04 Category Management" only. Section header is simply "Category Deep Dive" — do not include "04 Category Management" in the heading.
 
-**Noise filter:** Apply a dynamic minimum revenue threshold before analysis. Exclude merchants whose weekly revenue falls below 1% of total L2 weekly revenue OR below the 25th percentile of all active merchants in that L2, whichever threshold is lower. State the threshold value and method used at the top of this section.
+**Noise filter:** Apply a dynamic minimum revenue threshold per L3 category independently. For each L3, exclude merchants whose weekly revenue falls below 1% of that L3's total weekly revenue OR below the 25th percentile of active merchant weekly revenues within that L3 — whichever threshold is lower. State the threshold for each L3 individually inside that L3's block using the token {{[PREFIX]_NOISE_THRESHOLD}}. Do not use a single global threshold across all L3 categories.
 
 **The 6 fixed L3 categories (always present, always in this order):**
 
@@ -118,12 +118,9 @@ After the Early Warning Signals block, insert a table of the top 10 DDNQR mercha
 
 **For each L3, produce in order:**
 
-**A. Narrative block (4 sub-elements):**
+**A. Narrative block (1 element):**
 
-- **Overview:** 2–3 sentences of overall commentary. No merchant names. No bias toward positive or negative framing — neutral factual summary.
-- **Scale:** 1 sentence on rising momentum merchants in this L3.
-- **Attention Needed:** 1 sentence on biggest losers and/or declining momentum merchants.
-- **Watch List:** 1 sentence on reactivated and new entrant merchants.
+- **Overview:** 2–3 sentences of overall commentary. No merchant names. Neutral factual summary of L3 performance.
 
 **B. Top Merchants table** — Top 5 by YTD revenue (descending), plus a Total L3 row:
 
@@ -188,6 +185,16 @@ All revenue figures are RM. The raw data contains no currency symbol. Always dis
 ### Data Quality
 
 Run the full data validation checklist (see `data_validation.md`) before generating any section of the report.
+
+### Merchant Attribution Coverage
+
+If any rows in the source data cannot be attributed to a merchant (i.e. merchant_group is blank, null, or unresolvable), do not insert a caveat into the HTML report. Instead:
+1. Quantify the excluded TW revenue (RM value and % of total TW commercial revenue)
+2. Include this disclosure once in the validation summary before generation:
+   'Merchant-ranked signals exclude unresolved rows worth RM X (Y% of TW commercial revenue).'
+3. Repeat this disclosure in the final chat changelog/summary.
+4. Proceed with generating merchant-ranked tables using only rows with usable merchant_group values.
+5. Never add this caveat to any section of the HTML template.
 
 ---
 
