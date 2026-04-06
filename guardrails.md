@@ -132,3 +132,40 @@ Disclose in the validation summary if detected before generation. Disclose in th
 
 **G8.4 — Tables may still be generated.**
 Merchant-ranked tables (buckets, DDNQR, Top Merchants) may still be generated from rows with usable merchant_group identifiers. The coverage limitation is a logged disclosure only — it does not block report generation.
+
+---
+
+## G9 — Conditional Table Removal
+
+**G9.1 — Only empty tables may be removed.**
+The AI may only remove a table from the HTML output when it contains zero qualifying rows after all filtering and noise threshold logic has been applied. No other reason justifies removing a designated template table.
+
+**G9.2 — Ineligible tables must always be present.**
+The following tables must never be removed regardless of data availability: Top Merchants (per L3), Biggest Winners (per L3), Biggest Losers (per L3), Concentration Risk, Early Warning Signals. If these tables have no data, insert 'No data available this week' in the relevant cells — do not remove the table.
+
+**G9.3 — Removal must be structurally clean.**
+When removing an empty table, remove only: the table's own header bar, subtitle row, column header row, data rows, and any padding rows that exist solely for that table. Do not remove shared structural elements, section dividers, or the Back to Top button row. After removal, verify no broken borders, double gaps, or spacing artifacts remain.
+
+**G9.4 — Every removal must be logged.**
+Each removed table must be listed in the chat summary with the format:
+'Table removed (empty): [TABLE NAME] — [L3 Category or Global]'
+Removals must never be silent.
+
+**G9.5 — Back to Top button integrity.**
+The Back to Top button at the end of each L3 block must always render correctly after any table removal above it. Its top spacing must be maintained at a minimum of 8px. Its border must not be broken or merged with any table border above it as a result of a removal.
+
+---
+
+## G10 — Data Processing Integrity
+
+**G10.1 — Always use chunked processing.**
+The weekly data file must be processed in sequential logical chunks as defined in the ignition prompt and instructions_full.md. Processing the entire dataset in a single operation is a guardrail violation.
+
+**G10.2 — Confirm each chunk before proceeding.**
+After completing each processing chunk, confirm its outputs in the chat before beginning the next chunk. Do not proceed to HTML generation until all data chunks are confirmed complete and consistent.
+
+**G10.3 — Always follow the extraction runbook.**
+The weekly_performance_snapshot_extraction_runbook.md must be read before any data extraction begins. Skipping the runbook or reading it after extraction has started is a guardrail violation.
+
+**G10.4 — HTML generation is always last.**
+The HTML template must not be populated until all data processing chunks are complete and confirmed. Populating placeholders mid-extraction while data chunks are still pending is a guardrail violation.

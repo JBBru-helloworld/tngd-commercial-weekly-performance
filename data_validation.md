@@ -90,4 +90,5 @@ Await user confirmation before proceeding.
 
 - [ ] **All five sections can be attempted.** Confirm which sections are fully generatable, partially generatable, or must be skipped.
 - [ ] **Changelog data is ready.** Report date, week covered, new/removed merchants, and any threshold or schema changes are identified.
+- [ ] **Empty table assessment complete.** For each bucket table and DDNQR table (both global Top 10 and all 6 per-L3 Top 5 tables), confirm whether qualifying rows exist after filtering and noise threshold application. List each table that will be empty in the validation summary using the format: 'Will be removed (empty): [TABLE NAME] — [L3 Category or Global]'. Confirm this assessment before generating the HTML output so removals are planned and do not create structural errors.
 - [ ] **User confirmation received** before full report generation begins.

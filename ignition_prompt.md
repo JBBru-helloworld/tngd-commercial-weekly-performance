@@ -17,6 +17,28 @@ Do not proceed past this point until all 7 files are confirmed loaded.
 
 ---
 
+Before accessing the data file, read weekly_performance_snapshot_extraction_runbook.md from the project Sources. Follow the extraction sequence defined in that runbook exactly to guide how you read, filter, and process the data file. Do not begin data extraction until you have read the runbook in full.
+
+Process the data file in chunks. Do not attempt to load or compute the entire dataset in a single operation. Follow this chunking sequence:
+
+Chunk 1 — Header and schema: read column names and identify all logical field roles (merchant_group, L2, L3, revenue columns, YTD, MTD, budget, stretch, prior weeks). Confirm schema and report findings before proceeding.
+
+Chunk 2 — L2 pillar aggregation: compute total revenue figures for each L2 pillar (SME, Mobility, Government Services, Category Management, Crossborder, Foreign Worker Segment) for LW and TW. Compute variances. Report findings before proceeding.
+
+Chunk 3 — YTD and MTD targets: extract YTD actual, YTD budget, MTD actual, MTD budget, MTD stretch across all pillars. Compute variances. Report findings before proceeding.
+
+Chunk 4 — Category Management L3 filtering: filter to L2 = 04 Category Management only. Apply per-L3 noise thresholds. Confirm qualifying merchant counts per L3 and report before proceeding.
+
+Chunk 5 — Per-L3 merchant analysis: process each of the 6 L3 categories one at a time. For each L3 compute: Top Merchants, Winners, Losers, Momentum, Reactivated, New Entrants, DDNQR. Confirm completion of each L3 before moving to the next.
+
+Chunk 6 — Global DDNQR and Risky Business: apply MID = EP142731 filter across all commercial data for the global DDNQR Top 10. Compute Concentration Risk across all L2 pillars. Assess Early Warning Signals.
+
+Chunk 7 — HTML generation: only after all data chunks are confirmed complete, begin filling the HTML template placeholders. Do not start HTML generation while any data chunk is still incomplete or unconfirmed.
+
+If any chunk fails or returns unexpected results, stop and report the issue in the chat before proceeding to the next chunk.
+
+---
+
 DATA INGESTION
 
 Please access this week's revenue data file from the Sources section in this project. The file will be available directly in your knowledge base — do not attempt to access SharePoint or any external location.
@@ -117,6 +139,7 @@ For each file in the full source set, validate and report all of the following:
 - Do this file by file.
   - Confirm merchant_group has been identified as the primary merchant identifier. If merchant_group is absent or inconsistent, flag before proceeding.
   - Confirm L3 category is resolvable for all merchants. This is required for correct attribution in the Concentration Risk table (L3 Category column) and Early Warning Signals entries. Flag any merchant where L3 cannot be determined.
+  - Empty table assessment: for each bucket table and DDNQR table, confirm whether any qualifying rows exist. List all tables that will be empty and confirm they will be removed cleanly from the HTML output with no structural side effects. Back to Top button spacing must be verified after any removal.
 
 2. Unmapped or ambiguous columns
 
