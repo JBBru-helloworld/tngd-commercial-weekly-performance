@@ -433,11 +433,11 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "notes": "Rank 1 merchant current week revenue"
       },
       {
-        "token": "CONC_M1_CUM_PCT",
+        "token": "CONCENTRATION_R1_CONTRIBUTION_PCT",
         "source": "calculated",
         "format": "X.X%",
         "required": true,
-        "notes": "Cumulative % contribution of top 1 merchant to total commercial portfolio weekly revenue"
+        "notes": "Standalone contribution of rank 1 merchant to total commercial TW revenue. Formula: merchant TW revenue / total commercial TW revenue × 100. Independent per-merchant figure — does not accumulate."
       },
       {
         "token": "CONC_M2_NAME",
@@ -454,11 +454,11 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "notes": "Rank 2 merchant current week revenue"
       },
       {
-        "token": "CONC_M2_CUM_PCT",
+        "token": "CONCENTRATION_R2_CONTRIBUTION_PCT",
         "source": "calculated",
         "format": "X.X%",
         "required": true,
-        "notes": "Cumulative % contribution of top 2 merchants to total commercial portfolio weekly revenue"
+        "notes": "Standalone contribution of rank 2 merchant to total commercial TW revenue. Formula: merchant TW revenue / total commercial TW revenue × 100. Independent per-merchant figure — does not accumulate."
       },
       {
         "token": "CONC_M3_NAME",
@@ -475,11 +475,11 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "notes": "Rank 3 merchant current week revenue"
       },
       {
-        "token": "CONC_M3_CUM_PCT",
+        "token": "CONCENTRATION_R3_CONTRIBUTION_PCT",
         "source": "calculated",
         "format": "X.X%",
         "required": true,
-        "notes": "Cumulative % contribution of top 3 merchants to total commercial portfolio weekly revenue. Flag 🟡 Caution if >50%."
+        "notes": "Standalone contribution of rank 3 merchant to total commercial TW revenue. Formula: merchant TW revenue / total commercial TW revenue × 100. Independent per-merchant figure — does not accumulate."
       },
       {
         "token": "CONC_M4_NAME",
@@ -496,11 +496,11 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "notes": "Rank 4 merchant current week revenue"
       },
       {
-        "token": "CONC_M4_CUM_PCT",
+        "token": "CONCENTRATION_R4_CONTRIBUTION_PCT",
         "source": "calculated",
         "format": "X.X%",
         "required": true,
-        "notes": "Cumulative % contribution of top 4 merchants to total commercial portfolio weekly revenue"
+        "notes": "Standalone contribution of rank 4 merchant to total commercial TW revenue. Formula: merchant TW revenue / total commercial TW revenue × 100. Independent per-merchant figure — does not accumulate."
       },
       {
         "token": "CONC_M5_NAME",
@@ -517,11 +517,25 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "notes": "Rank 5 merchant current week revenue"
       },
       {
-        "token": "CONC_M5_CUM_PCT",
+        "token": "CONCENTRATION_R5_CONTRIBUTION_PCT",
         "source": "calculated",
         "format": "X.X%",
         "required": true,
-        "notes": "Cumulative % contribution of top 5 merchants to total commercial portfolio weekly revenue. Flag 🔴 High Risk if >70%."
+        "notes": "Standalone contribution of rank 5 merchant to total commercial TW revenue. Formula: merchant TW revenue / total commercial TW revenue × 100. Independent per-merchant figure — does not accumulate."
+      },
+      {
+        "token": "CONCENTRATION_TOP5_TOTAL_REV",
+        "source": "calculated",
+        "format": "RM X.XM",
+        "required": true,
+        "notes": "Combined weekly revenue of the top 5 merchants. Displayed in the Weekly Rev (RM) column of the totals row. Formula: sum of CONC_M1_REV through CONC_M5_REV."
+      },
+      {
+        "token": "CONCENTRATION_TOP5_CUMULATIVE_PCT",
+        "source": "calculated",
+        "format": "X.X%",
+        "required": true,
+        "notes": "Total Contribution % of the top 5 merchants combined. Displayed as a totals row at the bottom of the Concentration Risk table. This is the primary concentration risk signal: Flag 🟡 Caution if ≥50%, 🔴 High Risk if ≥70%. Formula: sum of CONCENTRATION_R1 through R5 CONTRIBUTION_PCT."
       },
       {
         "token_pattern": "CONCENTRATION_R{N}_L3",

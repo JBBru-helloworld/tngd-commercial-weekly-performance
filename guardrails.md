@@ -71,8 +71,16 @@ A merchant generating RM 10K/week for 3 weeks is not Rising Momentum — revenue
 
 ## G5 — Concentration and Risk
 
-**G5.1 — Concentration thresholds are defaults, not absolutes.**
-Default flags: 🟡 Caution if top 3 merchants > 50% of total commercial portfolio weekly revenue; 🔴 High Risk if top 5 > 70%. The denominator is always total commercial portfolio weekly revenue across all L2 pillars. These thresholds can be overridden by the user but must be explicitly noted if changed.
+**G5.1 — Concentration Risk thresholds are based on Top 5 Cumulative %.**
+The risk flag ({{CONCENTRATION_FLAG}}) must always be derived from {{CONCENTRATION_TOP5_CUMULATIVE_PCT}} — the combined Contribution % of the top 5 merchants shown in the totals row at the bottom of the Concentration Risk table.
+Default thresholds:
+  ✅ OK:         Top 5 Cumulative % < 50%
+  🟡 Caution:   Top 5 Cumulative % ≥ 50% and < 70%
+  🔴 High Risk: Top 5 Cumulative % ≥ 70%
+These thresholds may be overridden by the user but any override must be explicitly noted in the chat summary.
+
+**G5.1a — Contribution % and Top 5 Cumulative % are distinct calculations.**
+Contribution % is a standalone per-merchant figure (merchant TW revenue / total commercial TW revenue × 100). Top 5 Cumulative % is the sum of all 5 merchants' Contribution % values, displayed as a totals row. Never use any single merchant's Contribution % to trigger a risk flag — only {{CONCENTRATION_TOP5_CUMULATIVE_PCT}} determines the flag.
 
 The L3 Category column in the Concentration Risk table must always be populated with the merchant's specific L3 category name (Telco, Digital Lifestyle, Online Marketplaces & Fast Fashion, Daily Essentials & Retail, Everyday F&B and Lifestyle, Travel). Writing 'Category Management' in this column is a guardrail violation — that is the L2 label. Always resolve to the L3 level.
 
@@ -151,8 +159,16 @@ Each removed table must be listed in the chat summary with the format:
 'Table removed (empty): [TABLE NAME] — [L3 Category or Global]'
 Removals must never be silent.
 
-**G9.5 — Back to Top button integrity.**
-The Back to Top button at the end of each L3 block must always render correctly after any table removal above it. Its top spacing must be maintained at a minimum of 8px. Its border must not be broken or merged with any table border above it as a result of a removal.
+**G9.5 — Back to Top button and grey separator bar integrity.**
+After any table removal, both the grey separator bar and the Back to Top button must render correctly and with consistent spacing.
+
+Grey separator bar: the <tr> or <td> containing the grey separator bar (border-top:2px solid #e5e7eb or equivalent) that sits between the L3 content and the Back to Top button must never be removed, merged, or rendered invisible as a result of a table removal above it.
+
+Minimum spacing: after any table removal, the last remaining table in the L3 block must have a minimum of 12px bottom padding between its lower edge and the grey separator bar. If the removed table was providing this spacing, compensate by adding padding-bottom:12px to the last remaining table's outer wrapper <td>.
+
+Back to Top button: the Back to Top button row must always sit below the grey separator bar with minimum padding-top:6px on its wrapping <td>. This must not be reduced by any table removal above it.
+
+Violation: any table removal that results in the grey separator bar being invisible, merged with a table border, or collapsed to zero height is a guardrail violation. Any removal that results in the Back to Top button touching the last remaining table with no separator between them is a guardrail violation.
 
 ---
 

@@ -77,9 +77,29 @@ The Total Commercial row uses a highlighted style (yellow variance in HTML templ
 ### SECTION 3 — Risky Business
 
 **Concentration Risk:**
-Calculate the revenue concentration of the top 5 merchants across ALL commercial L2 pillars. The denominator for all percentages is the total weekly revenue of the full commercial portfolio for the current week.
 
-Show a 5-row table with these columns: Rank | Merchant | L3 Category | Weekly Revenue (RM) | Cumulative %. The Cumulative % column shows the running total contribution of merchants ranked 1 through N as a share of total commercial portfolio weekly revenue.
+Scope: all commercial L2 pillars combined (SME, Mobility, Government Services, Category Management, Crossborder, Foreign Worker Segment). The denominator for all percentage calculations is total commercial TW revenue.
+
+Sort: top 5 merchants by TW revenue descending.
+
+Table columns: Rank | Merchant | L3 Category | Weekly Revenue (RM) | Contribution %
+
+Column definitions:
+
+Contribution % — this merchant's TW revenue as a percentage of total commercial TW revenue. Calculated independently for each merchant.
+Formula: merchant TW revenue / total commercial TW revenue × 100
+Each row's Contribution % is a standalone figure unrelated to other rows.
+
+After the 5 data rows, the table includes a totals row labelled "Top 5 Cumulative %" that shows the combined Contribution % of all 5 merchants. This is the primary concentration risk signal.
+Token: {{CONCENTRATION_TOP5_CUMULATIVE_PCT}}
+Formula: sum of Contribution % for ranks 1 through 5.
+
+Risk flags based on {{CONCENTRATION_TOP5_CUMULATIVE_PCT}}:
+  ✅ OK:         Top 5 Cumulative % < 50%
+  🟡 Caution:   Top 5 Cumulative % ≥ 50% and < 70%
+  🔴 High Risk: Top 5 Cumulative % ≥ 70%
+
+Always show the {{CONCENTRATION_FLAG}} token reflecting the risk level derived from {{CONCENTRATION_TOP5_CUMULATIVE_PCT}}.
 
 For the L3 Category column, populate it with the merchant's specific L3 category name — NOT the L2 pillar name. The L3 category is the specific sub-category the merchant belongs to within Category Management, such as:
   Telco
@@ -89,12 +109,6 @@ For the L3 Category column, populate it with the merchant's specific L3 category
   Everyday F&B and Lifestyle
   Travel
 Always look up the merchant's L3 category from the source data using the L3 hierarchy field. Never default to writing 'Category Management' — that is the L2 label, not the L3 category. If the L3 category cannot be determined from the data, write 'Unknown' and flag it in the validation summary.
-
-Flag with these defaults:
-- 🟡 Caution: top 3 merchants collectively exceed 50% of total commercial portfolio weekly revenue
-- 🔴 High Risk: top 5 merchants collectively exceed 70% of total commercial portfolio weekly revenue
-
-Use tokens: {{CONC_M1_NAME}}, {{CONC_M1_REV}}, {{CONC_M1_CUM_PCT}} through {{CONC_M5_NAME}}, {{CONC_M5_REV}}, {{CONC_M5_CUM_PCT}} for the 5 data rows.
 
 **Early Warning Signals:**
 Flag any merchant showing:
@@ -302,6 +316,17 @@ REMOVAL RULES — when removing an empty table, the AI must:
    Example: 'Table removed (empty): DDNQR Global Top 10'
 
 5. Never remove a table and leave orphaned label text, divider rows, or spacing artifacts in its place. The removal must be clean with no visual gaps or broken borders remaining.
+
+6. Grey separator bar spacing must be preserved after any removal.
+   Each L3 block ends with a grey separator bar (a <td> or <tr> with border-top styling, e.g. border-top:2px solid #e5e7eb or similar) that visually separates the L3 content from the Back to Top button row.
+
+   After any table removal, verify the following:
+     a. The <tr> or <td> immediately above the grey separator bar has a minimum bottom padding of 12px. If the removed table was the element providing this spacing, add padding-bottom:12px to the last remaining table's wrapper <td> to compensate.
+     b. The grey separator bar itself must not be removed, merged with any table border, or rendered invisible as a side effect of the removal.
+     c. The visual gap between the bottom edge of the last remaining table and the top edge of the grey separator bar must be at minimum 12px. If it is less than 12px after removal, add the deficit as padding-bottom to the last remaining table's outer wrapper <td>.
+     d. The Back to Top button row must sit below the grey separator bar with its own internal padding intact (minimum padding-top:6px on the Back to Top button's wrapping <td>).
+
+   Never remove the grey separator bar or its wrapping <tr> as part of a table removal operation under any circumstances.
 
 ---
 
