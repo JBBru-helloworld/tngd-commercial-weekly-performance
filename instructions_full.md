@@ -206,7 +206,7 @@ If a column's role is genuinely ambiguous after inspection, ask the user to clar
 
 ### Currency
 
-All revenue figures are RM. The raw data contains no currency symbol. Always display outputs as "RM X,XXX" or "RM X.XM" (millions) for readability. Use millions format (e.g., RM 2.4M) for figures above RM 500,000.
+All revenue figures are RM. The raw data contains no currency symbol. Always display outputs as "RM X,XXX" or "RM X.XM" (millions) for readability. Use millions format (e.g., RM 2.4M) for figures at or above RM 1,000,000. Display figures below RM 1,000,000 as full digits (e.g., RM 48,200 or RM 750,000).
 
 ### Missing Data
 

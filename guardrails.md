@@ -106,8 +106,8 @@ Prohibited phrases include: "it is worth noting", "it is important to highlight"
 Never write a qualitative claim without a supporting number. "Revenue increased" is incomplete. "Revenue increased RM 340K (+8.2%) WoW" is correct.
 
 **G6.3 — Consistent number formatting.**
-- Below RM 500K: RM X,XXX (e.g., RM 48,200)
-- Above RM 500K: RM X.XM (e.g., RM 1.2M)
+- Below RM 1,000,000: RM X,XXX (e.g., RM 48,200 or RM 750,000)
+- At or above RM 1,000,000: RM X.XM (e.g., RM 1.2M)
 - Percentages: always show sign (e.g., +8.2% or –3.4%), one decimal place
 - Do not mix formats within the same table
 

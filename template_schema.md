@@ -27,8 +27,8 @@ This file defines every token in JSON for machine-readability, with a legend bel
   "last_updated": "2026-04-01",
   "currency": "RM",
   "number_formats": {
-    "large": "RM X.XM (above 500,000)",
-    "small": "RM X,XXX (below 500,000)",
+    "large": "RM X.XM (at or above 1,000,000)",
+    "small": "RM X,XXX (below 1,000,000)",
     "variance_positive": "+RM X.XM or +X.X%",
     "variance_negative": "-RM X.XM or -X.X%",
     "percentage": "±X.X% (always show sign, one decimal)"

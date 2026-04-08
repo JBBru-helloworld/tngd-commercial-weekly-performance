@@ -224,7 +224,7 @@ Otherwise, proceed automatically.
 
 Output format: produce a brief summary of key findings directly in the chat (3–5 bullet points covering headline performance, top L2 driver, biggest risk, and one forward signal), then generate the full report as a downloadable HTML file using the template.html file. Do not produce a Word document.
 
-Currency: all figures are RM. Display as RM X,XXX for amounts under RM 500K and RM X.XM for amounts above.
+Currency: all figures are RM. Display as RM X,XXX for amounts below RM 1,000,000 and RM X.XM for amounts at or above RM 1,000,000.
 
 Merchant naming: use merchant_group as the display name for all merchants in every table and narrative. Do not use any other name field.
 
@@ -253,8 +253,8 @@ Currency and figure rules:
 - All figures represent Gross Revenue based on payment data only
 - Manual billing and ancillary income are excluded where required by the report rules
 - Display format:
-  - RM X,XXX for amounts below RM 500K
-  - RM X.XM for amounts RM 500K and above
+  - RM X,XXX for amounts below RM 1,000,000
+  - RM X.XM for amounts at or above RM 1,000,000
 - Variances must always show sign where applicable
 
 ---
