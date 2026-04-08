@@ -138,8 +138,20 @@ For each file in the full source set, validate and report all of the following:
 - List every column role you have mapped and the exact source header used.
 - Do this file by file.
   - Confirm merchant_group has been identified as the primary merchant identifier. If merchant_group is absent or inconsistent, flag before proceeding.
+  - Confirm TW_DATE and LW_DATE: identify the week-ending dates for the current reporting week (TW_DATE) and prior reporting week (LW_DATE). These are injected into all TW and LW column headers across every table in the report. Every "TW" header must render as "TW — {{TW_DATE}}" and every "LW" header must render as "LW — {{LW_DATE}}".
+  - Mojibake scan: scan all text columns in each ingested file for mojibake patterns (sequences such as Ã, â€, Å, Â indicating UTF-8 text misread as Latin-1). If detected, attempt auto-correction by re-decoding from Latin-1 bytes as UTF-8. Report findings before proceeding — state which columns were affected, how many rows were corrected, and provide a before/after example. If correction fails, flag the row with the original value and do not substitute.
   - Confirm L3 category is resolvable for all merchants. This is required for correct attribution in the Concentration Risk table (L3 Category column) and Early Warning Signals entries. Flag any merchant where L3 cannot be determined.
-  - Empty table assessment: for each bucket table and DDNQR table, confirm whether any qualifying rows exist. List all tables that will be empty and confirm they will be removed cleanly from the HTML output with no structural side effects. Back to Top button spacing must be verified after any removal.
+  - Empty table removal assessment: for each bucket table and DDNQR table (both global Top 10 and all 6 per-L3 Top 5 tables), confirm whether any qualifying rows exist after filtering and noise threshold application. Then apply the following rules:
+
+    WHAT TO REMOVE: if a bucket table or DDNQR table (global or per-L3) contains zero qualifying rows, remove it entirely from the HTML output — including the table's label/header bar, subtitle row, column header row, all data rows, and any wrapping padding rows that exist solely for that specific table.
+
+    WHAT TO NEVER REMOVE: Top Merchants tables, Biggest Winners tables, Biggest Losers tables, Concentration Risk table, Early Warning Signals block, L3 title bars, noise filter/overview cards, section headers, Back to Top buttons, Quick Links, and the footer. These must always remain in the HTML output regardless of data availability.
+
+    PADDING CONSISTENCY: after removing any table, verify that the last remaining table in the same L3 block has at minimum 12px bottom padding between its lower edge and the grey separator bar. If the removed table was providing this spacing, add padding-bottom:12px to the last remaining table's outer wrapper <td>. The Back to Top button must retain minimum padding-top:6px on its wrapping <td>. The grey separator bar itself must never be removed.
+
+    L3 OUTER PADDING WRAPPER: the outermost <td> wrapper that provides horizontal padding (padding: 0 20px or equivalent) for each L3 category block must never be removed regardless of which tables within the block are empty or removed.
+
+    LOG: list every removed table in the chat summary using: 'Table removed (empty): [TABLE NAME] — [L3 Category or Global]'
 
 2. Unmapped or ambiguous columns
 

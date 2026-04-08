@@ -192,6 +192,8 @@ You must infer column roles from header names. Do not hardcode column names. Map
 
 IMPORTANT: If the data contains multiple merchant name columns (e.g. merchant_name, trade_name, merchant_id), always prioritise merchant_group. If merchant_group is missing or blank for any row, flag it in the data validation summary before generating the report.
 
+- TW_DATE and LW_DATE: during schema reading, identify the week-ending dates for the current reporting week (TW_DATE = PRIMARY_REPORT_WEEK week-ending date) and the prior reporting week (LW_DATE = PRIOR_REPORT_WEEK week-ending date). These values are injected as `{{TW_DATE}}` and `{{LW_DATE}}` tokens into all column headers labelled "TW" and "LW" respectively — across Table 1B, all L3 Top Merchants tables, all bucket tables, and all DDNQR tables. Every "TW" column header must render as "TW — {{TW_DATE}}" and every "LW" column header must render as "LW — {{LW_DATE}}".
+
 - L2 / L3 / L4 category hierarchy
 - Current week revenue
 - Prior week revenue (1 week ago)
@@ -243,6 +245,18 @@ Always follow this sequence:
 
 Confirm the output of each chunk before proceeding to the next. If a chunk produces unexpected results or fails, surface the issue in the chat immediately and do not proceed until it is resolved.
 
+### Mojibake Detection and Decoding
+
+Mojibake refers to garbled characters that result from text originally encoded as UTF-8 being misread as Latin-1 (ISO-8859-1) or a similar single-byte encoding. Common symptoms include sequences such as Ã©, â€™, Ã¢, Å" appearing in merchant names or category labels in the source data.
+
+Detection: during schema reading (Chunk 1), scan all text columns — particularly merchant_group, category hierarchy fields, and any descriptive label columns — for character sequences that are recognisable mojibake patterns (e.g. Ã, â€, Å, Â followed by unexpected characters).
+
+Decoding: if mojibake is detected, attempt automatic correction by treating the affected string as Latin-1 bytes and re-decoding as UTF-8. Apply this correction consistently across all affected fields before any downstream processing or analysis begins.
+
+Reporting: always report in the validation summary which columns were affected, how many rows were corrected, and at least one before/after example for an affected value. Do not silently fix mojibake — the correction must be explicitly surfaced to the user.
+
+Escalation: if the decoding attempt fails (i.e. the result is still garbled or produces an encoding error), do not guess or substitute the value. Flag the affected rows with the original garbled value intact and alert the user before proceeding.
+
 ---
 
 ## 4. Tone and Style Guide
@@ -262,6 +276,7 @@ Confirm the output of each chunk before proceeding to the next. If a chunk produ
 - Section headers must follow the exact naming convention in Section 2 above
 - Every session ends with a changelog summary delivered in the chat only — do not insert it into the HTML file (see `changelog_format.md`)
 - HTML output: inline CSS only, table-based layout, max 760px width
+- Legend section: the HTML template contains a static Legend block between the Quick Links section and the Footer. This block defines all abbreviations and metric labels used throughout the report (TW, LW, WoW, YTD, MTD, Contribution %, Top 5 Cumulative %, Noise Filter, DDNQR, Rising Momentum, Declining Momentum, Reactivated, New Entrants). The Legend is fully static — its content never changes between reports. Do not modify, remove, or add to it. The two dynamic tokens it contains ({{TW_DATE}} and {{LW_DATE}}) must be populated with the correct week-ending dates.
 
 ### Conditional Table Removal — Empty Tables Only
 
@@ -327,6 +342,9 @@ REMOVAL RULES — when removing an empty table, the AI must:
      d. The Back to Top button row must sit below the grey separator bar with its own internal padding intact (minimum padding-top:6px on the Back to Top button's wrapping <td>).
 
    Never remove the grey separator bar or its wrapping <tr> as part of a table removal operation under any circumstances.
+
+7. The L3 outer padding wrapper must never be removed.
+   The outermost <td> element that provides horizontal padding (padding: 0 20px or equivalent) for each L3 category block in the template must always remain present in the HTML output, even if all removable tables within that L3 block have been removed. This element controls the width alignment of the L3 section. Removing it is a guardrail violation regardless of how many inner tables are empty.
 
 ---
 

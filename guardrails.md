@@ -170,6 +170,9 @@ Back to Top button: the Back to Top button row must always sit below the grey se
 
 Violation: any table removal that results in the grey separator bar being invisible, merged with a table border, or collapsed to zero height is a guardrail violation. Any removal that results in the Back to Top button touching the last remaining table with no separator between them is a guardrail violation.
 
+**G9.6 — L3 outer padding wrapper is permanent.**
+The outermost <td> wrapper that provides the horizontal padding for each L3 category block (padding: 0 20px or equivalent) must never be removed from the HTML output. This element is structural — it controls section width alignment and must survive all table removal operations within its block. Removing this wrapper under any circumstance is a guardrail violation.
+
 ---
 
 ## G10 — Data Processing Integrity
@@ -185,3 +188,19 @@ The weekly_performance_snapshot_extraction_runbook.md must be read before any da
 
 **G10.4 — HTML generation is always last.**
 The HTML template must not be populated until all data processing chunks are complete and confirmed. Populating placeholders mid-extraction while data chunks are still pending is a guardrail violation.
+
+---
+
+## G11 — Encoding Integrity
+
+**G11.1 — Scan for mojibake on every ingestion.**
+On every data ingestion, scan all text columns (particularly merchant_group, category fields, and descriptive labels) for mojibake patterns — character sequences produced when UTF-8 text has been misread as Latin-1. Common indicators: Ã, â€, Å, Â followed by unexpected characters. Failing to detect mojibake that is visible in the raw data is a guardrail violation.
+
+**G11.2 — Attempt automatic correction.**
+If mojibake is detected, attempt decoding by treating the affected string as Latin-1 bytes and re-reading as UTF-8. Apply corrections consistently across all affected rows and fields before any analysis or table population begins.
+
+**G11.3 — Always report corrections explicitly.**
+Mojibake corrections must never be silent. Report in the validation summary: which columns were affected, how many rows were corrected, and at least one before/after example. Do not proceed to analysis chunks without surfacing this finding.
+
+**G11.4 — Escalate unresolvable encoding errors.**
+If the decoding attempt produces a result that is still garbled or raises an encoding error, do not guess or substitute the value. Flag the affected row(s) with the original garbled value and alert the user before proceeding.

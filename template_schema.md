@@ -56,6 +56,20 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "format": "Draft / Final",
         "required": true,
         "notes": "Specified by user at session start"
+      },
+      {
+        "token": "TW_DATE",
+        "source": "excel",
+        "format": "DD MMM YYYY",
+        "required": true,
+        "notes": "Week-ending date for the current reporting week (PRIMARY_REPORT_WEEK). Displayed in all TW column headers across Table 1B, all L3 Top Merchants tables, all bucket tables, and all DDNQR tables as 'TW — DD MMM YYYY'."
+      },
+      {
+        "token": "LW_DATE",
+        "source": "excel",
+        "format": "DD MMM YYYY",
+        "required": true,
+        "notes": "Week-ending date for the prior reporting week (PRIOR_REPORT_WEEK). Displayed in all LW column headers across Table 1B, all L3 Top Merchants tables, all bucket tables, and all DDNQR tables as 'LW — DD MMM YYYY'."
       }
     ],
 
@@ -66,6 +80,13 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "source": "excel",
         "required": true,
         "notes": "Always use merchant_group as the primary display name for merchants. Do not substitute with other name fields."
+      },
+      {
+        "token": "MOJIBAKE_DECODING",
+        "value": "detect_and_correct",
+        "source": "system",
+        "required": true,
+        "notes": "On every ingestion, scan all text columns for mojibake patterns (Ã, â€, Å, Â sequences indicating UTF-8 text misread as Latin-1). If detected, attempt auto-correction by re-decoding from Latin-1 bytes as UTF-8. Report all corrections in the validation summary with at least one before/after example. Escalate unresolvable cases to the user — do not substitute or silently skip."
       }
     ],
 
@@ -636,6 +657,29 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "format": "URL",
         "required": true,
         "notes": "URL for the Merchant Search Dashboard. Appears in Quick Links section above Footer."
+      }
+    ],
+
+    "legend": [
+      {
+        "section": "Legend",
+        "static": true,
+        "notes": "The Legend block is located between the Quick Links section and the Footer. All definition rows are static and must never be modified, reordered, or removed. The two dynamic tokens TW_DATE and LW_DATE within the legend must be populated with the correct week-ending dates for the current and prior report weeks.",
+        "definitions": [
+          "TW — This Week: revenue for the current reporting week ending {{TW_DATE}}",
+          "LW — Last Week: revenue for the prior reporting week ending {{LW_DATE}}",
+          "WoW — Week-on-Week: change from LW to TW (RM and %)",
+          "YTD — Year to Date: cumulative revenue from 1 January through the report week-ending date",
+          "MTD — Month to Date: cumulative revenue from the 1st of the report month through the report week-ending date",
+          "Contribution % — this merchant's TW revenue as a percentage of total commercial TW revenue",
+          "Top 5 Cumulative % — sum of Contribution % for the top 5 merchants in the Concentration Risk table; the primary concentration risk signal",
+          "Noise Filter — minimum weekly revenue threshold applied per L3 category to exclude immaterial merchants from bucket tables",
+          "DDNQR — merchants using Dynamic Duitnow QR (MID = EP142731); shown in a dedicated table per L3 and globally",
+          "Rising Momentum — merchants with 3 or more consecutive weeks of WoW revenue growth",
+          "Declining Momentum — merchants with 3 or more consecutive weeks of WoW revenue decline",
+          "Reactivated — merchants with TW revenue > 0 and LW revenue = 0 exactly",
+          "New Entrants — merchants with no revenue recorded in any prior week across the full combined dataset before TW"
+        ]
       }
     ]
   }

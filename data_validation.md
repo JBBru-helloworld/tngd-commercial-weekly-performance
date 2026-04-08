@@ -37,6 +37,7 @@ Await user confirmation before proceeding.
 - [ ] **Category hierarchy confirmed.** L2, L3, and L4 levels are distinguishable in the data (separate columns or encoded in a single field). Confirm which applies.
 - [ ] **L2 scope confirmed.** The data contains rows classifiable as "04 Category Management." If the L2 filter yields no rows, stop and flag this before proceeding.
 - [ ] **L3 category resolvable for all merchants flagged in Early Warning Signals and Concentration Risk table.** For every merchant that will appear in either the Early Warning Signals block or the Concentration Risk table, confirm their L3 category can be looked up from the data hierarchy. If any merchant's L3 category is unresolvable, flag the specific merchant name and the affected output section in the validation summary before generating the report.
+- [ ] **Mojibake scan complete.** Scan all text columns — particularly merchant_group, category hierarchy fields, and any label columns — for mojibake sequences (e.g. Ã, â€, Å, Â followed by unexpected characters). These result from UTF-8 text being misread as Latin-1. If mojibake is detected: attempt automatic correction by treating the affected string as Latin-1 bytes and re-decoding as UTF-8; report the number of rows corrected and at least one before/after example in the validation summary; flag any rows where the correction attempt fails or produces still-garbled output.
 
 ---
 
