@@ -204,3 +204,23 @@ Mojibake corrections must never be silent. Report in the validation summary: whi
 
 **G11.4 — Escalate unresolvable encoding errors.**
 If the decoding attempt produces a result that is still garbled or raises an encoding error, do not guess or substitute the value. Flag the affected row(s) with the original garbled value and alert the user before proceeding.
+
+---
+
+## G12 — MTD Month Boundary Integrity
+
+**G12.1 — Always check for rollover weeks before computing MTD.**
+Before any MTD figure is calculated, compare the week-start date and TW_DATE. If they fall in different calendar months, a rollover week exists and boundary logic must be applied. Skipping this check is a guardrail violation.
+
+**G12.2 — Never include prior-month revenue in current-month MTD.**
+In a rollover week, any transaction dates that fall before the first day of the current month must be excluded from all MTD calculations at every level — overall, L2, L3, and merchant. Including prior-month days in the current MTD is a guardrail violation.
+
+**G12.3 — Rollover logic applies to MTD only.**
+WoW, LW, TW, and YTD calculations must never be altered by rollover week detection. Applying month boundary filtering to WoW, LW, TW, or YTD figures is a guardrail violation.
+
+**G12.4 — Rollover weeks must always be disclosed.**
+When a rollover week is detected, the validation summary must include the rollover disclosure before the report is generated. Silent handling of a rollover week without disclosure is a guardrail violation. The required disclosure format is:
+'Rollover week detected: week spans [week_start_date] to [TW_DATE]. MTD includes [boundary_date] to [TW_DATE] only ([N days]). Prior month dates excluded: [list].'
+
+**G12.5 — MTD budget and stretch comparisons must note partial month context.**
+When a rollover week exists and only partial-month actuals are available, the validation summary must note that the MTD actual reflects a partial month. The MTD budget and stretch targets remain as provided in the source data — do not adjust them unless the source data provides a daily budget breakdown.

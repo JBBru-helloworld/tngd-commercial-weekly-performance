@@ -25,7 +25,28 @@ Chunk 1 — Header and schema: read column names and identify all logical field 
 
 Chunk 2 — L2 pillar aggregation: compute total revenue figures for each L2 pillar (SME, Mobility, Government Services, Category Management, Crossborder, Foreign Worker Segment) for LW and TW. Compute variances. Report findings before proceeding.
 
-Chunk 3 — YTD and MTD targets: extract YTD actual, YTD budget, MTD actual, MTD budget, MTD stretch across all pillars. Compute variances. Report findings before proceeding.
+Chunk 3 — YTD and MTD targets with rollover week check:
+
+Step 3a — Rollover week detection:
+Compare the week-start date (Monday of the reporting week) with TW_DATE.
+If they fall in different calendar months, a rollover week exists.
+Identify boundary_date = first day of month(TW_DATE).
+List all transaction dates in the reporting week that fall before boundary_date — these are excluded from MTD.
+Report rollover status before proceeding:
+  If rollover: 'Rollover week detected: MTD includes [boundary_date] to [TW_DATE] ([N days]). Excluded from MTD: [list of prior-month dates].'
+  If no rollover: 'No rollover week. Standard MTD applied.'
+
+Step 3b — MTD calculation:
+If rollover week: sum revenue from boundary_date to TW_DATE only at overall, L2, L3, and merchant levels.
+If no rollover: sum revenue from 1st of current month to TW_DATE.
+
+Step 3c — YTD calculation:
+Sum all revenue from 1 January of the current year to TW_DATE. Month boundaries do not affect YTD. No special handling required.
+
+Step 3d — MTD vs Budget and MTD vs Stretch:
+Compare calculated MTD actual against the MTD budget and MTD stretch values from the source data. If rollover week, note in validation summary that MTD actual is partial-month only.
+
+Report all YTD and MTD figures with variances before proceeding to Chunk 4.
 
 Chunk 4 — Category Management L3 filtering: filter to L2 = 04 Category Management only. Apply per-L3 noise thresholds. Confirm qualifying merchant counts per L3 and report before proceeding.
 
@@ -139,6 +160,7 @@ For each file in the full source set, validate and report all of the following:
 - Do this file by file.
   - Confirm merchant_group has been identified as the primary merchant identifier. If merchant_group is absent or inconsistent, flag before proceeding.
   - Confirm TW_DATE and LW_DATE: identify the week-ending dates for the current reporting week (TW_DATE) and prior reporting week (LW_DATE). These are injected into all TW and LW column headers across every table in the report. Every "TW" header must render as "TW — {{TW_DATE}}" and every "LW" header must render as "LW — {{LW_DATE}}".
+  - MTD rollover check: compare week-start date (Monday) and TW_DATE. If different calendar months, identify boundary_date (1st of TW month) and list all prior-month dates in the week that must be excluded from MTD. Report rollover status explicitly before any MTD computation begins.
   - Mojibake scan: scan all text columns in each ingested file for mojibake patterns (sequences such as Ã, â€, Å, Â indicating UTF-8 text misread as Latin-1). If detected, attempt auto-correction by re-decoding from Latin-1 bytes as UTF-8. Report findings before proceeding — state which columns were affected, how many rows were corrected, and provide a before/after example. If correction fails, flag the row with the original value and do not substitute.
   - Confirm L3 category is resolvable for all merchants. This is required for correct attribution in the Concentration Risk table (L3 Category column) and Early Warning Signals entries. Flag any merchant where L3 cannot be determined.
   - Empty table removal assessment: for each bucket table and DDNQR table (both global Top 10 and all 6 per-L3 Top 5 tables), confirm whether any qualifying rows exist after filtering and noise threshold application. Then apply the following rules:

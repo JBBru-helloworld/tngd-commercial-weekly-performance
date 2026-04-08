@@ -87,6 +87,18 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "source": "system",
         "required": true,
         "notes": "On every ingestion, scan all text columns for mojibake patterns (Ã, â€, Å, Â sequences indicating UTF-8 text misread as Latin-1). If detected, attempt auto-correction by re-decoding from Latin-1 bytes as UTF-8. Report all corrections in the validation summary with at least one before/after example. Escalate unresolvable cases to the user — do not substitute or silently skip."
+      },
+      {
+        "rule": "MTD_ROLLOVER_BOUNDARY",
+        "trigger": "month(week_start_date) ≠ month(TW_DATE)",
+        "boundary_date": "First day of month(TW_DATE)",
+        "include_in_MTD": "Transaction dates >= boundary_date within the reporting week",
+        "exclude_from_MTD": "Transaction dates < boundary_date within the reporting week (prior month days)",
+        "applies_to": "All MTD tokens at all levels: overall, L2, L3, merchant",
+        "does_not_apply_to": "WoW, LW, TW, YTD calculations",
+        "disclosure_required": true,
+        "disclosure_format": "Rollover week detected: week spans [start] to [TW_DATE]. MTD includes [boundary_date] to [TW_DATE] only ([N days]). Prior month dates excluded: [list].",
+        "required": true
       }
     ],
 
@@ -159,44 +171,50 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "token": "MTD_ACTUAL",
         "source": "excel",
         "format": "RM X.XM",
-        "required": true
+        "required": true,
+        "notes": "MTD rollover rule applies: in weeks spanning two calendar months, MTD actual includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded. See MTD Month Boundary Logic in instructions_full.md."
       },
       {
         "token": "MTD_BUDGET",
         "source": "excel",
         "format": "RM X.XM",
-        "required": true
+        "required": true,
+        "notes": "MTD rollover rule applies: in weeks spanning two calendar months, MTD actual includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded. See MTD Month Boundary Logic in instructions_full.md."
       },
       {
         "token": "MTD_VAR_ABS",
         "source": "calculated",
         "format": "±RM X.XM",
-        "required": true
+        "required": true,
+        "notes": "MTD rollover rule applies: in weeks spanning two calendar months, MTD actual includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded. See MTD Month Boundary Logic in instructions_full.md."
       },
       {
         "token": "MTD_VAR_PCT",
         "source": "calculated",
         "format": "±X.X%",
-        "required": true
+        "required": true,
+        "notes": "MTD rollover rule applies: in weeks spanning two calendar months, MTD actual includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded. See MTD Month Boundary Logic in instructions_full.md."
       },
       {
         "token": "MTD_STRETCH",
         "source": "excel",
         "format": "RM X.XM",
         "required": false,
-        "notes": "If YTD Stretch or MTD Stretch targets are unavailable, omit those rows and flag."
+        "notes": "If YTD Stretch or MTD Stretch targets are unavailable, omit those rows and flag. MTD rollover rule applies: in weeks spanning two calendar months, MTD actual includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded. See MTD Month Boundary Logic in instructions_full.md."
       },
       {
         "token": "MTD_STR_VAR_ABS",
         "source": "calculated",
         "format": "±RM X.XM",
-        "required": false
+        "required": false,
+        "notes": "MTD rollover rule applies: in weeks spanning two calendar months, MTD actual includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded. See MTD Month Boundary Logic in instructions_full.md."
       },
       {
         "token": "MTD_STR_VAR_PCT",
         "source": "calculated",
         "format": "±X.X%",
-        "required": false
+        "required": false,
+        "notes": "MTD rollover rule applies: in weeks spanning two calendar months, MTD actual includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded. See MTD Month Boundary Logic in instructions_full.md."
       }
     ],
 
@@ -356,10 +374,12 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "sort": "YTD descending (primary), rows 1-5 plus Total L3 row",
         "token_pattern": "{PREFIX}_M{N}_{COL} where N=1-5, COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
         "total_row_pattern": "{PREFIX}_TOTAL_{COL} where COL = YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
-        "source": "excel + calculated"
+        "source": "excel + calculated",
+        "mtd_note": "MTD rollover rule applies to all MTD values in this table: in weeks spanning two calendar months, MTD includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded at merchant and L3 total level."
       },
       "bucket_tables": {
         "note": "All buckets: Top 5 merchants. Token pattern: {PREFIX}_{BUCKET}{N}_{COL}",
+        "mtd_note": "MTD rollover rule applies to all MTD values in bucket tables: in weeks spanning two calendar months, MTD includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded at merchant level.",
         "buckets": [
           {
             "code": "WIN",
@@ -420,7 +440,8 @@ This file defines every token in JSON for machine-readability, with a legend bel
       "note": "Top 10 DDNQR merchants across all Commercial L2 pillars. Filter: MID = EP142731. Sort: YTD descending.",
       "token_pattern": "DDNQR_GLOBAL_R{N}_{COL} where N=1-10, COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
       "source": "excel + calculated",
-      "required": true
+      "required": true,
+      "mtd_note": "MTD rollover rule applies to all MTD values in this table: in weeks spanning two calendar months, MTD includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded at merchant level."
     },
 
     "section_3_risky_business": [

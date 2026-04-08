@@ -245,6 +245,47 @@ Always follow this sequence:
 
 Confirm the output of each chunk before proceeding to the next. If a chunk produces unexpected results or fails, surface the issue in the chat immediately and do not proceed until it is resolved.
 
+### MTD Month Boundary Logic — Rollover Week Handling
+
+DEFINITION:
+A rollover week is any reporting week where the 7-day window spans two calendar months — meaning at least one day in the week belongs to month N-1 and at least one day belongs to month N.
+
+Example: week runs Monday 31 March to Sunday 6 April.
+  31 March → belongs to March (month N-1) — exclude from April MTD
+  1 April to 6 April → belongs to April (month N) — include in April MTD
+
+DETECTION:
+A rollover week exists when the week-start date (Monday) and the week-end date (Sunday or the TW_DATE) fall in different calendar months.
+Check: month(TW_DATE) ≠ month(week_start_date)
+If they are the same month: standard MTD logic applies, no special handling needed.
+If they differ: rollover week logic must be applied.
+
+ROLLOVER WEEK MTD CALCULATION RULES:
+
+Rule 1 — Identify the month boundary date.
+The boundary date is the first day of the current month (month N).
+boundary_date = first day of month(TW_DATE)
+Example: if TW_DATE = 6 April, then boundary_date = 1 April.
+
+Rule 2 — Filter MTD revenue to current month days only.
+For ALL MTD calculations in a rollover week, only include revenue from transaction dates >= boundary_date.
+Exclude any revenue from transaction dates < boundary_date regardless of whether those dates fall within the current reporting week.
+This applies at every level: overall commercial, per-L2 pillar, per-L3 category, and per-merchant.
+
+Rule 3 — MTD budget and stretch targets must also be adjusted.
+The MTD budget and MTD stretch targets in the source data may be set for the full month. If the MTD budget/stretch figure provided is a full-month target, do not adjust it — compare the partial-month actual against the full-month target as normal and note this in the validation summary.
+If the source data provides a daily or weekly budget breakdown, sum only the budget days from boundary_date to TW_DATE for the MTD target comparison.
+
+Rule 4 — Disclose rollover handling in validation summary.
+Whenever a rollover week is detected, include the following in the validation summary before generating the report:
+  'Rollover week detected: week spans [week_start_date] to [TW_DATE]. MTD calculations include only [boundary_date] to [TW_DATE] ([N days] of current month). Prior month days excluded from MTD: [list excluded dates].'
+
+Rule 5 — Do not apply rollover logic to WoW, YTD, or LW calculations.
+Rollover logic applies exclusively to MTD figures. WoW calculations always use TW vs LW full week revenue regardless of month boundary. YTD always accumulates from 1 January to TW_DATE regardless of month boundary.
+
+Rule 6 — Non-rollover weeks.
+If month(TW_DATE) = month(week_start_date), apply standard MTD logic: sum all revenue from the 1st of the current month to TW_DATE. No special handling required. Do not disclose rollover detection if no rollover exists.
+
 ### Mojibake Detection and Decoding
 
 Mojibake refers to garbled characters that result from text originally encoded as UTF-8 being misread as Latin-1 (ISO-8859-1) or a similar single-byte encoding. Common symptoms include sequences such as Ã©, â€™, Ã¢, Å" appearing in merchant names or category labels in the source data.

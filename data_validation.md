@@ -58,6 +58,19 @@ Await user confirmation before proceeding.
 - [ ] **At least 3 prior weeks present.** Required for momentum signals (Rising/Declining). If fewer than 3 weeks, state: *"Momentum signals unavailable — X weeks of data detected, minimum 3 required."*
 - [ ] **Weeks are consecutive.** Check for gaps in the weekly data. A missing week breaks momentum signal calculations — flag and ask whether to interpolate or skip.
 - [ ] **Week-ending dates are consistent.** All weekly data should share the same day-of-week cutoff (e.g., all Sunday or all Saturday). Flag inconsistencies.
+- [ ] **MTD rollover week check.** Compare the week-start date (Monday of the reporting week) and the week-end date (TW_DATE).
+
+  If month(week_start_date) ≠ month(TW_DATE):
+    - Flag as rollover week in the validation summary
+    - Identify boundary_date = first day of month(TW_DATE)
+    - Confirm which transaction dates in the week fall before boundary_date (prior month — exclude from MTD) and which fall on or after boundary_date (current month — include in MTD)
+    - List excluded dates explicitly: '[date]: excluded from MTD (prior month)'
+    - Confirm MTD revenue at overall, L2, L3, and merchant levels has been recalculated using only current-month dates
+    - Report: 'Rollover week: MTD includes [boundary_date] to [TW_DATE] only ([N days]). Excluded from MTD: [list of prior-month dates in the week].'
+
+  If month(week_start_date) = month(TW_DATE):
+    - No rollover. Standard MTD applies (1st of month to TW_DATE).
+    - Report: 'No rollover week detected. Standard MTD logic applied.'
 
 ---
 
