@@ -122,6 +122,8 @@ Label each signal clearly. Do not speculate on cause — describe the pattern on
 Each signal entry must follow this format:
 '[merchant_group value] ([L3 category name]) — [signal description with RM values]'
 
+Each merchant signal must appear on its own separate line. Never combine multiple merchant signals into a single sentence or comma-separated list. One merchant equals one line.
+
 The text in parentheses must always be the merchant's specific L3 category (Telco, Digital Lifestyle, Online Marketplaces & Fast Fashion, Daily Essentials & Retail, Everyday F&B and Lifestyle, or Travel).
 
 Never write 'Category Management' in the parentheses — that is the L2 pillar name, not the L3 category. Always look up the merchant's L3 category from the source data hierarchy before generating the signal entry. If the L3 category cannot be determined, write 'L3 Unknown' and flag it in the validation summary.
@@ -285,6 +287,52 @@ Rollover logic applies exclusively to MTD figures. WoW calculations always use T
 
 Rule 6 — Non-rollover weeks.
 If month(TW_DATE) = month(week_start_date), apply standard MTD logic: sum all revenue from the 1st of the current month to TW_DATE. No special handling required. Do not disclose rollover detection if no rollover exists.
+
+### YTD Accumulation Logic — Multi-File Computation and Rollover Week Handling
+
+DEFINITION:
+YTD (Year-to-Date) is the cumulative sum of all revenue from 1 January of the current year through to and including TW_DATE. It is computed by the AI by summing across all weekly data files uploaded for the current year — it is not read from a pre-aggregated column.
+
+Budget and stretch targets are pre-aggregated values read directly from a separate budget/stretch file. The AI must not compute or adjust these figures — read them as provided.
+
+COMPUTATION RULES:
+
+Rule 1 — Sum across all weekly files from 1 January to TW_DATE.
+YTD = sum of revenue across every weekly data file covering any period from 1 January of the current year up to and including TW_DATE.
+Every file whose reporting week falls fully or partially within this window must be included in the YTD sum.
+
+Rule 2 — Include the full current reporting week in YTD.
+The current week's contribution to YTD is the full 7-day week revenue — all days in the reporting week regardless of which calendar month they fall in. Do not apply month boundary filtering to YTD. Even in a rollover week where prior-month days are excluded from MTD, those same prior-month days must still be included in YTD.
+
+Example — rollover week Mon 31 Mar to Sun 6 Apr:
+  MTD (April): includes 1 Apr to 6 Apr only (6 days)
+  YTD: includes 31 Mar to 6 Apr in full (all 7 days) plus all prior weekly files since 1 Jan. The 31 Mar revenue is in YTD but not MTD.
+
+Rule 3 — Prevent double-counting across weekly files.
+Each weekly data file covers a distinct 7-day window. Before summing, confirm that no two uploaded files cover overlapping date ranges. If overlap is detected between any two files:
+  - Flag the overlap in the validation summary
+  - Do not sum the overlapping days twice
+  - Use the more recent file's data for the overlapping period
+  - Report: 'Overlap detected between [file A date range] and [file B date range]. Used [file B] for overlapping days.'
+
+Rule 4 — Prevent gaps between weekly files.
+Before summing YTD, verify that the uploaded files form a continuous sequence from the earliest available file to TW_DATE with no missing weeks. If a gap is detected:
+  - Flag the gap in the validation summary
+  - Report: 'Gap detected: no data file covers [missing date range]. YTD may be understated for this period.'
+  - Proceed with available data but note the understatement risk
+  - Do not attempt to interpolate or estimate the missing week
+
+Rule 5 — MTD filter must never contaminate YTD.
+The month boundary filter applied during MTD computation (excluding prior-month days from the current reporting week) must operate in complete isolation from YTD computation. Apply MTD and YTD as two entirely separate passes over the data. Never reuse a filtered MTD dataset as the input for YTD computation.
+
+Rule 6 — YTD applies at all levels consistently.
+YTD must be computed using the same 1 Jan to TW_DATE window at every level: overall commercial total, per-L2 pillar, per-L3 category, and per-merchant. No level may use a different YTD window or apply additional date filters.
+
+Rule 7 — Disclose YTD file coverage in validation summary.
+Before generating the report, list all files used in the YTD computation:
+  'YTD computed from [N] weekly files covering [earliest file start date] to [TW_DATE].'
+If any gaps or overlaps were detected and resolved, list them.
+If only one file is available (first week of the year): note this and confirm YTD = TW revenue for that single file.
 
 ### Mojibake Detection and Decoding
 

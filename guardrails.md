@@ -95,6 +95,11 @@ Every Early Warning Signal entry must identify the merchant's L3 category in par
 '[merchant_group] ([L3 category name]) — [signal description]'
 If the L3 category cannot be resolved from the data, write '(L3 Unknown)' and flag it in the validation output. Never suppress the signal entirely because of a missing L3 label — always include it with the Unknown tag.
 
+**G5.5 — Each Early Warning Signal entry must be on its own line.**
+Never group, combine, or comma-separate multiple merchant signals into a single line or sentence. Each merchant that triggers an early warning condition must appear as a standalone line entry in the format:
+'[merchant_group] ([L3 category]) — [signal description with RM values]'
+Writing two or more merchants on the same line is a guardrail violation.
+
 ---
 
 ## G6 — Tone and Language
@@ -224,3 +229,28 @@ When a rollover week is detected, the validation summary must include the rollov
 
 **G12.5 — MTD budget and stretch comparisons must note partial month context.**
 When a rollover week exists and only partial-month actuals are available, the validation summary must note that the MTD actual reflects a partial month. The MTD budget and stretch targets remain as provided in the source data — do not adjust them unless the source data provides a daily budget breakdown.
+
+---
+
+## G13 — YTD Accumulation Integrity
+
+**G13.1 — YTD always covers 1 January to TW_DATE inclusive.**
+No date filter, month boundary rule, or file selection logic may reduce the YTD window below 1 January to TW_DATE of the current year. Applying any additional date restriction to YTD is a guardrail violation.
+
+**G13.2 — MTD boundary filter must never contaminate YTD.**
+The month boundary filter used for MTD rollover weeks operates in complete isolation. YTD must be computed from an unfiltered dataset. Using a month-filtered MTD dataset as input for YTD computation is a guardrail violation.
+
+**G13.3 — Current week full revenue must be included in YTD.**
+Even in a rollover week where prior-month days are excluded from MTD, those same days must be included in YTD. The current reporting week always contributes its full 7-day revenue to YTD. Partial-week YTD contribution is a guardrail violation.
+
+**G13.4 — No double-counting across files.**
+If any two weekly files cover overlapping date ranges, the overlapping days must be counted only once using the more recent file. Silent double-counting of any date range in YTD is a guardrail violation.
+
+**G13.5 — Gaps must be disclosed not estimated.**
+If a weekly file is missing from the YTD sequence, the gap must be flagged and disclosed. Interpolating or estimating revenue for a missing week to fill a YTD gap is a guardrail violation.
+
+**G13.6 — Budget and stretch are always read as provided.**
+YTD budget and YTD stretch targets are pre-aggregated values from the budget/stretch file. The AI must not recompute, adjust, or override these figures. Using a computed value in place of the provided budget/stretch target is a guardrail violation.
+
+**G13.7 — YTD file coverage must always be disclosed.**
+The validation summary must always state how many weekly files were used in the YTD computation and the date range they cover. Generating a YTD figure without disclosing its file coverage is a guardrail violation.

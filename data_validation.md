@@ -72,6 +72,16 @@ Await user confirmation before proceeding.
     - No rollover. Standard MTD applies (1st of month to TW_DATE).
     - Report: 'No rollover week detected. Standard MTD logic applied.'
 
+- [ ] **YTD file coverage confirmed.** List all weekly data files available for the current year. Confirm the earliest file starts on or after 1 January of the current year. Confirm the latest file covers TW_DATE. Report: 'YTD computed from [N] files covering [earliest start] to [TW_DATE].'
+
+- [ ] **No overlapping date ranges between weekly files.** For each pair of consecutive files, confirm the end date of file N is exactly one day before the start date of file N+1, or that the files cover distinct non-overlapping windows. If overlap detected: flag, identify which days overlap, confirm more recent file will be used for overlapping period.
+
+- [ ] **No gaps between weekly files.** Confirm consecutive files form a continuous sequence with no missing weeks between them. If a gap is detected: flag the missing date range and note that YTD may be understated for this period.
+
+- [ ] **YTD and MTD computed as separate passes.** Confirm that the month boundary filter applied during MTD computation was not applied to the YTD dataset. YTD must include the full current reporting week regardless of rollover week status.
+
+- [ ] **YTD consistency across levels.** Confirm that the YTD window (1 Jan to TW_DATE) is identical at overall, L2, L3, and merchant levels. Flag any level where a different date range was inadvertently applied.
+
 ---
 
 ### D — Merchant Name Consistency

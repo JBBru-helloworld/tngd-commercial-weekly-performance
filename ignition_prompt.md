@@ -40,8 +40,22 @@ Step 3b — MTD calculation:
 If rollover week: sum revenue from boundary_date to TW_DATE only at overall, L2, L3, and merchant levels.
 If no rollover: sum revenue from 1st of current month to TW_DATE.
 
-Step 3c — YTD calculation:
-Sum all revenue from 1 January of the current year to TW_DATE. Month boundaries do not affect YTD. No special handling required.
+Step 3c — YTD computation (separate pass — do not reuse MTD dataset):
+
+File inventory: list all weekly data files available for the current year. Confirm date ranges covered by each file. Check for:
+  - Overlaps: if two files cover overlapping dates, flag and use the more recent file for the overlapping period
+  - Gaps: if any week between 1 Jan and TW_DATE has no file coverage, flag and note YTD understatement risk
+
+Compute YTD as the sum of all revenue across all available weekly files from 1 January to TW_DATE inclusive. Apply this at every level: overall commercial, per-L2 pillar, per-L3 category, per-merchant.
+
+Critical: compute YTD from the original unfiltered dataset — never from the month-filtered MTD dataset. The current reporting week contributes its full 7-day revenue to YTD regardless of rollover week status.
+
+Read YTD budget and YTD stretch targets directly from the budget/stretch file as pre-aggregated values. Do not compute or adjust these figures.
+
+Report before proceeding:
+  'YTD computed from [N] files covering [earliest date] to [TW_DATE].'
+  List any overlaps or gaps detected and how they were resolved.
+  Confirm MTD and YTD were computed as separate passes.
 
 Step 3d — MTD vs Budget and MTD vs Stretch:
 Compare calculated MTD actual against the MTD budget and MTD stretch values from the source data. If rollover week, note in validation summary that MTD actual is partial-month only.
@@ -53,6 +67,8 @@ Chunk 4 — Category Management L3 filtering: filter to L2 = 04 Category Managem
 Chunk 5 — Per-L3 merchant analysis: process each of the 6 L3 categories one at a time. For each L3 compute: Top Merchants, Winners, Losers, Momentum, Reactivated, New Entrants, DDNQR. Confirm completion of each L3 before moving to the next.
 
 Chunk 6 — Global DDNQR and Risky Business: apply MID = EP142731 filter across all commercial data for the global DDNQR Top 10. Compute Concentration Risk across all L2 pillars. Assess Early Warning Signals.
+
+Early Warning Signals formatting: each merchant must appear on its own separate line. Do not combine multiple merchants into one sentence or list them with commas. Format strictly as one entry per line.
 
 Chunk 7 — HTML generation: only after all data chunks are confirmed complete, begin filling the HTML template placeholders. Do not start HTML generation while any data chunk is still incomplete or unconfirmed.
 
@@ -161,6 +177,7 @@ For each file in the full source set, validate and report all of the following:
   - Confirm merchant_group has been identified as the primary merchant identifier. If merchant_group is absent or inconsistent, flag before proceeding.
   - Confirm TW_DATE and LW_DATE: identify the week-ending dates for the current reporting week (TW_DATE) and prior reporting week (LW_DATE). These are injected into all TW and LW column headers across every table in the report. Every "TW" header must render as "TW — {{TW_DATE}}" and every "LW" header must render as "LW — {{LW_DATE}}".
   - MTD rollover check: compare week-start date (Monday) and TW_DATE. If different calendar months, identify boundary_date (1st of TW month) and list all prior-month dates in the week that must be excluded from MTD. Report rollover status explicitly before any MTD computation begins.
+  - YTD file coverage: list all weekly files available for the current year. Confirm date range coverage from 1 Jan to TW_DATE. Flag any overlaps (use more recent file) or gaps (flag understatement risk). Confirm YTD will be computed as a separate pass from the unfiltered dataset — not from the MTD-filtered dataset.
   - Mojibake scan: scan all text columns in each ingested file for mojibake patterns (sequences such as Ã, â€, Å, Â indicating UTF-8 text misread as Latin-1). If detected, attempt auto-correction by re-decoding from Latin-1 bytes as UTF-8. Report findings before proceeding — state which columns were affected, how many rows were corrected, and provide a before/after example. If correction fails, flag the row with the original value and do not substitute.
   - Confirm L3 category is resolvable for all merchants. This is required for correct attribution in the Concentration Risk table (L3 Category column) and Early Warning Signals entries. Flag any merchant where L3 cannot be determined.
   - Empty table removal assessment: for each bucket table and DDNQR table (both global Top 10 and all 6 per-L3 Top 5 tables), confirm whether any qualifying rows exist after filtering and noise threshold application. Then apply the following rules:

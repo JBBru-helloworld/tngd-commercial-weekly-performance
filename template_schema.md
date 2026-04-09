@@ -89,6 +89,17 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "notes": "On every ingestion, scan all text columns for mojibake patterns (Ã, â€, Å, Â sequences indicating UTF-8 text misread as Latin-1). If detected, attempt auto-correction by re-decoding from Latin-1 bytes as UTF-8. Report all corrections in the validation summary with at least one before/after example. Escalate unresolvable cases to the user — do not substitute or silently skip."
       },
       {
+        "rule": "YTD_ACCUMULATION",
+        "window": "1 January of current year to TW_DATE inclusive",
+        "method": "Sum across all available weekly data files — AI computed",
+        "budget_stretch_source": "Pre-aggregated from separate budget/stretch file — read as provided, do not compute",
+        "isolation_from_mtd": "Must be computed as a completely separate pass from the MTD month-boundary-filtered dataset",
+        "rollover_week_behaviour": "Include full 7-day current week in YTD regardless of month boundary. Prior-month days excluded from MTD are still included in YTD.",
+        "overlap_handling": "If two files cover overlapping dates, use more recent file for overlapping period. Flag in validation summary.",
+        "gap_handling": "If a week between 1 Jan and TW_DATE has no file coverage, flag understatement risk. Do not estimate or interpolate.",
+        "required": true
+      },
+      {
         "rule": "MTD_ROLLOVER_BOUNDARY",
         "trigger": "month(week_start_date) ≠ month(TW_DATE)",
         "boundary_date": "First day of month(TW_DATE)",
@@ -124,48 +135,52 @@ This file defines every token in JSON for machine-readability, with a legend bel
     "section_1a_targets": [
       {
         "token": "YTD_ACTUAL",
-        "source": "excel",
+        "source": "calculated",
         "format": "RM X.XM",
-        "required": true
+        "required": true,
+        "notes": "Computed by AI: sum of revenue across all weekly files from 1 Jan to TW_DATE inclusive. Must be computed as a separate pass from MTD. Full current week included regardless of rollover week status. Check for file overlaps and gaps before computing."
       },
       {
         "token": "YTD_BUDGET",
         "source": "excel",
         "format": "RM X.XM",
-        "required": true
+        "required": true,
+        "notes": "Pre-aggregated: read directly from budget/stretch file as provided. Do not recompute or adjust."
       },
       {
         "token": "YTD_VAR_ABS",
         "source": "calculated",
         "format": "±RM X.XM",
-        "required": true
+        "required": true,
+        "notes": "Computed by AI: sum of revenue across all weekly files from 1 Jan to TW_DATE inclusive. Must be computed as a separate pass from MTD. Full current week included regardless of rollover week status. Check for file overlaps and gaps before computing."
       },
       {
         "token": "YTD_VAR_PCT",
         "source": "calculated",
         "format": "±X.X%",
-        "required": true
+        "required": true,
+        "notes": "Computed by AI: sum of revenue across all weekly files from 1 Jan to TW_DATE inclusive. Must be computed as a separate pass from MTD. Full current week included regardless of rollover week status. Check for file overlaps and gaps before computing."
       },
       {
         "token": "YTD_STRETCH",
         "source": "excel",
         "format": "RM X.XM",
         "required": false,
-        "notes": "YTD stretch target. If unavailable, omit YTD vs Stretch row and flag."
+        "notes": "YTD stretch target. If unavailable, omit YTD vs Stretch row and flag. Pre-aggregated: read directly from budget/stretch file as provided. Do not recompute or adjust."
       },
       {
         "token": "YTD_STR_VAR_ABS",
         "source": "calculated",
         "format": "±RM X.XM",
         "required": false,
-        "notes": "YTD Actual minus YTD Stretch target."
+        "notes": "YTD Actual minus YTD Stretch target. Computed by AI: sum of revenue across all weekly files from 1 Jan to TW_DATE inclusive. Must be computed as a separate pass from MTD. Full current week included regardless of rollover week status. Check for file overlaps and gaps before computing."
       },
       {
         "token": "YTD_STR_VAR_PCT",
         "source": "calculated",
         "format": "±X.X%",
         "required": false,
-        "notes": "YTD variance vs Stretch as a percentage."
+        "notes": "YTD variance vs Stretch as a percentage. Computed by AI: sum of revenue across all weekly files from 1 Jan to TW_DATE inclusive. Must be computed as a separate pass from MTD. Full current week included regardless of rollover week status. Check for file overlaps and gaps before computing."
       },
       {
         "token": "MTD_ACTUAL",
@@ -375,11 +390,13 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "token_pattern": "{PREFIX}_M{N}_{COL} where N=1-5, COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
         "total_row_pattern": "{PREFIX}_TOTAL_{COL} where COL = YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
         "source": "excel + calculated",
-        "mtd_note": "MTD rollover rule applies to all MTD values in this table: in weeks spanning two calendar months, MTD includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded at merchant and L3 total level."
+        "mtd_note": "MTD rollover rule applies to all MTD values in this table: in weeks spanning two calendar months, MTD includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded at merchant and L3 total level.",
+        "ytd_note": "YTD values in this table are AI-computed sums across all weekly files from 1 Jan to TW_DATE inclusive, computed as a separate pass from MTD. Full current week always included."
       },
       "bucket_tables": {
         "note": "All buckets: Top 5 merchants. Token pattern: {PREFIX}_{BUCKET}{N}_{COL}",
         "mtd_note": "MTD rollover rule applies to all MTD values in bucket tables: in weeks spanning two calendar months, MTD includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded at merchant level.",
+        "ytd_note": "YTD values in bucket tables are AI-computed sums across all weekly files from 1 Jan to TW_DATE inclusive, computed as a separate pass from MTD. Full current week always included.",
         "buckets": [
           {
             "code": "WIN",
@@ -441,7 +458,8 @@ This file defines every token in JSON for machine-readability, with a legend bel
       "token_pattern": "DDNQR_GLOBAL_R{N}_{COL} where N=1-10, COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
       "source": "excel + calculated",
       "required": true,
-      "mtd_note": "MTD rollover rule applies to all MTD values in this table: in weeks spanning two calendar months, MTD includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded at merchant level."
+      "mtd_note": "MTD rollover rule applies to all MTD values in this table: in weeks spanning two calendar months, MTD includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded at merchant level.",
+      "ytd_note": "YTD values in this table are AI-computed sums across all weekly files from 1 Jan to TW_DATE inclusive, computed as a separate pass from MTD. Full current week always included."
     },
 
     "section_3_risky_business": [
