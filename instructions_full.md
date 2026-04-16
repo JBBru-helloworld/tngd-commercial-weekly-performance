@@ -133,6 +133,30 @@ Never write 'Category Management' in the parentheses — that is the L2 pillar n
 **DDNQR Top 10 (Global):**
 After the Early Warning Signals block, insert a table of the top 10 DDNQR merchants across ALL commercial L2 pillars. Apply MID filter EP142731 to identify DDNQR merchants in the source data, then rank by YTD revenue descending. Use `merchant_group` as the display name. Columns: Merchant | YTD ↓ | MTD | LW | TW | WoW RM | WoW %. Tokens: `{{DDNQR_GLOBAL_R{N}_{COL}}}` where N = 1–10 and COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT. If MID EP142731 returns fewer than 10 merchants, populate the remaining rows with 'N/A'.
 
+**DDNQR Penetration Tracker (separate table)**
+
+Immediately after the Global DDNQR Top 10 table, insert a separate standalone table titled "DDNQR Penetration Tracker". This table uses the same horizontal padding and spacing as the DDNQR Top 10 table. It contains 3 rows with the same column structure (Metric | YTD ↓ | MTD | LW | TW | WoW RM | WoW %):
+
+Row 1 — Total DDNQR TPV:
+Sum each column (YTD, MTD, LW, TW) across all 10 DDNQR merchant rows.
+WoW RM = Total DDNQR TW minus Total DDNQR LW.
+WoW % = WoW RM / Total DDNQR LW × 100. Display as ±X.X%.
+If Total DDNQR LW = 0, display WoW % as N/A.
+
+Row 2 — Total Commercial TPV:
+Reuse the total commercial figures already computed for Table 1B (WoW by Commercial Pillar). Do not recompute — reference the same underlying values.
+WoW RM = Total Commercial TW minus Total Commercial LW.
+WoW % = WoW RM / Total Commercial LW × 100. Display as ±X.X%.
+
+Row 3 — DDNQR Migration %:
+For each column: (Total DDNQR value / Total Commercial value) × 100.
+Display as X.X% (ratio — no ± sign).
+WoW RM column: express as percentage point change = DDNQR Migration TW% minus DDNQR Migration LW%. Display as ±X.Xpp.
+WoW % column: percentage change of the migration rate itself = (DDNQR Migration TW% minus DDNQR Migration LW%) / DDNQR Migration LW% × 100. Display as ±X.X%. If DDNQR Migration LW% = 0, display as N/A.
+If any denominator for any column is zero, display that specific cell as N/A.
+
+The Penetration Tracker must always be present whenever the Global DDNQR Top 10 table is present. If the DDNQR Top 10 table is removed (empty), the Penetration Tracker is also removed with it as a single unit.
+
 ---
 
 ### SECTION 4 — Category Deep Dive

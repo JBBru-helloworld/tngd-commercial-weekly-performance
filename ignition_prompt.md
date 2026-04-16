@@ -188,6 +188,23 @@ For each file in the full source set, validate and report all of the following:
 
     PADDING CONSISTENCY: after removing any table, verify that the last remaining table in the same L3 block has at minimum 12px bottom padding between its lower edge and the grey separator bar. If the removed table was providing this spacing, add padding-bottom:12px to the last remaining table's outer wrapper <td>. The Back to Top button must retain minimum padding-top:6px on its wrapping <td>. The grey separator bar itself must never be removed.
 
+    DDNQR TOP 5 REMOVAL — SPECIFIC PADDING RULE:
+    When the DDNQR Top 5 table is removed from any L3 category block, the DDNQR table is always the last content element before the grey separator bar and Back to Top button. Its removal therefore always leaves the grey separator bar sitting directly adjacent to the table above it with no buffer.
+
+    After removing the DDNQR Top 5 table from any L3 block, you must immediately apply the following fix to that L3 block:
+
+    Step 1 — Find the grey separator bar row in that L3 block. It is the <tr> or <td> element containing border-top:2px solid #e5e7eb (or equivalent) that sits between the L3 content and the Back to Top button row.
+
+    Step 2 — Add or update the padding on the wrapping <td> of that grey separator bar row to include padding-top:12px. If it already has padding-top set to a value less than 12px, increase it to 12px. If it is already 12px or greater, leave it unchanged.
+
+    Step 3 — Verify the Back to Top button row itself retains its own internal padding (minimum padding-top:6px on its wrapping <td>). If the padding was reduced by the removal, restore it to 6px.
+
+    Step 4 — Confirm the grey separator bar is visually distinct — it must appear as a clear horizontal line with breathing room above it, not merged with the border of the table above.
+
+    Apply this specific rule to every L3 block where the DDNQR Top 5 table is removed. If DDNQR Top 5 is removed from 3 L3 blocks, apply this fix to all 3 grey separator bars independently.
+
+    Do not apply this rule when other tables (not DDNQR) are removed — those cases are covered by the general padding consistency rules above.
+
     L3 OUTER PADDING WRAPPER: the outermost <td> wrapper that provides horizontal padding (padding: 0 20px or equivalent) for each L3 category block must never be removed regardless of which tables within the block are empty or removed.
 
     LOG: list every removed table in the chat summary using: 'Table removed (empty): [TABLE NAME] — [L3 Category or Global]'

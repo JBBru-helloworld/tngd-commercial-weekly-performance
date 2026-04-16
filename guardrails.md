@@ -95,6 +95,9 @@ Every Early Warning Signal entry must identify the merchant's L3 category in par
 '[merchant_group] ([L3 category name]) — [signal description]'
 If the L3 category cannot be resolved from the data, write '(L3 Unknown)' and flag it in the validation output. Never suppress the signal entirely because of a missing L3 label — always include it with the Unknown tag.
 
+**G5.6 — DDNQR Migration % calculation must use the correct denominators.**
+The DDNQR Migration % for each column must always use the total commercial revenue for that same column as the denominator — never the DDNQR total itself or any other figure. The WoW RM column for DDNQR Migration % is expressed in percentage points (pp = TW migration rate minus LW migration rate) not in RM. If any denominator is zero for any column, that cell must display as N/A — never divide by zero or display an error.
+
 **G5.5 — Each Early Warning Signal entry must be on its own line.**
 Never group, combine, or comma-separate multiple merchant signals into a single line or sentence. Each merchant that triggers an early warning condition must appear as a standalone line entry in the format:
 '[merchant_group] ([L3 category]) — [signal description with RM values]'
@@ -177,6 +180,9 @@ Violation: any table removal that results in the grey separator bar being invisi
 
 **G9.6 — L3 outer padding wrapper is permanent.**
 The outermost <td> wrapper that provides the horizontal padding for each L3 category block (padding: 0 20px or equivalent) must never be removed from the HTML output. This element is structural — it controls section width alignment and must survive all table removal operations within its block. Removing this wrapper under any circumstance is a guardrail violation.
+
+**G9.7 — DDNQR Penetration Tracker is inseparable from the DDNQR Top 10 table.**
+The DDNQR Penetration Tracker (a separate standalone table immediately after the Global DDNQR Top 10, containing Total DDNQR TPV, Total Commercial TPV, and DDNQR Migration % rows) must always appear whenever the Global DDNQR Top 10 table is present. It must never be removed independently of the DDNQR Top 10 table. If the Global DDNQR Top 10 table is removed because it is empty, the Penetration Tracker is also removed with it as a single unit. Generating the DDNQR Top 10 table without the Penetration Tracker is a guardrail violation.
 
 ---
 

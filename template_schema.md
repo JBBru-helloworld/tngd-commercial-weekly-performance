@@ -462,6 +462,36 @@ This file defines every token in JSON for machine-readability, with a legend bel
       "ytd_note": "YTD values in this table are AI-computed sums across all weekly files from 1 Jan to TW_DATE inclusive, computed as a separate pass from MTD. Full current week always included."
     },
 
+    "section_2_ddnqr_penetration_tracker": {
+      "note": "Standalone table titled 'DDNQR Penetration Tracker' placed immediately after the Global DDNQR Top 10 table. Contains 3 rows: Total DDNQR TPV, Total Commercial TPV, and DDNQR Migration %. Always present when the DDNQR Top 10 table is present; removed with it as a single unit if the table is empty.",
+      "tokens": [
+        {
+          "token": "DDNQR_GLOBAL_TOTAL_{COL}",
+          "col_values": "YTD | MTD | LW | TW | WOW_RM | WOW_PCT",
+          "source": "calculated",
+          "format": "RM X.XM or RM X,XXX for YTD/MTD/LW/TW | ±RM X.XM for WOW_RM | ±X.X% for WOW_PCT",
+          "required": true,
+          "notes": "Sum of all 10 DDNQR merchant rows for each column. WoW RM = TW total minus LW total. WoW % = WoW RM / LW total × 100. If LW total = 0, display WoW % as N/A."
+        },
+        {
+          "token": "COMMERCIAL_TOTAL_{COL}",
+          "col_values": "YTD | MTD | LW | TW | WOW_RM | WOW_PCT",
+          "source": "calculated — reuse Table 1B total commercial figures",
+          "format": "RM X.XM or RM X,XXX for YTD/MTD/LW/TW | ±RM X.XM for WOW_RM | ±X.X% for WOW_PCT",
+          "required": true,
+          "notes": "Total commercial revenue across all L2 pillars. Reuse figures already computed for Table 1B — do not recompute."
+        },
+        {
+          "token": "DDNQR_MIGRATION_{COL}",
+          "col_values": "YTD | MTD | LW | TW | WOW_RM | WOW_PCT",
+          "source": "calculated",
+          "format": "X.X% for YTD/MTD/LW/TW | ±X.Xpp for WOW_RM | ±X.X% for WOW_PCT",
+          "required": true,
+          "notes": "DDNQR total / commercial total × 100 for each column. WoW RM expressed in percentage points (pp = TW migration rate minus LW migration rate). WoW % = (TW migration rate minus LW migration rate) / LW migration rate × 100. If any denominator is 0, display as N/A."
+        }
+      ]
+    },
+
     "section_3_risky_business": [
       {
         "token": "VOLATILE_MOVERS",
@@ -712,6 +742,7 @@ This file defines every token in JSON for machine-readability, with a legend bel
           "MTD — Month to Date: cumulative revenue from the 1st of the report month through the report week-ending date",
           "Contribution % — this merchant's TW revenue as a percentage of total commercial TW revenue",
           "Top 5 Cumulative % — sum of Contribution % for the top 5 merchants in the Concentration Risk table; the primary concentration risk signal",
+          "DDNQR Migration % — DDNQR total TPV as a percentage of total commercial TPV for the same period; tracks the share of payment volume migrated to Dynamic Duitnow QR",
           "Noise Filter — minimum weekly revenue threshold applied per L3 category to exclude immaterial merchants from bucket tables",
           "DDNQR — merchants using Dynamic Duitnow QR (MID = EP142731); shown in a dedicated table per L3 and globally",
           "Rising Momentum — merchants with 3 or more consecutive weeks of WoW revenue growth",
