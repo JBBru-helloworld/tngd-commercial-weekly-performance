@@ -60,17 +60,21 @@ Generate output in exactly this order. Do not skip sections. Do not add sections
 
 **Table 1B — Week-on-Week by Commercial Pillar (L2) (separate table, columns: Pillar | Last Week RM | This Week RM | Variance RM | Variance %):**
 
-| Pillar (Commercial L2) | Last Week (RM) | This Week (RM) | Variance (RM) | Variance (%) |
-| ---------------------- | -------------- | -------------- | ------------- | ------------ |
-| SME                    |                |                |               |              |
-| Mobility               |                |                |               |              |
-| Government Services    |                |                |               |              |
-| Category Management    |                |                |               |              |
-| Crossborder            |                |                |               |              |
-| Foreign Worker Segment |                |                |               |              |
-| **Total Commercial**   |                |                |               |              |
+| Pillar (Commercial L2)       | Last Week (RM) | This Week (RM) | Variance (RM) | Variance (%) |
+| ---------------------------- | -------------- | -------------- | ------------- | ------------ |
+| SME                          |                |                |               |              |
+| Mobility                     |                |                |               |              |
+| Government Services          |                |                |               |              |
+| Category Management          |                |                |               |              |
+| Crossborder (excl. eSIM)     |                |                |               |              |
+| eSIM                         |                |                |               |              |
+| Foreign Worker Segment       |                |                |               |              |
+| **Total Commercial**         |                |                |               |              |
 
 The Total Commercial row uses a highlighted style (yellow variance in HTML template). WoW is NOT in Table 1A — it has its own dedicated Table 1B with L2 pillar breakdown.
+
+**eSIM extraction from Crossborder:**
+Before populating Table 1B, identify all eSIM merchants using commercial_l3 = 'eSIM' (or equivalent eSIM value in the L3 field). Sum their LW and TW revenue separately as the eSIM row values. Subtract the eSIM LW total from the total Crossborder LW figure to get Crossborder (excl. eSIM) LW. Subtract the eSIM TW total from the total Crossborder TW figure to get Crossborder (excl. eSIM) TW. Compute variances for both the Crossborder (excl. eSIM) row and the eSIM row independently. The Total Commercial row must equal the sum of all 7 pillar rows including both Crossborder (excl. eSIM) and eSIM — confirm this before populating the table.
 
 ---
 
@@ -124,7 +128,7 @@ Each signal entry must follow this format:
 
 Each merchant signal must appear on its own separate line. Never combine multiple merchant signals into a single sentence or comma-separated list. One merchant equals one line.
 
-The text in parentheses must always be the merchant's specific L3 category (Telco, Digital Lifestyle, Online Marketplaces & Fast Fashion, Daily Essentials & Retail, Everyday F&B and Lifestyle, or Travel).
+The text in parentheses must always be the merchant's specific L3 category (Telco Prepaid, Telco Postpaid, Digital Lifestyle, Online Marketplaces & Fast Fashion, Daily Essentials & Retail, Everyday F&B and Lifestyle, or Travel).
 
 Never write 'Category Management' in the parentheses — that is the L2 pillar name, not the L3 category. Always look up the merchant's L3 category from the source data hierarchy before generating the signal entry. If the L3 category cannot be determined, write 'L3 Unknown' and flag it in the validation summary.
 
@@ -137,23 +141,29 @@ After the Early Warning Signals block, insert a table of the top 10 DDNQR mercha
 
 Immediately after the Global DDNQR Top 10 table, insert a separate standalone table titled "DDNQR Penetration Tracker". This table uses the same horizontal padding and spacing as the DDNQR Top 10 table. It contains 3 rows with the same column structure (Metric | YTD ↓ | MTD | LW | TW | WoW RM | WoW %):
 
+**DDNQR Penetration Tracker — TPV Source Requirement**
+
+All three summary footer rows (Total DDNQR TPV, Total Commercial TPV, DDNQR Migration %) must use TPV (Transaction Payment Volume) as the data source — not gross revenue. TPV is a distinct field in the weekly data file from the revenue field used elsewhere in the report.
+
 Row 1 — Total DDNQR TPV:
-Sum each column (YTD, MTD, LW, TW) across all 10 DDNQR merchant rows.
+Sum the TPV field across all qualifying DDNQR merchants (MID = EP142731) for YTD, MTD, LW, and TW periods. Do not use the revenue field for this calculation.
 WoW RM = Total DDNQR TW minus Total DDNQR LW.
 WoW % = WoW RM / Total DDNQR LW × 100. Display as ±X.X%.
 If Total DDNQR LW = 0, display WoW % as N/A.
 
 Row 2 — Total Commercial TPV:
-Reuse the total commercial figures already computed for Table 1B (WoW by Commercial Pillar). Do not recompute — reference the same underlying values.
+Sum the TPV field across all commercial merchants for YTD, MTD, LW, and TW periods. This figure is computed separately from the revenue-based Total Commercial used in Table 1B — they are different fields and will likely differ in value.
 WoW RM = Total Commercial TW minus Total Commercial LW.
 WoW % = WoW RM / Total Commercial LW × 100. Display as ±X.X%.
 
 Row 3 — DDNQR Migration %:
-For each column: (Total DDNQR value / Total Commercial value) × 100.
+For each column: DDNQR TPV / Total Commercial TPV × 100. Both numerator and denominator must be TPV.
 Display as X.X% (ratio — no ± sign).
 WoW RM column: express as percentage point change = DDNQR Migration TW% minus DDNQR Migration LW%. Display as ±X.Xpp.
 WoW % column: percentage change of the migration rate itself = (DDNQR Migration TW% minus DDNQR Migration LW%) / DDNQR Migration LW% × 100. Display as ±X.X%. If DDNQR Migration LW% = 0, display as N/A.
 If any denominator for any column is zero, display that specific cell as N/A.
+
+If the TPV field cannot be identified in the source data, flag this in the validation summary before generating the DDNQR Penetration Tracker and insert 'TPV field not found' in all 3 footer rows.
 
 The Penetration Tracker must always be present whenever the Global DDNQR Top 10 table is present. If the DDNQR Top 10 table is removed (empty), the Penetration Tracker is also removed with it as a single unit.
 
@@ -165,14 +175,17 @@ The Penetration Tracker must always be present whenever the Global DDNQR Top 10 
 
 **Noise filter:** Apply a dynamic minimum revenue threshold per L3 category independently. For each L3, exclude merchants whose weekly revenue falls below 1% of that L3's total weekly revenue OR below the 25th percentile of active merchant weekly revenues within that L3 — whichever threshold is lower. State the threshold for each L3 individually inside that L3's block using the token {{[PREFIX]_NOISE_THRESHOLD}}. Do not use a single global threshold across all L3 categories.
 
-**The 6 fixed L3 categories (always present, always in this order):**
+**The 7 fixed L3 categories (always present, always in this order):**
 
-1. Telco
-2. Digital Lifestyle
-3. Online Marketplaces & Fast Fashion
-4. Daily Essentials & Retail
-5. Everyday F&B and Lifestyle
-6. Travel
+1. Telco Prepaid
+2. Telco Postpaid
+3. Digital Lifestyle
+4. Online Marketplaces & Fast Fashion
+5. Daily Essentials & Retail
+6. Everyday F&B and Lifestyle
+7. Travel
+
+**Telco Prepaid vs Telco Postpaid:** identify prepaid and postpaid merchants within the Telco L3 category using the commercial_l3 or equivalent sub-category field in the source data. Prepaid and Postpaid must be treated as entirely separate L3 blocks with independent noise filters, independent merchant rankings, and independent bucket analysis. Do not mix prepaid and postpaid merchants across the two blocks. The Total L3 row in each block reflects only that sub-category's merchants.
 
 **For each L3, produce in order:**
 
@@ -201,7 +214,41 @@ The Penetration Tracker must always be present whenever the Global DDNQR Top 10 
 
 If fewer than 3 weeks of data: omit Rising/Declining Momentum and state: _"Momentum signals unavailable — minimum 3 weeks of data required."_
 
-**D. DDNQR Top 5** — Always present regardless of week count. Apply MID filter EP142731 first, then filter to this L3 category, then sort by YTD revenue descending. Use `merchant_group` as the display name. Tokens: `{{[PREFIX]_DDNQR{N}_{COL}}}` where N = 1–5 and COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT. Prefixes: TELCO, DL, MKTPL, DAILY, FNB, TRAVEL.
+**D. DDNQR Top 5** — Always present regardless of week count. Apply MID filter EP142731 first, then filter to this L3 category, then sort by YTD revenue descending. Use `merchant_group` as the display name. Tokens: `{{[PREFIX]_DDNQR{N}_{COL}}}` where N = 1–5 and COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT. Prefixes: TELCO_PRE, TELCO_POST, DL, MKTPL, DAILY, FNB, TRAVEL.
+
+---
+
+### Daily Essentials & Retail — Petrol Merchant Exclusion Rule
+
+When generating the Daily Essentials & Retail L3 block, petrol merchants must be excluded from all ranked merchant tables but retained in revenue totals.
+
+**IDENTIFICATION:**
+Petrol merchants are identified by either of these methods — apply both:
+Method 1 — merchant_group naming: any merchant_group value containing or matching (case-insensitive): Petronas, Shell, Caltex, Petron, BHPetrol.
+Method 2 — use-case field: any merchant whose use-case field in the weekly report data classifies them as petrol, fuel, or petroleum.
+If both methods are available, use both and combine the resulting lists. If a merchant is identified by either method, treat them as petrol.
+
+**EXCLUSION SCOPE** — exclude petrol merchants from:
+- Top Merchants table (Top 5 sorted by YTD)
+- Biggest Winners bucket
+- Biggest Losers bucket
+- Rising Momentum bucket
+- Declining Momentum bucket
+- Reactivated bucket
+- New Entrants bucket
+- DDNQR Top 5 table for Daily Essentials
+
+**RETENTION IN TOTALS** — petrol merchant revenue must be included in:
+- Total L3 row ({{DAILY_TOTAL_YTD}}, {{DAILY_TOTAL_MTD}}, {{DAILY_TOTAL_LW}}, {{DAILY_TOTAL_TW}}, {{DAILY_TOTAL_WOW_RM}}, {{DAILY_TOTAL_WOW_PCT}})
+- Any Daily Essentials & Retail aggregate figure used in Table 1B WoW by Commercial Pillar or elsewhere in the report
+
+**TABLE BACKFILL RULE:**
+When a petrol merchant would have ranked in the Top 5 of any table (e.g. Petronas appears as rank 2 by YTD), replace it with the next qualifying non-petrol merchant in that sort order. The table must always show 5 merchants if 5 non-petrol merchants exist. Never leave a blank row where a petrol merchant was excluded.
+
+**DISCLOSURE:**
+Include the following one-line note in the validation summary:
+'Petrol merchants excluded from Daily Essentials ranked tables: [list identified petrol merchants]. Revenue retained in totals.'
+Do not add this disclosure to the HTML output.
 
 
 

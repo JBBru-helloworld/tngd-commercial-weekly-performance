@@ -34,6 +34,7 @@ Await user confirmation before proceeding.
 - [ ] **No ambiguous columns.** Every column has been assigned a clear role. If a column's role is uncertain, flag it explicitly and ask the user.
 - [ ] **merchant_group field confirmed as primary merchant identifier.** If absent or inconsistent across weeks, flag before proceeding. Do not use any other name field as the display name.
 - [ ] **MID filter field confirmed.** Verify the data contains a column that can be filtered for MID = EP142731 to identify DDNQR merchants. If this column is absent or the value EP142731 returns zero rows, flag before generating the DDNQR tables and insert 'No DDNQR merchants found' in the relevant table placeholders.
+- [ ] **Telco sub-category split confirmed.** Verify the data contains a field (commercial_l3 or equivalent) that distinguishes Telco Prepaid from Telco Postpaid merchants. If this distinction cannot be made from the data, flag before proceeding and do not generate either Telco block until the user confirms the correct split field.
 - [ ] **Category hierarchy confirmed.** L2, L3, and L4 levels are distinguishable in the data (separate columns or encoded in a single field). Confirm which applies.
 - [ ] **L2 scope confirmed.** The data contains rows classifiable as "04 Category Management." If the L2 filter yields no rows, stop and flag this before proceeding.
 - [ ] **L3 category resolvable for all merchants flagged in Early Warning Signals and Concentration Risk table.** For every merchant that will appear in either the Early Warning Signals block or the Concentration Risk table, confirm their L3 category can be looked up from the data hierarchy. If any merchant's L3 category is unresolvable, flag the specific merchant name and the affected output section in the validation summary before generating the report.
@@ -94,8 +95,9 @@ Await user confirmation before proceeding.
 
 ### E — Noise Filter Application
 
-- [ ] **Per-L3 threshold computed.** For each of the 6 L3 categories independently, calculate: (a) 1% of that L3's total weekly revenue, and (b) the 25th percentile of active merchant weekly revenues within that L3. Apply the lower value as that L3's threshold. State each L3 threshold value separately in the validation summary.
-- [ ] **Thresholds stated.** Report the exact RM value of the threshold applied for each of the 6 L3 categories and the method used.
+- [ ] **Per-L3 threshold computed.** For each of the 7 L3 categories independently, calculate: (a) 1% of that L3's total weekly revenue, and (b) the 25th percentile of active merchant weekly revenues within that L3. Apply the lower value as that L3's threshold. State each L3 threshold value separately in the validation summary.
+- [ ] **Thresholds stated.** Report the exact RM value of the threshold applied for each of the 7 L3 categories and the method used.
+- [ ] **Daily Essentials petrol merchant identification complete.** Scan all merchant_group values within the Daily Essentials & Retail L3 scope for petrol merchants using both identification methods: Method 1 — merchant_group containing: Petronas, Shell, Caltex, Petron, BHPetrol (case-insensitive). Method 2 — use-case field classifying the merchant as petrol/fuel. Report the full list of identified petrol merchants and their combined TW revenue before proceeding. Confirm this revenue is retained in the Daily Essentials Total L3 figures.
 - [ ] **Merchants excluded listed.** Provide a count of how many merchants were excluded per L3 threshold, and optionally list their names for the user's reference.
 - [ ] **Thresholds are reasonable.** Sanity check: if any L3 threshold excludes >40% of merchants in that L3, flag this as potentially too aggressive and offer the user an override.
 
@@ -115,4 +117,5 @@ Await user confirmation before proceeding.
 - [ ] **All five sections can be attempted.** Confirm which sections are fully generatable, partially generatable, or must be skipped.
 - [ ] **Changelog data is ready.** Report date, week covered, new/removed merchants, and any threshold or schema changes are identified.
 - [ ] **Empty table assessment complete.** For each bucket table and DDNQR table (both global Top 10 and all 6 per-L3 Top 5 tables), confirm whether qualifying rows exist after filtering and noise threshold application. List each table that will be empty in the validation summary using the format: 'Will be removed (empty): [TABLE NAME] — [L3 Category or Global]'. Confirm this assessment before generating the HTML output so removals are planned and do not create structural errors.
+- [ ] **eSIM extraction from Crossborder validated.** Filter commercial_l3 = eSIM to identify eSIM merchants. Confirm: eSIM LW total computed correctly; eSIM TW total computed correctly; Crossborder (excl. eSIM) = Total Crossborder minus eSIM total for both LW and TW; Total Commercial = Crossborder (excl. eSIM) + eSIM + all other pillars (must equal pre-extraction Total Commercial exactly). Report any discrepancy before proceeding.
 - [ ] **User confirmation received** before full report generation begins.

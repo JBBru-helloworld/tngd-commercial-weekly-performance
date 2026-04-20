@@ -38,6 +38,9 @@ Do not generate Section 3 without first applying the noise filter and stating th
 **G2.5 — Always use merchant_group as the merchant identifier.**
 The source data contains a field called merchant_group which is the standardised and consistent naming for all merchants across weeks. Always use merchant_group as the merchant name displayed in all tables, bucket lists, and narrative text. Do not use any other merchant name field (such as merchant_name, merchant_id, or trade_name) as the display name unless merchant_group is absent, in which case flag the issue to the user before proceeding. Never mix merchant identifiers across the same report.
 
+**G2.6 — Telco Prepaid and Telco Postpaid must never be mixed.**
+Merchants identified as Telco Prepaid must only appear in the Telco Prepaid L3 block. Merchants identified as Telco Postpaid must only appear in the Telco Postpaid L3 block. A merchant appearing in both blocks in the same report is a guardrail violation. The Total L3 row for each block must reflect only that block's merchants.
+
 ---
 
 ## G3 — Output Structure
@@ -95,8 +98,14 @@ Every Early Warning Signal entry must identify the merchant's L3 category in par
 '[merchant_group] ([L3 category name]) — [signal description]'
 If the L3 category cannot be resolved from the data, write '(L3 Unknown)' and flag it in the validation output. Never suppress the signal entirely because of a missing L3 label — always include it with the Unknown tag.
 
-**G5.6 — DDNQR Migration % calculation must use the correct denominators.**
-The DDNQR Migration % for each column must always use the total commercial revenue for that same column as the denominator — never the DDNQR total itself or any other figure. The WoW RM column for DDNQR Migration % is expressed in percentage points (pp = TW migration rate minus LW migration rate) not in RM. If any denominator is zero for any column, that cell must display as N/A — never divide by zero or display an error.
+**G5.6 — DDNQR Penetration Tracker must use TPV not revenue.**
+All three rows of the DDNQR Penetration Tracker (Total DDNQR TPV, Total Commercial TPV, DDNQR Migration %) must be computed from the TPV field in the source data. Using the revenue field for any of these rows is a guardrail violation.
+
+Total Commercial TPV is computed separately from the revenue-based Total Commercial figure used in Table 1B — they are different source fields and must not be conflated.
+
+DDNQR Migration % = DDNQR TPV / Total Commercial TPV × 100. Using revenue in either the numerator or denominator is a guardrail violation.
+
+If the TPV field is not identifiable in the source data, do not populate the 3 footer rows with revenue figures as a substitute. Flag as unavailable and insert 'TPV field not found' in all cells.
 
 **G5.5 — Each Early Warning Signal entry must be on its own line.**
 Never group, combine, or comma-separate multiple merchant signals into a single line or sentence. Each merchant that triggers an early warning condition must appear as a standalone line entry in the format:
@@ -260,3 +269,35 @@ YTD budget and YTD stretch targets are pre-aggregated values from the budget/str
 
 **G13.7 — YTD file coverage must always be disclosed.**
 The validation summary must always state how many weekly files were used in the YTD computation and the date range they cover. Generating a YTD figure without disclosing its file coverage is a guardrail violation.
+
+---
+
+## G14 — Daily Essentials & Retail Petrol Merchant Exclusion
+
+**G14.1 — Petrol merchants must never appear in ranked tables.**
+Within the Daily Essentials & Retail L3 block, no merchant identified as a petrol merchant (by merchant_group name or use-case field) may appear in any ranked table: Top Merchants, Winners, Losers, Rising Momentum, Declining Momentum, Reactivated, New Entrants, or DDNQR Top 5. A petrol merchant name appearing in any ranked table is a guardrail violation.
+
+**G14.2 — Petrol revenue must be retained in all totals.**
+Excluding petrol merchants from ranked tables must never reduce the Total L3 revenue figures. The Total L3 row must always reflect the full Daily Essentials & Retail revenue including petrol. Removing petrol revenue from any total is a guardrail violation.
+
+**G14.3 — Excluded ranks must be backfilled.**
+If a petrol merchant would have ranked in the Top 5 of any table, the next qualifying non-petrol merchant in that sort order must fill the position. Leaving a blank row or reducing the table to fewer than 5 rows when 5 non-petrol merchants exist is a guardrail violation.
+
+**G14.4 — Known petrol merchants.**
+The following merchant_group names are always treated as petrol regardless of data context: Petronas, Shell, Caltex, Petron, BHPetrol. Additional petrol merchants identified via the use-case field must also be excluded. If a new petrol merchant is discovered that is not in this list, flag it in the validation summary.
+
+---
+
+## G15 — eSIM Extraction from Crossborder
+
+**G15.1 — eSIM must always be shown as a standalone row in Table 1B.**
+eSIM revenue must never be included within the Crossborder row figure. The Crossborder row must always be net of eSIM. Showing a Crossborder figure that includes eSIM revenue is a guardrail violation.
+
+**G15.2 — eSIM identification uses commercial_l3 field.**
+eSIM merchants are identified exclusively by filtering commercial_l3 = eSIM (or equivalent eSIM value). Do not use merchant_group naming to identify eSIM merchants — use the L3 field only.
+
+**G15.3 — Total Commercial must remain unchanged.**
+The reclassification of eSIM from Crossborder to a standalone row must not change the Total Commercial figure. Total Commercial = sum of all 7 rows including both Crossborder (excl. eSIM) and eSIM. Any discrepancy in the Total Commercial figure after eSIM extraction is a guardrail violation.
+
+**G15.4 — eSIM row position is fixed.**
+The eSIM row must always appear between Crossborder (excl. eSIM) and Foreign Worker Segment in Table 1B. It must never be moved, merged with another row, or omitted even if eSIM revenue is zero for the week (display zero with N/A for WoW % if LW is also zero).

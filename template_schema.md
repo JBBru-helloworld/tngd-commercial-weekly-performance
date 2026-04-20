@@ -234,14 +234,15 @@ This file defines every token in JSON for machine-readability, with a legend bel
     ],
 
     "section_1b_wow_by_pillar": {
-      "note": "One set of 4 tokens per L2 pillar. Pillars: SME, MOBILITY, GOVNT, CATMGMT, CROSSBORDER, FWS, TOTAL",
+      "note": "One set of 4 tokens per L2 pillar. Pillars: SME, MOBILITY, GOVNT, CATMGMT, CROSSBORDER_EX_ESIM, ESIM, FWS, TOTAL. Crossborder is shown net of eSIM revenue. eSIM is shown as a separate row identified via commercial_l3 = eSIM.",
       "token_pattern": "{PILLAR}_LW / {PILLAR}_TW / {PILLAR}_VAR_ABS / {PILLAR}_VAR_PCT",
       "pillars": [
         "SME",
         "MOBILITY",
         "GOVNT",
         "CATMGMT",
-        "CROSSBORDER",
+        "CROSSBORDER_EX_ESIM",
+        "ESIM",
         "FWS",
         "TOTAL"
       ],
@@ -249,6 +250,13 @@ This file defines every token in JSON for machine-readability, with a legend bel
       "prefix": "WOW_",
       "source": "excel + calculated",
       "required": true,
+      "esim_tokens": [
+        { "token": "WOW_ESIM_LW", "source": "excel", "format": "RM X.XM", "required": true, "notes": "eSIM LW revenue — extracted from Crossborder via commercial_l3 filter" },
+        { "token": "WOW_ESIM_TW", "source": "excel", "format": "RM X.XM", "required": true },
+        { "token": "WOW_ESIM_VAR_ABS", "source": "calculated", "format": "±RM X.XM", "required": true },
+        { "token": "WOW_ESIM_VAR_PCT", "source": "calculated", "format": "±X.X%", "required": true }
+      ],
+      "crossborder_ex_esim_note": "Crossborder revenue excluding eSIM merchants (commercial_l3 = eSIM filtered out). Tokens renamed from CROSSBORDER to CROSSBORDER_EX_ESIM.",
       "notes": "TOTAL row uses light blue background (#dbeafe) with dark navy text (#1e3a5f)"
     },
 
@@ -284,11 +292,18 @@ This file defines every token in JSON for machine-readability, with a legend bel
 
     "section_3_l3_noise_thresholds": [
       {
-        "token": "TELCO_NOISE_THRESHOLD",
+        "token": "TELCO_PRE_NOISE_THRESHOLD",
         "source": "calculated",
         "format": "RM X,XXX",
         "required": true,
-        "notes": "Dynamic noise filter threshold for Telco L3 category. Calculated as the lower of: 1% of total L3 weekly revenue or the 25th percentile of active merchant weekly revenues within this L3."
+        "notes": "Dynamic noise filter threshold for Telco Prepaid L3 category. Calculated as the lower of: 1% of total L3 weekly revenue or the 25th percentile of active merchant weekly revenues within this L3."
+      },
+      {
+        "token": "TELCO_POST_NOISE_THRESHOLD",
+        "source": "calculated",
+        "format": "RM X,XXX",
+        "required": true,
+        "notes": "Dynamic noise filter threshold for Telco Postpaid L3 category. Calculated as the lower of: 1% of total L3 weekly revenue or the 25th percentile of active merchant weekly revenues within this L3."
       },
       {
         "token": "DL_NOISE_THRESHOLD",
@@ -328,9 +343,10 @@ This file defines every token in JSON for machine-readability, with a legend bel
     ],
 
     "section_2_l3_blocks": {
-      "note": "Identical token structure for all 6 L3 categories. Replace PREFIX with: TELCO, DL, MKTPL, DAILY, FNB, TRAVEL",
+      "note": "Identical token structure for all 7 L3 categories. Replace PREFIX with: TELCO_PRE, TELCO_POST, DL, MKTPL, DAILY, FNB, TRAVEL",
       "l3_categories": [
-        { "prefix": "TELCO", "full_name": "Telco", "anchor": "l3-telco" },
+        { "prefix": "TELCO_PRE", "full_name": "Telco Prepaid", "anchor": "l3-telco-prepaid" },
+        { "prefix": "TELCO_POST", "full_name": "Telco Postpaid", "anchor": "l3-telco-postpaid" },
         {
           "prefix": "DL",
           "full_name": "Digital Lifestyle",
@@ -391,12 +407,14 @@ This file defines every token in JSON for machine-readability, with a legend bel
         "total_row_pattern": "{PREFIX}_TOTAL_{COL} where COL = YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
         "source": "excel + calculated",
         "mtd_note": "MTD rollover rule applies to all MTD values in this table: in weeks spanning two calendar months, MTD includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded at merchant and L3 total level.",
-        "ytd_note": "YTD values in this table are AI-computed sums across all weekly files from 1 Jan to TW_DATE inclusive, computed as a separate pass from MTD. Full current week always included."
+        "ytd_note": "YTD values in this table are AI-computed sums across all weekly files from 1 Jan to TW_DATE inclusive, computed as a separate pass from MTD. Full current week always included.",
+        "daily_petrol_note": "DAILY prefix only: Petrol merchants excluded from all ranked rows (identified by merchant_group naming: Petronas, Shell, Caltex, Petron, BHPetrol — or use-case field). Revenue retained in DAILY_TOTAL tokens. Excluded ranks backfilled with next qualifying non-petrol merchant."
       },
       "bucket_tables": {
         "note": "All buckets: Top 5 merchants. Token pattern: {PREFIX}_{BUCKET}{N}_{COL}",
         "mtd_note": "MTD rollover rule applies to all MTD values in bucket tables: in weeks spanning two calendar months, MTD includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded at merchant level.",
         "ytd_note": "YTD values in bucket tables are AI-computed sums across all weekly files from 1 Jan to TW_DATE inclusive, computed as a separate pass from MTD. Full current week always included.",
+        "daily_petrol_note": "DAILY prefix only: Petrol merchants excluded from all ranked rows (identified by merchant_group naming: Petronas, Shell, Caltex, Petron, BHPetrol — or use-case field). Revenue retained in DAILY_TOTAL tokens. Excluded ranks backfilled with next qualifying non-petrol merchant.",
         "buckets": [
           {
             "code": "WIN",
@@ -471,15 +489,15 @@ This file defines every token in JSON for machine-readability, with a legend bel
           "source": "calculated",
           "format": "RM X.XM or RM X,XXX for YTD/MTD/LW/TW | ±RM X.XM for WOW_RM | ±X.X% for WOW_PCT",
           "required": true,
-          "notes": "Sum of all 10 DDNQR merchant rows for each column. WoW RM = TW total minus LW total. WoW % = WoW RM / LW total × 100. If LW total = 0, display WoW % as N/A."
+          "notes": "Sum of TPV (not revenue) across all qualifying DDNQR merchants (MID = EP142731) for each column. Source field: TPV field in the weekly data file."
         },
         {
           "token": "COMMERCIAL_TOTAL_{COL}",
           "col_values": "YTD | MTD | LW | TW | WOW_RM | WOW_PCT",
-          "source": "calculated — reuse Table 1B total commercial figures",
+          "source": "calculated — TPV field, computed separately from revenue-based Table 1B figures",
           "format": "RM X.XM or RM X,XXX for YTD/MTD/LW/TW | ±RM X.XM for WOW_RM | ±X.X% for WOW_PCT",
           "required": true,
-          "notes": "Total commercial revenue across all L2 pillars. Reuse figures already computed for Table 1B — do not recompute."
+          "notes": "Total commercial TPV (not revenue) across all L2 pillars for each column. Source field: TPV field in the weekly data file. Must be computed from TPV separately from the revenue-based Total Commercial figures used in Table 1B."
         },
         {
           "token": "DDNQR_MIGRATION_{COL}",
@@ -487,7 +505,7 @@ This file defines every token in JSON for machine-readability, with a legend bel
           "source": "calculated",
           "format": "X.X% for YTD/MTD/LW/TW | ±X.Xpp for WOW_RM | ±X.X% for WOW_PCT",
           "required": true,
-          "notes": "DDNQR total / commercial total × 100 for each column. WoW RM expressed in percentage points (pp = TW migration rate minus LW migration rate). WoW % = (TW migration rate minus LW migration rate) / LW migration rate × 100. If any denominator is 0, display as N/A."
+          "notes": "DDNQR TPV / Total Commercial TPV × 100 for each column. Both numerator and denominator must be TPV figures — not revenue. WoW RM expressed in percentage points (pp = TW migration rate minus LW migration rate). WoW % = (TW migration rate minus LW migration rate) / LW migration rate × 100. If any denominator is 0, display as N/A."
         }
       ]
     },
