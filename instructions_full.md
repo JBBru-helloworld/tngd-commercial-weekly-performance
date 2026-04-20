@@ -159,11 +159,10 @@ WoW RM = Total Commercial TW minus Total Commercial LW.
 WoW % = WoW RM / Total Commercial LW × 100. Display as ±X.X%.
 
 Row 3 — DDNQR Migration %:
-For each column: DDNQR Gross TPV / Total Commercial Gross TPV × 100. Both numerator and denominator must be Gross TPV.
-Display as X.X% (ratio — no ± sign).
-WoW RM column: express as percentage point change = DDNQR Migration TW% minus DDNQR Migration LW%. Display as ±X.Xpp.
-WoW % column: percentage change of the migration rate itself = (DDNQR Migration TW% minus DDNQR Migration LW%) / DDNQR Migration LW% × 100. Display as ±X.X%. If DDNQR Migration LW% = 0, display as -.
-If any denominator for any column is zero, display that specific cell as -.
+For each column (YTD, MTD, LW, TW): DDNQR Gross TPV / Total Commercial Gross TPV × 100. Both numerator and denominator must be Gross TPV.
+Display as X.X% (ratio — no ± sign). If any denominator is zero, display that cell as -.
+WoW RM column: leave blank — do not populate, do not insert a dash or placeholder.
+WoW % column: leave blank — do not populate, do not insert a dash or placeholder.
 
 If the Gross TPV field cannot be identified in the source data, flag this in the validation summary before generating the DDNQR Penetration Tracker and insert 'Gross TPV field not found' in all 3 footer rows.
 
@@ -452,7 +451,7 @@ Escalation: if the decoding attempt fails (i.e. the result is still garbled or p
 
 ### Conditional Table Removal — Empty Tables Only
 
-When generating the HTML output, if any of the following table types contains zero qualifying rows after data filtering and noise threshold application, remove that specific table instance entirely from the HTML output:
+When generating the HTML output, any of the following table types that contains zero qualifying rows after data filtering and noise threshold application must be removed entirely from the HTML output. Leaving an empty eligible table in the HTML is a violation. Before HTML generation begins, produce a written removal plan listing every eligible table assessed as empty (to be removed) or non-empty (to be retained):
 
 Eligible for removal when empty:
 

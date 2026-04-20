@@ -169,8 +169,8 @@ Merchant-ranked tables (buckets, DDNQR, Top Merchants) may still be generated fr
 
 ## G9 — Conditional Table Removal
 
-**G9.1 — Only empty tables may be removed.**
-The AI may only remove a table from the HTML output when it contains zero qualifying rows after all filtering and noise threshold logic has been applied. No other reason justifies removing a designated template table.
+**G9.1 — Empty eligible tables must be removed; all others must remain.**
+The AI must remove a table from the HTML output when it contains zero qualifying rows after all filtering and noise threshold logic has been applied — this is mandatory, not optional. Leaving an empty eligible table (with no data rows) in the HTML output is a guardrail violation. No other reason justifies removing a table that contains qualifying rows.
 
 **G9.2 — Ineligible tables must always be present.**
 The following tables must never be removed regardless of data availability: Top Merchants (per L3), Biggest Winners (per L3), Biggest Losers (per L3), Concentration Risk, Early Warning Signals. If these tables have no data, insert 'No data available this week' in the relevant cells — do not remove the table.
@@ -199,6 +199,12 @@ The outermost <td> wrapper that provides the horizontal padding for each L3 cate
 
 **G9.7 — DDNQR Penetration Tracker is inseparable from the DDNQR Top 10 table.**
 The DDNQR Penetration Tracker (a separate standalone table immediately after the Global DDNQR Top 10, containing Total DDNQR TPV, Total Commercial TPV, and DDNQR Migration % rows) must always appear whenever the Global DDNQR Top 10 table is present. It must never be removed independently of the DDNQR Top 10 table. If the Global DDNQR Top 10 table is removed because it is empty, the Penetration Tracker is also removed with it as a single unit. Generating the DDNQR Top 10 table without the Penetration Tracker is a guardrail violation.
+
+**G9.8 — Pre-generation table removal assessment is mandatory.**
+Before HTML generation begins (before Chunk 7), the AI must explicitly assess every eligible removable table across all L3 blocks and global sections and produce a written removal plan in the chat. This plan must list: (1) all tables confirmed empty and marked for removal, (2) all tables confirmed non-empty and marked for retention. HTML generation must not start until this assessment is complete and confirmed. Beginning HTML generation without a completed table removal assessment is a guardrail violation.
+
+**G9.9 — DDNQR Migration % WoW cells must always be blank.**
+The WoW RM and WoW % cells for the DDNQR Migration % row in the Penetration Tracker must always be left empty — no value, no dash, no placeholder token. Populating either of these cells with any content is a guardrail violation.
 
 ---
 

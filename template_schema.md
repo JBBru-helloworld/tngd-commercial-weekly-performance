@@ -531,11 +531,12 @@ This file defines every token in JSON for machine-readability, with a legend bel
         },
         {
           "token": "DDNQR_MIGRATION_{COL}",
-          "col_values": "YTD | MTD | LW | TW | WOW_RM | WOW_PCT",
+          "col_values": "YTD | MTD | LW | TW",
+          "col_values_blank": "WOW_RM | WOW_PCT — always leave these two cells empty, no value, no placeholder",
           "source": "calculated",
-          "format": "X.X% for YTD/MTD/LW/TW | ±X.Xpp for WOW_RM | ±X.X% for WOW_PCT",
+          "format": "X.X% for YTD/MTD/LW/TW | WOW_RM and WOW_PCT cells are blank",
           "required": true,
-          "notes": "DDNQR Gross TPV / Total Commercial Gross TPV × 100 for each column. Both numerator and denominator must be Gross TPV figures — not revenue. WoW RM expressed in percentage points (pp = TW migration rate minus LW migration rate). WoW % = (TW migration rate minus LW migration rate) / LW migration rate × 100. If any denominator is 0, display as -."
+          "notes": "DDNQR Gross TPV / Total Commercial Gross TPV × 100 for each column. Both numerator and denominator must be Gross TPV figures — not revenue. WoW RM and WoW % cells for this row must always be left empty — do not populate, do not insert a placeholder or dash. If any denominator for YTD/MTD/LW/TW is zero, display that specific cell as -."
         }
       ]
     },
