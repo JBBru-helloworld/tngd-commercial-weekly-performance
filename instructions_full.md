@@ -128,6 +128,8 @@ Each signal entry must follow this format:
 
 Each merchant signal must appear on its own separate line. Never combine multiple merchant signals into a single sentence or comma-separated list. One merchant equals one line.
 
+**Cap:** No more than 10 merchants may appear in the Early Warning Signals block. If more than 10 qualify after applying the materiality threshold, apply this priority order: (1) single-week drop >20% WoW, (2) 2 consecutive WoW declines, (3) re-entry after ≥3 weeks absent. Within each priority tier, rank by absolute WoW revenue decline (largest first) and take the top entries until the 10-merchant limit is reached.
+
 The text in parentheses must always be the merchant's specific L3 category (Telco Prepaid, Telco Postpaid, Digital Lifestyle, Online Marketplaces & Fast Fashion, Daily Essentials & Retail, Everyday F&B and Lifestyle, or Travel).
 
 Never write 'Category Management' in the parentheses — that is the L2 pillar name, not the L3 category. Always look up the merchant's L3 category from the source data hierarchy before generating the signal entry. If the L3 category cannot be determined, write 'L3 Unknown' and flag it in the validation summary.
@@ -281,7 +283,13 @@ If a column's role is genuinely ambiguous after inspection, ask the user to clar
 
 ### Currency
 
-All revenue figures are RM. The raw data contains no currency symbol. Always display outputs as "RM X,XXX" or "RM X.XM" (millions) for readability. Use millions format (e.g., RM 2.4M) for figures at or above RM 1,000,000. Display figures below RM 1,000,000 as full digits (e.g., RM 48,200 or RM 750,000).
+All revenue figures are RM. The raw data contains no currency symbol. Apply a three-tier display format based on magnitude:
+
+- Below RM 1,000,000: full digits (e.g., RM 48,200 or RM 750,000)
+- RM 1,000,000 to below RM 1,000,000,000: millions format, one decimal (e.g., RM 2.4M)
+- RM 1,000,000,000 and above: billions format, one decimal (e.g., RM 1.2B)
+
+Do not mix formats within the same table. Apply the tier consistently based on each individual figure's magnitude.
 
 ### Missing Data
 

@@ -113,6 +113,9 @@ Never group, combine, or comma-separate multiple merchant signals into a single 
 '[merchant_group] ([L3 category]) — [signal description with RM values]'
 Writing two or more merchants on the same line is a guardrail violation.
 
+**G5.7 — Early Warning Signals are capped at 10 merchants.**
+No more than 10 merchants may appear in the Early Warning Signals block. If more than 10 qualify after applying the materiality threshold, use this priority order: (1) single-week drop >20% WoW, (2) 2 consecutive WoW declines, (3) re-entry after ≥3 weeks absent. Within each priority tier, rank by absolute WoW revenue decline (largest first). Stop once 10 entries are reached. Exceeding 10 entries is a guardrail violation.
+
 ---
 
 ## G6 — Tone and Language
@@ -126,9 +129,11 @@ Never write a qualitative claim without a supporting number. "Revenue increased"
 **G6.3 — Consistent number formatting.**
 
 - Below RM 1,000,000: RM X,XXX (e.g., RM 48,200 or RM 750,000)
-- At or above RM 1,000,000: RM X.XM (e.g., RM 1.2M)
+- RM 1,000,000 to below RM 1,000,000,000: RM X.XM (e.g., RM 1.2M)
+- RM 1,000,000,000 and above: RM X.XB (e.g., RM 1.2B)
 - Percentages: always show sign (e.g., +8.2% or –3.4%), one decimal place
 - Do not mix formats within the same table
+- Apply each figure's tier independently based on its own magnitude
 
 ---
 

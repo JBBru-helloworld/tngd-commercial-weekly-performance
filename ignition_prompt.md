@@ -69,7 +69,7 @@ Chunk 5 — Per-L3 merchant analysis: process each of the 7 L3 categories one at
 
 Chunk 6 — Global DDNQR and Risky Business: apply MID = EP142731 filter across all commercial data for the global DDNQR Top 10. Compute Concentration Risk across all L2 pillars. Assess Early Warning Signals. DDNQR Penetration Tracker Gross TPV source: the 3 summary footer rows require Gross TPV data not revenue. Identify the Gross TPV field in the source data. Compute: Total DDNQR TPV = sum of Gross TPV for MID = EP142731 merchants (YTD, MTD, LW, TW); Total Commercial TPV = sum of Gross TPV across all commercial merchants (computed separately from revenue totals — different field); DDNQR Migration % = DDNQR Gross TPV / Commercial Gross TPV × 100 per column. If Gross TPV field not found: flag in validation summary, insert 'Gross TPV field not found' in all Penetration Tracker cells, proceed with rest of report.
 
-Early Warning Signals formatting: each merchant must appear on its own separate line. Do not combine multiple merchants into one sentence or list them with commas. Format strictly as one entry per line.
+Early Warning Signals formatting: each merchant must appear on its own separate line. Do not combine multiple merchants into one sentence or list them with commas. Format strictly as one entry per line. Maximum 10 merchants total — if more qualify, apply priority: (1) >20% single-week WoW drop, (2) 2 consecutive WoW declines, (3) re-entry after ≥3 weeks absent; within each tier rank by absolute WoW decline descending.
 
 Chunk 7 — HTML generation: only after all data chunks are confirmed complete, begin filling the HTML template placeholders. Do not start HTML generation while any data chunk is still incomplete or unconfirmed.
 
@@ -297,7 +297,7 @@ Otherwise, proceed automatically.
 
 Output format: produce a brief summary of key findings directly in the chat (3–5 bullet points covering headline performance, top L2 driver, biggest risk, and one forward signal), then generate the full report as a downloadable HTML file using the template.html file. Do not produce a Word document.
 
-Currency: all figures are RM. Display as RM X,XXX for amounts below RM 1,000,000 and RM X.XM for amounts at or above RM 1,000,000.
+Currency: all figures are RM. Three-tier display: RM X,XXX for amounts below RM 1,000,000 | RM X.XM for RM 1,000,000 to below RM 1,000,000,000 | RM X.XB for RM 1,000,000,000 and above.
 
 Merchant naming: use merchant_group as the display name for all merchants in every table and narrative. Do not use any other name field.
 
@@ -325,9 +325,10 @@ Currency and figure rules:
 - Raw data contains no currency symbol
 - All figures represent Gross Revenue based on payment data only
 - Manual billing and ancillary income are excluded where required by the report rules
-- Display format:
+- Display format (three tiers):
   - RM X,XXX for amounts below RM 1,000,000
-  - RM X.XM for amounts at or above RM 1,000,000
+  - RM X.XM for amounts RM 1,000,000 to below RM 1,000,000,000
+  - RM X.XB for amounts RM 1,000,000,000 and above
 - Variances must always show sign where applicable
 
 ---
