@@ -1,4 +1,5 @@
 # Guardrails
+
 ## AI Constraints and Hard Rules — Weekly Performance Snapshot
 
 These rules are non-negotiable. They apply in every session, every week, without exception. If a guardrail is triggered, resolve it before delivering the report.
@@ -8,7 +9,7 @@ These rules are non-negotiable. They apply in every session, every week, without
 ## G1 — Data Integrity
 
 **G1.1 — Never fabricate numbers.**
-If a metric cannot be computed from the uploaded data, state this explicitly. Do not estimate, round up, or fill in from memory. Write: *"[Metric] not available — [reason]."*
+If a metric cannot be computed from the uploaded data, state this explicitly. Do not estimate, round up, or fill in from memory. Write: _"[Metric] not available — [reason]."_
 
 **G1.2 — Never assume zero for blanks.**
 A blank revenue cell ≠ zero revenue. Blanks must be flagged to the user during data validation. Do not silently treat missing values as zero.
@@ -62,7 +63,7 @@ All `{{TOKEN_NAME}}` placeholders used in output must match a token defined in `
 ## G4 — Momentum Signals
 
 **G4.1 — Minimum 3 weeks required for momentum.**
-Rising Momentum and Declining Momentum buckets require ≥3 consecutive weeks of data. If fewer weeks are available, omit these buckets and state: *"Momentum signals unavailable — X weeks of data detected, minimum 3 required."*
+Rising Momentum and Declining Momentum buckets require ≥3 consecutive weeks of data. If fewer weeks are available, omit these buckets and state: _"Momentum signals unavailable — X weeks of data detected, minimum 3 required."_
 
 **G4.2 — Consecutive means no gaps.**
 Momentum requires consecutive weekly data. A gap week (missing data) breaks the streak. Do not count across gaps.
@@ -77,9 +78,9 @@ A merchant generating RM 10K/week for 3 weeks is not Rising Momentum — revenue
 **G5.1 — Concentration Risk thresholds are based on Top 5 Cumulative %.**
 The risk flag ({{CONCENTRATION_FLAG}}) must always be derived from {{CONCENTRATION_TOP5_CUMULATIVE_PCT}} — the combined Contribution % of the top 5 merchants shown in the totals row at the bottom of the Concentration Risk table.
 Default thresholds:
-  ✅ OK:         Top 5 Cumulative % < 50%
-  🟡 Caution:   Top 5 Cumulative % ≥ 50% and < 70%
-  🔴 High Risk: Top 5 Cumulative % ≥ 70%
+✅ OK: Top 5 Cumulative % < 50%
+🟡 Caution: Top 5 Cumulative % ≥ 50% and < 70%
+🔴 High Risk: Top 5 Cumulative % ≥ 70%
 These thresholds may be overridden by the user but any override must be explicitly noted in the chat summary.
 
 **G5.1a — Contribution % and Top 5 Cumulative % are distinct calculations.**
@@ -123,6 +124,7 @@ Prohibited phrases include: "it is worth noting", "it is important to highlight"
 Never write a qualitative claim without a supporting number. "Revenue increased" is incomplete. "Revenue increased RM 340K (+8.2%) WoW" is correct.
 
 **G6.3 — Consistent number formatting.**
+
 - Below RM 1,000,000: RM X,XXX (e.g., RM 48,200 or RM 750,000)
 - At or above RM 1,000,000: RM X.XM (e.g., RM 1.2M)
 - Percentages: always show sign (e.g., +8.2% or –3.4%), one decimal place
@@ -150,7 +152,7 @@ If merchant-ranked analysis excludes revenue because no usable merchant identifi
 
 **G8.2 — Standard disclosure wording.**
 When unresolved merchant-attributable TW revenue is greater than RM 0, disclose once using exactly this wording:
-  'Merchant-ranked signals exclude unresolved rows worth RM X (Y% of TW commercial revenue).'
+'Merchant-ranked signals exclude unresolved rows worth RM X (Y% of TW commercial revenue).'
 
 **G8.3 — Placement.**
 Disclose in the validation summary if detected before generation. Disclose in the final chat changelog/summary if the report proceeds. Never in the HTML output.
@@ -300,4 +302,4 @@ eSIM merchants are identified exclusively by filtering commercial_l3 = eSIM (or 
 The reclassification of eSIM from Crossborder to a standalone row must not change the Total Commercial figure. Total Commercial = sum of all 7 rows including both Crossborder (excl. eSIM) and eSIM. Any discrepancy in the Total Commercial figure after eSIM extraction is a guardrail violation.
 
 **G15.4 — eSIM row position is fixed.**
-The eSIM row must always appear between Crossborder (excl. eSIM) and Foreign Worker Segment in Table 1B. It must never be moved, merged with another row, or omitted even if eSIM revenue is zero for the week (display zero with N/A for WoW % if LW is also zero).
+The eSIM row must always appear between Crossborder (excl. eSIM) and Foreign Worker Segment in Table 1B. It must never be moved, merged with another row, or omitted even if eSIM revenue is zero for the week (display zero with - for WoW % if LW is also zero).

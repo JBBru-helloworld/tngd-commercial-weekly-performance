@@ -60,16 +60,16 @@ Generate output in exactly this order. Do not skip sections. Do not add sections
 
 **Table 1B — Week-on-Week by Commercial Pillar (L2) (separate table, columns: Pillar | Last Week RM | This Week RM | Variance RM | Variance %):**
 
-| Pillar (Commercial L2)       | Last Week (RM) | This Week (RM) | Variance (RM) | Variance (%) |
-| ---------------------------- | -------------- | -------------- | ------------- | ------------ |
-| SME                          |                |                |               |              |
-| Mobility                     |                |                |               |              |
-| Government Services          |                |                |               |              |
-| Category Management          |                |                |               |              |
-| Crossborder (excl. eSIM)     |                |                |               |              |
-| eSIM                         |                |                |               |              |
-| Foreign Worker Segment       |                |                |               |              |
-| **Total Commercial**         |                |                |               |              |
+| Pillar (Commercial L2)   | Last Week (RM) | This Week (RM) | Variance (RM) | Variance (%) |
+| ------------------------ | -------------- | -------------- | ------------- | ------------ |
+| SME                      |                |                |               |              |
+| Mobility                 |                |                |               |              |
+| Government Services      |                |                |               |              |
+| Category Management      |                |                |               |              |
+| Crossborder (excl. eSIM) |                |                |               |              |
+| eSIM                     |                |                |               |              |
+| Foreign Worker Segment   |                |                |               |              |
+| **Total Commercial**     |                |                |               |              |
 
 The Total Commercial row uses a highlighted style (yellow variance in HTML template). WoW is NOT in Table 1A — it has its own dedicated Table 1B with L2 pillar breakdown.
 
@@ -99,19 +99,19 @@ Token: {{CONCENTRATION_TOP5_CUMULATIVE_PCT}}
 Formula: sum of Contribution % for ranks 1 through 5.
 
 Risk flags based on {{CONCENTRATION_TOP5_CUMULATIVE_PCT}}:
-  ✅ OK:         Top 5 Cumulative % < 50%
-  🟡 Caution:   Top 5 Cumulative % ≥ 50% and < 70%
-  🔴 High Risk: Top 5 Cumulative % ≥ 70%
+✅ OK: Top 5 Cumulative % < 50%
+🟡 Caution: Top 5 Cumulative % ≥ 50% and < 70%
+🔴 High Risk: Top 5 Cumulative % ≥ 70%
 
 Always show the {{CONCENTRATION_FLAG}} token reflecting the risk level derived from {{CONCENTRATION_TOP5_CUMULATIVE_PCT}}.
 
 For the L3 Category column, populate it with the merchant's specific L3 category name — NOT the L2 pillar name. The L3 category is the specific sub-category the merchant belongs to within Category Management, such as:
-  Telco
-  Digital Lifestyle
-  Online Marketplaces & Fast Fashion
-  Daily Essentials & Retail
-  Everyday F&B and Lifestyle
-  Travel
+Telco
+Digital Lifestyle
+Online Marketplaces & Fast Fashion
+Daily Essentials & Retail
+Everyday F&B and Lifestyle
+Travel
 Always look up the merchant's L3 category from the source data using the L3 hierarchy field. Never default to writing 'Category Management' — that is the L2 label, not the L3 category. If the L3 category cannot be determined from the data, write 'Unknown' and flag it in the validation summary.
 
 **Early Warning Signals:**
@@ -135,7 +135,7 @@ Never write 'Category Management' in the parentheses — that is the L2 pillar n
 **Materiality threshold:** The minimum absolute revenue threshold for Early Warning Signals is the same as the noise filter threshold already calculated during validation for the relevant L3 category. Merchants whose current-week revenue falls below this threshold are excluded from Early Warning Signals entirely — even if they show a qualifying pattern. The threshold is dynamic and will differ by L3 category and week. Document the exact RM value applied as {{EARLY_WARNING_THRESHOLD}} in the HTML template subtitle.
 
 **DDNQR Top 10 (Global):**
-After the Early Warning Signals block, insert a table of the top 10 DDNQR merchants across ALL commercial L2 pillars. Apply MID filter EP142731 to identify DDNQR merchants in the source data, then rank by YTD revenue descending. Use `merchant_group` as the display name. Columns: Merchant | YTD ↓ | MTD | LW | TW | WoW RM | WoW %. Tokens: `{{DDNQR_GLOBAL_R{N}_{COL}}}` where N = 1–10 and COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT. If MID EP142731 returns fewer than 10 merchants, populate the remaining rows with 'N/A'.
+After the Early Warning Signals block, insert a table of the top 10 DDNQR merchants across ALL commercial L2 pillars. Apply MID filter EP142731 to identify DDNQR merchants in the source data, then rank by YTD revenue descending. Use `merchant_group` as the display name. Columns: Merchant | YTD ↓ | MTD | LW | TW | WoW RM | WoW %. Tokens: `{{DDNQR_GLOBAL_R{N}_{COL}}}` where N = 1–10 and COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT. If MID EP142731 returns fewer than 10 merchants, populate the remaining rows with '-'.
 
 **DDNQR Penetration Tracker (separate table)**
 
@@ -149,7 +149,7 @@ Row 1 — Total DDNQR TPV:
 Sum the Gross TPV field across all qualifying DDNQR merchants (MID = EP142731) for YTD, MTD, LW, and TW periods. Do not use the revenue field for this calculation.
 WoW RM = Total DDNQR TW minus Total DDNQR LW.
 WoW % = WoW RM / Total DDNQR LW × 100. Display as ±X.X%.
-If Total DDNQR LW = 0, display WoW % as N/A.
+If Total DDNQR LW = 0, display WoW % as -.
 
 Row 2 — Total Commercial TPV:
 Sum the Gross TPV field across all commercial merchants for YTD, MTD, LW, and TW periods. This figure is computed separately from the revenue-based Total Commercial used in Table 1B — they are different fields and will likely differ in value.
@@ -160,8 +160,8 @@ Row 3 — DDNQR Migration %:
 For each column: DDNQR Gross TPV / Total Commercial Gross TPV × 100. Both numerator and denominator must be Gross TPV.
 Display as X.X% (ratio — no ± sign).
 WoW RM column: express as percentage point change = DDNQR Migration TW% minus DDNQR Migration LW%. Display as ±X.Xpp.
-WoW % column: percentage change of the migration rate itself = (DDNQR Migration TW% minus DDNQR Migration LW%) / DDNQR Migration LW% × 100. Display as ±X.X%. If DDNQR Migration LW% = 0, display as N/A.
-If any denominator for any column is zero, display that specific cell as N/A.
+WoW % column: percentage change of the migration rate itself = (DDNQR Migration TW% minus DDNQR Migration LW%) / DDNQR Migration LW% × 100. Display as ±X.X%. If DDNQR Migration LW% = 0, display as -.
+If any denominator for any column is zero, display that specific cell as -.
 
 If the Gross TPV field cannot be identified in the source data, flag this in the validation summary before generating the DDNQR Penetration Tracker and insert 'Gross TPV field not found' in all 3 footer rows.
 
@@ -210,7 +210,7 @@ The Penetration Tracker must always be present whenever the Global DDNQR Top 10 
 | 📉 Declining Momentum | Sort #1: consecutive weeks descending · Sort #2: YTD | ≥3 consecutive WoW decline weeks                  |
 | 🔄 Reactivated        | Sort #1: YTD descending                              | Transaction this week, zero revenue prior week(s) |
 | 🆕 New Entrants       | Sort #1: YTD descending                              | Zero lifetime transactions before this week       |
-| 📌 DDNQR Top 5        | Sort #1: YTD descending                              | MID = EP142731 within this L3 category scope       |
+| 📌 DDNQR Top 5        | Sort #1: YTD descending                              | MID = EP142731 within this L3 category scope      |
 
 If fewer than 3 weeks of data: omit Rising/Declining Momentum and state: _"Momentum signals unavailable — minimum 3 weeks of data required."_
 
@@ -229,6 +229,7 @@ Method 2 — use-case field: any merchant whose use-case field in the weekly rep
 If both methods are available, use both and combine the resulting lists. If a merchant is identified by either method, treat them as petrol.
 
 **EXCLUSION SCOPE** — exclude petrol merchants from:
+
 - Top Merchants table (Top 5 sorted by YTD)
 - Biggest Winners bucket
 - Biggest Losers bucket
@@ -239,6 +240,7 @@ If both methods are available, use both and combine the resulting lists. If a me
 - DDNQR Top 5 table for Daily Essentials
 
 **RETENTION IN TOTALS** — petrol merchant revenue must be included in:
+
 - Total L3 row ({{DAILY_TOTAL_YTD}}, {{DAILY_TOTAL_MTD}}, {{DAILY_TOTAL_LW}}, {{DAILY_TOTAL_TW}}, {{DAILY_TOTAL_WOW_RM}}, {{DAILY_TOTAL_WOW_PCT}})
 - Any Daily Essentials & Retail aggregate figure used in Table 1B WoW by Commercial Pillar or elsewhere in the report
 
@@ -249,8 +251,6 @@ When a petrol merchant would have ranked in the Top 5 of any table (e.g. Petrona
 Include the following one-line note in the validation summary:
 'Petrol merchants excluded from Daily Essentials ranked tables: [list identified petrol merchants]. Revenue retained in totals.'
 Do not add this disclosure to the HTML output.
-
-
 
 ---
 
@@ -296,6 +296,7 @@ Run the full data validation checklist (see `data_validation.md`) before generat
 ### Merchant Attribution Coverage
 
 If any rows in the source data cannot be attributed to a merchant (i.e. merchant_group is blank, null, or unresolvable), do not insert a caveat into the HTML report. Instead:
+
 1. Quantify the excluded TW revenue (RM value and % of total TW commercial revenue)
 2. Include this disclosure once in the validation summary before generation:
    'Merchant-ranked signals exclude unresolved rows worth RM X (Y% of TW commercial revenue).'
@@ -308,6 +309,7 @@ If any rows in the source data cannot be attributed to a merchant (i.e. merchant
 The weekly data file must always be processed in sequential logical chunks. Do not attempt to load or compute the entire dataset in a single operation as this risks incomplete fetching, computation errors, and unreliable output.
 
 Always follow this sequence:
+
 1. Schema and field identification
 2. L2 pillar revenue aggregation (LW, TW, variances)
 3. YTD and MTD target extraction and variance computation
@@ -324,8 +326,8 @@ DEFINITION:
 A rollover week is any reporting week where the 7-day window spans two calendar months — meaning at least one day in the week belongs to month N-1 and at least one day belongs to month N.
 
 Example: week runs Monday 31 March to Sunday 6 April.
-  31 March → belongs to March (month N-1) — exclude from April MTD
-  1 April to 6 April → belongs to April (month N) — include in April MTD
+31 March → belongs to March (month N-1) — exclude from April MTD
+1 April to 6 April → belongs to April (month N) — include in April MTD
 
 DETECTION:
 A rollover week exists when the week-start date (Monday) and the week-end date (Sunday or the TW_DATE) fall in different calendar months.
@@ -351,7 +353,7 @@ If the source data provides a daily or weekly budget breakdown, sum only the bud
 
 Rule 4 — Disclose rollover handling in validation summary.
 Whenever a rollover week is detected, include the following in the validation summary before generating the report:
-  'Rollover week detected: week spans [week_start_date] to [TW_DATE]. MTD calculations include only [boundary_date] to [TW_DATE] ([N days] of current month). Prior month days excluded from MTD: [list excluded dates].'
+'Rollover week detected: week spans [week_start_date] to [TW_DATE]. MTD calculations include only [boundary_date] to [TW_DATE] ([N days] of current month). Prior month days excluded from MTD: [list excluded dates].'
 
 Rule 5 — Do not apply rollover logic to WoW, YTD, or LW calculations.
 Rollover logic applies exclusively to MTD figures. WoW calculations always use TW vs LW full week revenue regardless of month boundary. YTD always accumulates from 1 January to TW_DATE regardless of month boundary.
@@ -376,22 +378,24 @@ Rule 2 — Include the full current reporting week in YTD.
 The current week's contribution to YTD is the full 7-day week revenue — all days in the reporting week regardless of which calendar month they fall in. Do not apply month boundary filtering to YTD. Even in a rollover week where prior-month days are excluded from MTD, those same prior-month days must still be included in YTD.
 
 Example — rollover week Mon 31 Mar to Sun 6 Apr:
-  MTD (April): includes 1 Apr to 6 Apr only (6 days)
-  YTD: includes 31 Mar to 6 Apr in full (all 7 days) plus all prior weekly files since 1 Jan. The 31 Mar revenue is in YTD but not MTD.
+MTD (April): includes 1 Apr to 6 Apr only (6 days)
+YTD: includes 31 Mar to 6 Apr in full (all 7 days) plus all prior weekly files since 1 Jan. The 31 Mar revenue is in YTD but not MTD.
 
 Rule 3 — Prevent double-counting across weekly files.
 Each weekly data file covers a distinct 7-day window. Before summing, confirm that no two uploaded files cover overlapping date ranges. If overlap is detected between any two files:
-  - Flag the overlap in the validation summary
-  - Do not sum the overlapping days twice
-  - Use the more recent file's data for the overlapping period
-  - Report: 'Overlap detected between [file A date range] and [file B date range]. Used [file B] for overlapping days.'
+
+- Flag the overlap in the validation summary
+- Do not sum the overlapping days twice
+- Use the more recent file's data for the overlapping period
+- Report: 'Overlap detected between [file A date range] and [file B date range]. Used [file B] for overlapping days.'
 
 Rule 4 — Prevent gaps between weekly files.
 Before summing YTD, verify that the uploaded files form a continuous sequence from the earliest available file to TW_DATE with no missing weeks. If a gap is detected:
-  - Flag the gap in the validation summary
-  - Report: 'Gap detected: no data file covers [missing date range]. YTD may be understated for this period.'
-  - Proceed with available data but note the understatement risk
-  - Do not attempt to interpolate or estimate the missing week
+
+- Flag the gap in the validation summary
+- Report: 'Gap detected: no data file covers [missing date range]. YTD may be understated for this period.'
+- Proceed with available data but note the understatement risk
+- Do not attempt to interpolate or estimate the missing week
 
 Rule 5 — MTD filter must never contaminate YTD.
 The month boundary filter applied during MTD computation (excluding prior-month days from the current reporting week) must operate in complete isolation from YTD computation. Apply MTD and YTD as two entirely separate passes over the data. Never reuse a filtered MTD dataset as the input for YTD computation.
@@ -401,7 +405,7 @@ YTD must be computed using the same 1 Jan to TW_DATE window at every level: over
 
 Rule 7 — Disclose YTD file coverage in validation summary.
 Before generating the report, list all files used in the YTD computation:
-  'YTD computed from [N] weekly files covering [earliest file start date] to [TW_DATE].'
+'YTD computed from [N] weekly files covering [earliest file start date] to [TW_DATE].'
 If any gaps or overlaps were detected and resolved, list them.
 If only one file is available (first week of the year): note this and confirm YTD = TW revenue for that single file.
 
@@ -443,6 +447,7 @@ Escalation: if the decoding attempt fails (i.e. the result is still garbled or p
 When generating the HTML output, if any of the following table types contains zero qualifying rows after data filtering and noise threshold application, remove that specific table instance entirely from the HTML output:
 
 Eligible for removal when empty:
+
 - DDNQR Top 5 tables (per L3 category — each assessed independently)
 - DDNQR Global Top 10 table (in Section 2 Risky Business)
 - Rising Momentum bucket table (per L3 category)
@@ -451,6 +456,7 @@ Eligible for removal when empty:
 - New Entrants bucket table (per L3 category)
 
 NOT eligible for removal under any circumstance:
+
 - L3 title bars and noise filter + overview cards
 - Top Merchants table (per L3)
 - Biggest Winners bucket table (per L3)
@@ -466,26 +472,26 @@ NOT eligible for removal under any circumstance:
 REMOVAL RULES — when removing an empty table, the AI must:
 
 1. Remove the complete table block including:
-     - The section label <p> or header bar <tr> specific to that table
-     - The subtitle/description row if one exists directly above the table
-     - The column header row
-     - All data rows
-     - Any wrapping <tr><td> padding rows that exist SOLELY to create spacing above or below that specific table and serve no other purpose
-   Do not remove any shared padding rows, dividers, or structural elements that also serve adjacent content.
+   - The section label <p> or header bar <tr> specific to that table
+   - The subtitle/description row if one exists directly above the table
+   - The column header row
+   - All data rows
+   - Any wrapping <tr><td> padding rows that exist SOLELY to create spacing above or below that specific table and serve no other purpose
+     Do not remove any shared padding rows, dividers, or structural elements that also serve adjacent content.
 
 2. Preserve all surrounding elements:
-     - The Back to Top button and its wrapping row must never be removed or have its top/bottom border affected by a table removal above it
-     - The L3 section divider (border-top separator between L3 blocks) must remain intact
-     - Any padding row between the last remaining table and the Back to Top button must be preserved or adjusted so the Back to Top button retains its correct spacing (padding-top: minimum 8px above the Back to Top button row)
+   - The Back to Top button and its wrapping row must never be removed or have its top/bottom border affected by a table removal above it
+   - The L3 section divider (border-top separator between L3 blocks) must remain intact
+   - Any padding row between the last remaining table and the Back to Top button must be preserved or adjusted so the Back to Top button retains its correct spacing (padding-top: minimum 8px above the Back to Top button row)
 
 3. After removal, verify the surrounding structure:
-     - No double padding gaps where the removed table sat
-     - No missing bottom border on the last table remaining in that L3 block
-     - The Back to Top button renders correctly with consistent spacing from the table above it
-     - The L3 divider line between categories is not affected
+   - No double padding gaps where the removed table sat
+   - No missing bottom border on the last table remaining in that L3 block
+   - The Back to Top button renders correctly with consistent spacing from the table above it
+   - The L3 divider line between categories is not affected
 
 4. Log every removed table in the chat summary using this format:
-     'Table removed (empty): [TABLE NAME] — [L3 Category or Global]'
+   'Table removed (empty): [TABLE NAME] — [L3 Category or Global]'
    Example: 'Table removed (empty): DDNQR Top 5 — Telco'
    Example: 'Table removed (empty): Rising Momentum — Travel'
    Example: 'Table removed (empty): DDNQR Global Top 10'
@@ -496,10 +502,10 @@ REMOVAL RULES — when removing an empty table, the AI must:
    Each L3 block ends with a grey separator bar (a <td> or <tr> with border-top styling, e.g. border-top:2px solid #e5e7eb or similar) that visually separates the L3 content from the Back to Top button row.
 
    After any table removal, verify the following:
-     a. The <tr> or <td> immediately above the grey separator bar has a minimum bottom padding of 12px. If the removed table was the element providing this spacing, add padding-bottom:12px to the last remaining table's wrapper <td> to compensate.
-     b. The grey separator bar itself must not be removed, merged with any table border, or rendered invisible as a side effect of the removal.
-     c. The visual gap between the bottom edge of the last remaining table and the top edge of the grey separator bar must be at minimum 12px. If it is less than 12px after removal, add the deficit as padding-bottom to the last remaining table's outer wrapper <td>.
-     d. The Back to Top button row must sit below the grey separator bar with its own internal padding intact (minimum padding-top:6px on the Back to Top button's wrapping <td>).
+   a. The <tr> or <td> immediately above the grey separator bar has a minimum bottom padding of 12px. If the removed table was the element providing this spacing, add padding-bottom:12px to the last remaining table's wrapper <td> to compensate.
+   b. The grey separator bar itself must not be removed, merged with any table border, or rendered invisible as a side effect of the removal.
+   c. The visual gap between the bottom edge of the last remaining table and the top edge of the grey separator bar must be at minimum 12px. If it is less than 12px after removal, add the deficit as padding-bottom to the last remaining table's outer wrapper <td>.
+   d. The Back to Top button row must sit below the grey separator bar with its own internal padding intact (minimum padding-top:6px on the Back to Top button's wrapping <td>).
 
    Never remove the grey separator bar or its wrapping <tr> as part of a table removal operation under any circumstances.
 

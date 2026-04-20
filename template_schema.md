@@ -251,10 +251,31 @@ This file defines every token in JSON for machine-readability, with a legend bel
       "source": "excel + calculated",
       "required": true,
       "esim_tokens": [
-        { "token": "WOW_ESIM_LW", "source": "excel", "format": "RM X.XM", "required": true, "notes": "eSIM LW revenue — extracted from Crossborder via commercial_l3 filter" },
-        { "token": "WOW_ESIM_TW", "source": "excel", "format": "RM X.XM", "required": true },
-        { "token": "WOW_ESIM_VAR_ABS", "source": "calculated", "format": "±RM X.XM", "required": true },
-        { "token": "WOW_ESIM_VAR_PCT", "source": "calculated", "format": "±X.X%", "required": true }
+        {
+          "token": "WOW_ESIM_LW",
+          "source": "excel",
+          "format": "RM X.XM",
+          "required": true,
+          "notes": "eSIM LW revenue — extracted from Crossborder via commercial_l3 filter"
+        },
+        {
+          "token": "WOW_ESIM_TW",
+          "source": "excel",
+          "format": "RM X.XM",
+          "required": true
+        },
+        {
+          "token": "WOW_ESIM_VAR_ABS",
+          "source": "calculated",
+          "format": "±RM X.XM",
+          "required": true
+        },
+        {
+          "token": "WOW_ESIM_VAR_PCT",
+          "source": "calculated",
+          "format": "±X.X%",
+          "required": true
+        }
       ],
       "crossborder_ex_esim_note": "Crossborder revenue excluding eSIM merchants (commercial_l3 = eSIM filtered out). Tokens renamed from CROSSBORDER to CROSSBORDER_EX_ESIM.",
       "notes": "TOTAL row uses light blue background (#dbeafe) with dark navy text (#1e3a5f)"
@@ -345,8 +366,16 @@ This file defines every token in JSON for machine-readability, with a legend bel
     "section_2_l3_blocks": {
       "note": "Identical token structure for all 7 L3 categories. Replace PREFIX with: TELCO_PRE, TELCO_POST, DL, MKTPL, DAILY, FNB, TRAVEL",
       "l3_categories": [
-        { "prefix": "TELCO_PRE", "full_name": "Telco Prepaid", "anchor": "l3-telco-prepaid" },
-        { "prefix": "TELCO_POST", "full_name": "Telco Postpaid", "anchor": "l3-telco-postpaid" },
+        {
+          "prefix": "TELCO_PRE",
+          "full_name": "Telco Prepaid",
+          "anchor": "l3-telco-prepaid"
+        },
+        {
+          "prefix": "TELCO_POST",
+          "full_name": "Telco Postpaid",
+          "anchor": "l3-telco-postpaid"
+        },
         {
           "prefix": "DL",
           "full_name": "Digital Lifestyle",
@@ -505,7 +534,7 @@ This file defines every token in JSON for machine-readability, with a legend bel
           "source": "calculated",
           "format": "X.X% for YTD/MTD/LW/TW | ±X.Xpp for WOW_RM | ±X.X% for WOW_PCT",
           "required": true,
-          "notes": "DDNQR Gross TPV / Total Commercial Gross TPV × 100 for each column. Both numerator and denominator must be Gross TPV figures — not revenue. WoW RM expressed in percentage points (pp = TW migration rate minus LW migration rate). WoW % = (TW migration rate minus LW migration rate) / LW migration rate × 100. If any denominator is 0, display as N/A."
+          "notes": "DDNQR Gross TPV / Total Commercial Gross TPV × 100 for each column. Both numerator and denominator must be Gross TPV figures — not revenue. WoW RM expressed in percentage points (pp = TW migration rate minus LW migration rate). WoW % = (TW migration rate minus LW migration rate) / LW migration rate × 100. If any denominator is 0, display as -."
         }
       ]
     },

@@ -33,8 +33,8 @@ If they fall in different calendar months, a rollover week exists.
 Identify boundary_date = first day of month(TW_DATE).
 List all transaction dates in the reporting week that fall before boundary_date — these are excluded from MTD.
 Report rollover status before proceeding:
-  If rollover: 'Rollover week detected: MTD includes [boundary_date] to [TW_DATE] ([N days]). Excluded from MTD: [list of prior-month dates].'
-  If no rollover: 'No rollover week. Standard MTD applied.'
+If rollover: 'Rollover week detected: MTD includes [boundary_date] to [TW_DATE] ([N days]). Excluded from MTD: [list of prior-month dates].'
+If no rollover: 'No rollover week. Standard MTD applied.'
 
 Step 3b — MTD calculation:
 If rollover week: sum revenue from boundary_date to TW_DATE only at overall, L2, L3, and merchant levels.
@@ -43,8 +43,9 @@ If no rollover: sum revenue from 1st of current month to TW_DATE.
 Step 3c — YTD computation (separate pass — do not reuse MTD dataset):
 
 File inventory: list all weekly data files available for the current year. Confirm date ranges covered by each file. Check for:
-  - Overlaps: if two files cover overlapping dates, flag and use the more recent file for the overlapping period
-  - Gaps: if any week between 1 Jan and TW_DATE has no file coverage, flag and note YTD understatement risk
+
+- Overlaps: if two files cover overlapping dates, flag and use the more recent file for the overlapping period
+- Gaps: if any week between 1 Jan and TW_DATE has no file coverage, flag and note YTD understatement risk
 
 Compute YTD as the sum of all revenue across all available weekly files from 1 January to TW_DATE inclusive. Apply this at every level: overall commercial, per-L2 pillar, per-L3 category, per-merchant.
 
@@ -53,9 +54,9 @@ Critical: compute YTD from the original unfiltered dataset — never from the mo
 Read YTD budget and YTD stretch targets directly from the budget/stretch file as pre-aggregated values. Do not compute or adjust these figures.
 
 Report before proceeding:
-  'YTD computed from [N] files covering [earliest date] to [TW_DATE].'
-  List any overlaps or gaps detected and how they were resolved.
-  Confirm MTD and YTD were computed as separate passes.
+'YTD computed from [N] files covering [earliest date] to [TW_DATE].'
+List any overlaps or gaps detected and how they were resolved.
+Confirm MTD and YTD were computed as separate passes.
 
 Step 3d — MTD vs Budget and MTD vs Stretch:
 Compare calculated MTD actual against the MTD budget and MTD stretch values from the source data. If rollover week, note in validation summary that MTD actual is partial-month only.
@@ -302,7 +303,7 @@ Merchant naming: use merchant_group as the display name for all merchants in eve
 
 Do not skip any section. Do not add sections not listed. If a section cannot be completed, include it with a clear explanation of why and what data would be needed.
 
-Use template.html as the exact output structure for the HTML file. Fill every {{TOKEN_NAME}} placeholder with the correct value derived from the data. Do not alter the template design, layout, colours, fonts, spacing, section order, or any HTML structure. Your only job is to replace placeholders with data. If a placeholder cannot be filled due to missing data, insert 'N/A' and flag it in the chat summary.
+Use template.html as the exact output structure for the HTML file. Fill every {{TOKEN_NAME}} placeholder with the correct value derived from the data. Do not alter the template design, layout, colours, fonts, spacing, section order, or any HTML structure. Your only job is to replace placeholders with data. If a placeholder cannot be filled due to missing data, insert '-' and flag it in the chat summary.
 
 ---
 
@@ -440,7 +441,7 @@ YTD source
 c. Six bucket tables
 Each bucket table must be fully populated.
 Do not use placeholder rows.
-Do not use "N/A" unless genuinely no qualifying merchants exist.
+Do not use "-" unless genuinely no qualifying merchants exist.
 If a bucket is empty, use a single row stating:
 "No merchants meet this criterion this week"
 
