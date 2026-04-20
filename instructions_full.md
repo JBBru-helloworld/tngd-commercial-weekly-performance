@@ -143,27 +143,27 @@ Immediately after the Global DDNQR Top 10 table, insert a separate standalone ta
 
 **DDNQR Penetration Tracker — TPV Source Requirement**
 
-All three summary footer rows (Total DDNQR TPV, Total Commercial TPV, DDNQR Migration %) must use TPV (Transaction Payment Volume) as the data source — not gross revenue. TPV is a distinct field in the weekly data file from the revenue field used elsewhere in the report.
+All three summary footer rows (Total DDNQR TPV, Total Commercial TPV, DDNQR Migration %) must use Gross TPV (Gross Transaction Payment Volume) as the data source — not gross revenue. Gross TPV is a distinct field in the weekly data file from the revenue field used elsewhere in the report.
 
 Row 1 — Total DDNQR TPV:
-Sum the TPV field across all qualifying DDNQR merchants (MID = EP142731) for YTD, MTD, LW, and TW periods. Do not use the revenue field for this calculation.
+Sum the Gross TPV field across all qualifying DDNQR merchants (MID = EP142731) for YTD, MTD, LW, and TW periods. Do not use the revenue field for this calculation.
 WoW RM = Total DDNQR TW minus Total DDNQR LW.
 WoW % = WoW RM / Total DDNQR LW × 100. Display as ±X.X%.
 If Total DDNQR LW = 0, display WoW % as N/A.
 
 Row 2 — Total Commercial TPV:
-Sum the TPV field across all commercial merchants for YTD, MTD, LW, and TW periods. This figure is computed separately from the revenue-based Total Commercial used in Table 1B — they are different fields and will likely differ in value.
+Sum the Gross TPV field across all commercial merchants for YTD, MTD, LW, and TW periods. This figure is computed separately from the revenue-based Total Commercial used in Table 1B — they are different fields and will likely differ in value.
 WoW RM = Total Commercial TW minus Total Commercial LW.
 WoW % = WoW RM / Total Commercial LW × 100. Display as ±X.X%.
 
 Row 3 — DDNQR Migration %:
-For each column: DDNQR TPV / Total Commercial TPV × 100. Both numerator and denominator must be TPV.
+For each column: DDNQR Gross TPV / Total Commercial Gross TPV × 100. Both numerator and denominator must be Gross TPV.
 Display as X.X% (ratio — no ± sign).
 WoW RM column: express as percentage point change = DDNQR Migration TW% minus DDNQR Migration LW%. Display as ±X.Xpp.
 WoW % column: percentage change of the migration rate itself = (DDNQR Migration TW% minus DDNQR Migration LW%) / DDNQR Migration LW% × 100. Display as ±X.X%. If DDNQR Migration LW% = 0, display as N/A.
 If any denominator for any column is zero, display that specific cell as N/A.
 
-If the TPV field cannot be identified in the source data, flag this in the validation summary before generating the DDNQR Penetration Tracker and insert 'TPV field not found' in all 3 footer rows.
+If the Gross TPV field cannot be identified in the source data, flag this in the validation summary before generating the DDNQR Penetration Tracker and insert 'Gross TPV field not found' in all 3 footer rows.
 
 The Penetration Tracker must always be present whenever the Global DDNQR Top 10 table is present. If the DDNQR Top 10 table is removed (empty), the Penetration Tracker is also removed with it as a single unit.
 

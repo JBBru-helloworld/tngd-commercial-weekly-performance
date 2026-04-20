@@ -98,14 +98,14 @@ Every Early Warning Signal entry must identify the merchant's L3 category in par
 '[merchant_group] ([L3 category name]) — [signal description]'
 If the L3 category cannot be resolved from the data, write '(L3 Unknown)' and flag it in the validation output. Never suppress the signal entirely because of a missing L3 label — always include it with the Unknown tag.
 
-**G5.6 — DDNQR Penetration Tracker must use TPV not revenue.**
-All three rows of the DDNQR Penetration Tracker (Total DDNQR TPV, Total Commercial TPV, DDNQR Migration %) must be computed from the TPV field in the source data. Using the revenue field for any of these rows is a guardrail violation.
+**G5.6 — DDNQR Penetration Tracker must use Gross TPV not revenue.**
+All three rows of the DDNQR Penetration Tracker (Total DDNQR TPV, Total Commercial TPV, DDNQR Migration %) must be computed from the Gross TPV field in the source data. Using the revenue field for any of these rows is a guardrail violation.
 
 Total Commercial TPV is computed separately from the revenue-based Total Commercial figure used in Table 1B — they are different source fields and must not be conflated.
 
-DDNQR Migration % = DDNQR TPV / Total Commercial TPV × 100. Using revenue in either the numerator or denominator is a guardrail violation.
+DDNQR Migration % = DDNQR Gross TPV / Total Commercial Gross TPV × 100. Using revenue in either the numerator or denominator is a guardrail violation.
 
-If the TPV field is not identifiable in the source data, do not populate the 3 footer rows with revenue figures as a substitute. Flag as unavailable and insert 'TPV field not found' in all cells.
+If the Gross TPV field is not identifiable in the source data, do not populate the 3 footer rows with revenue figures as a substitute. Flag as unavailable and insert 'Gross TPV field not found' in all cells.
 
 **G5.5 — Each Early Warning Signal entry must be on its own line.**
 Never group, combine, or comma-separate multiple merchant signals into a single line or sentence. Each merchant that triggers an early warning condition must appear as a standalone line entry in the format:

@@ -489,15 +489,15 @@ This file defines every token in JSON for machine-readability, with a legend bel
           "source": "calculated",
           "format": "RM X.XM or RM X,XXX for YTD/MTD/LW/TW | ±RM X.XM for WOW_RM | ±X.X% for WOW_PCT",
           "required": true,
-          "notes": "Sum of TPV (not revenue) across all qualifying DDNQR merchants (MID = EP142731) for each column. Source field: TPV field in the weekly data file."
+          "notes": "Sum of Gross TPV (not revenue) across all qualifying DDNQR merchants (MID = EP142731) for each column. Source field: Gross TPV field in the weekly data file."
         },
         {
           "token": "COMMERCIAL_TOTAL_{COL}",
           "col_values": "YTD | MTD | LW | TW | WOW_RM | WOW_PCT",
-          "source": "calculated — TPV field, computed separately from revenue-based Table 1B figures",
+          "source": "calculated — Gross TPV field, computed separately from revenue-based Table 1B figures",
           "format": "RM X.XM or RM X,XXX for YTD/MTD/LW/TW | ±RM X.XM for WOW_RM | ±X.X% for WOW_PCT",
           "required": true,
-          "notes": "Total commercial TPV (not revenue) across all L2 pillars for each column. Source field: TPV field in the weekly data file. Must be computed from TPV separately from the revenue-based Total Commercial figures used in Table 1B."
+          "notes": "Total commercial Gross TPV (not revenue) across all L2 pillars for each column. Source field: Gross TPV field in the weekly data file. Must be computed from Gross TPV separately from the revenue-based Total Commercial figures used in Table 1B."
         },
         {
           "token": "DDNQR_MIGRATION_{COL}",
@@ -505,7 +505,7 @@ This file defines every token in JSON for machine-readability, with a legend bel
           "source": "calculated",
           "format": "X.X% for YTD/MTD/LW/TW | ±X.Xpp for WOW_RM | ±X.X% for WOW_PCT",
           "required": true,
-          "notes": "DDNQR TPV / Total Commercial TPV × 100 for each column. Both numerator and denominator must be TPV figures — not revenue. WoW RM expressed in percentage points (pp = TW migration rate minus LW migration rate). WoW % = (TW migration rate minus LW migration rate) / LW migration rate × 100. If any denominator is 0, display as N/A."
+          "notes": "DDNQR Gross TPV / Total Commercial Gross TPV × 100 for each column. Both numerator and denominator must be Gross TPV figures — not revenue. WoW RM expressed in percentage points (pp = TW migration rate minus LW migration rate). WoW % = (TW migration rate minus LW migration rate) / LW migration rate × 100. If any denominator is 0, display as N/A."
         }
       ]
     },
