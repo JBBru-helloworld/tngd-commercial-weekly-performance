@@ -509,7 +509,8 @@ This file defines every token in JSON for machine-readability, with a legend bel
             "columns": "NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
             "token_pattern": "{PREFIX}_DDNQR{N}_{COL} where N=1-5",
             "note": "Apply MID filter EP142731 first, then filter to L3 category, then sort by DDNQR-specific YTD revenue descending. All revenue values (YTD/MTD/LW/TW/WoW) must be sourced only from rows where MID=EP142731. Never use the merchant's total revenue across all MIDs. Use merchant_group as the display name.",
-            "total_row_token_pattern": "{PREFIX}_DDNQR_TOTAL_{COL} where COL = YTD|MTD|LW|TW|WOW_RM|WOW_PCT"
+            "total_row_token_pattern": "{PREFIX}_DDNQR_TOTAL_{COL} where COL = YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
+            "total_row_note": "Sums ALL MID=EP142731 merchants within this L3 category — not just the top 5 displayed rows."
           }
         ]
       }
@@ -524,7 +525,7 @@ This file defines every token in JSON for machine-readability, with a legend bel
       "ytd_note": "YTD values in this table are AI-computed sums across all weekly files from 1 Jan to TW_DATE inclusive, computed as a separate pass from MTD. Full current week always included. YTD must also be MID=EP142731 scoped.",
       "total_row": {
         "token_pattern": "DDNQR_GLOBAL_REV_TOTAL_{COL} where COL = YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
-        "notes": "Footer row summing DDNQR-scoped revenue for all displayed merchants in the Global Top 10. Styled teal (#0e7490) background, white bold text."
+        "notes": "Footer row summing DDNQR-scoped revenue for ALL qualifying MID=EP142731 merchants across all commercial L2 pillars — not just the top 10 displayed rows. WoW RM = Total TW minus Total LW. WoW % = WoW RM / Total LW × 100."
       }
     },
 

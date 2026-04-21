@@ -155,11 +155,11 @@ Step 3 — Compute period columns from DDNQR subset. For each merchant compute t
 
 Step 4 — Sort by YTD DDNQR revenue descending. Rank merchants by their YTD DDNQR revenue (computed in Step 3). Show Top 10 globally or Top 5 per L3 category.
 
-Step 5 — Add Total DDNQR Revenue row at the bottom of each table. After the last merchant data row, append a Total row that sums each column across all displayed merchant rows:
-- Total YTD DDNQR = sum of all displayed merchant YTD DDNQR values
-- Total MTD DDNQR = sum of all displayed merchant MTD DDNQR values
-- Total LW DDNQR  = sum of all displayed merchant LW DDNQR values
-- Total TW DDNQR  = sum of all displayed merchant TW DDNQR values
+Step 5 — Add Total DDNQR Revenue row at the bottom of each table. After the last merchant data row, append a Total row that sums each column across ALL qualifying DDNQR merchants in scope — not just the displayed rows. For the Global Top 10, this means all merchants with MID=EP142731 across all commercial L2 pillars. For each per-L3 Top 5, this means all merchants with MID=EP142731 within that L3 category. Do not limit the total to only the top 10 or top 5 displayed rows.
+- Total YTD DDNQR = sum of YTD DDNQR revenue across ALL qualifying merchants in scope
+- Total MTD DDNQR = sum of MTD DDNQR revenue across ALL qualifying merchants in scope
+- Total LW DDNQR  = sum of LW DDNQR revenue across ALL qualifying merchants in scope
+- Total TW DDNQR  = sum of TW DDNQR revenue across ALL qualifying merchants in scope
 - Total WoW RM    = Total TW DDNQR minus Total LW DDNQR
 - Total WoW %     = Total WoW RM / Total LW DDNQR × 100. If Total LW DDNQR = 0, display as N/A.
 

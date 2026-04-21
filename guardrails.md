@@ -340,8 +340,8 @@ When computing any DDNQR revenue metric — YTD, MTD, LW, TW, WoW RM, WoW % — 
 **G16.2 — MID filter is applied before merchant identification, not after.**
 The correct processing order is: (1) filter all rows to MID = EP142731, (2) group the resulting rows by merchant_group, (3) sum revenue within each group. Applying merchant identification first and then attempting to extract DDNQR revenue is a guardrail violation.
 
-**G16.3 — DDNQR total rows must sum only MID-scoped revenue.**
-The Total DDNQR Revenue footer rows in the Global Top 10 and each per-L3 Top 5 DDNQR table must reflect the sum of DDNQR-scoped revenue for the displayed merchants only. Using any broader revenue aggregate (e.g. total L3 revenue or total commercial revenue) in the Total DDNQR Revenue row is a guardrail violation.
+**G16.3 — DDNQR total rows must sum ALL qualifying merchants, not just displayed rows.**
+The Total DDNQR Revenue footer rows in the Global Top 10 and each per-L3 Top 5 DDNQR table must reflect the sum of DDNQR-scoped revenue across ALL merchants qualifying under MID=EP142731 within the relevant scope — not only the top 10 or top 5 displayed rows. For the Global Top 10, sum all MID=EP142731 merchants across all commercial L2 pillars. For each per-L3 Top 5, sum all MID=EP142731 merchants within that L3 category. Limiting the total to only the displayed ranked rows is a guardrail violation.
 
 **G16.4 — DDNQR sort order must use MID-scoped YTD revenue.**
 Merchants in all DDNQR tables must be ranked by their MID=EP142731 YTD revenue, descending. Ranking by total merchant YTD revenue or by any other metric is a guardrail violation.
