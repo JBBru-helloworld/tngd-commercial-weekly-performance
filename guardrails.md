@@ -345,3 +345,12 @@ The Total DDNQR Revenue footer rows in the Global Top 10 and each per-L3 Top 5 D
 
 **G16.4 — DDNQR sort order must use MID-scoped YTD revenue.**
 Merchants in all DDNQR tables must be ranked by their MID=EP142731 YTD revenue, descending. Ranking by total merchant YTD revenue or by any other metric is a guardrail violation.
+
+**G16.5 — DDNQR audit block is a mandatory gate before HTML generation.**
+The DDNQR audit block (all 5 checks) must be completed and reported in the chat before Chunk 7 (HTML generation) begins. Beginning HTML generation without a completed and passing DDNQR audit is a guardrail violation. If any audit check fails, stop and resolve with the user before proceeding.
+
+**G16.6 — DDNQR revenue and Gross TPV must never be mixed.**
+Object 1 (ddnqr_global_revenue) and Object 2 (ddnqr_l3_revenue) use the revenue field only. Object 3 (ddnqr_penetration_tpv) uses the Gross TPV field only. Using Gross TPV in Objects 1 or 2, or using revenue in Object 3, is a guardrail violation. If Object 3 Row 1 TW equals Object 1 Total TW exactly, flag as a likely field-mapping error before proceeding.
+
+**G16.7 — The three DDNQR objects are computed in complete isolation.**
+No figure from Objects 1, 2, or 3 may be derived from, reused from, or cross-contaminated with the revenue figures used in Table 1B, L3 Top Merchants tables, or any other non-DDNQR calculation. Each object draws directly from the source data with its own filter applied first.

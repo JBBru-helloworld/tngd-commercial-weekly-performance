@@ -136,67 +136,147 @@ Never write 'Category Management' in the parentheses — that is the L2 pillar n
 
 **Materiality threshold:** The minimum absolute revenue threshold for Early Warning Signals is the same as the noise filter threshold already calculated during validation for the relevant L3 category. Merchants whose current-week revenue falls below this threshold are excluded from Early Warning Signals entirely — even if they show a qualifying pattern. The threshold is dynamic and will differ by L3 category and week. Document the exact RM value applied as {{EARLY_WARNING_THRESHOLD}} in the HTML template subtitle.
 
-**DDNQR Top 10 (Global):**
-After the Early Warning Signals block, insert a table of the top 10 DDNQR merchants across ALL commercial L2 pillars. Use `merchant_group` as the display name. Columns: Merchant | YTD ↓ | MTD | LW | TW | WoW RM | WoW %. Tokens: `{{DDNQR_GLOBAL_R{N}_{COL}}}` where N = 1–10 and COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT. If MID EP142731 returns fewer than 10 merchants, populate the remaining rows with '-'. After the 10th merchant row, append a Total DDNQR Revenue row (tokens: `{{DDNQR_GLOBAL_REV_TOTAL_{COL}}}` for COL = YTD|MTD|LW|TW|WOW_RM|WOW_PCT).
+---
 
-**DDNQR Revenue Computation — Correct Logic**
+## DDNQR Isolated Calculation Path
 
-Step 1 — Filter by MID = EP142731. From the full dataset, isolate all transaction rows where MID = EP142731. This produces the DDNQR transaction subset.
+DDNQR computation is a fully isolated processing phase. It must be completed as a self-contained block before any DDNQR tokens are populated in the HTML template. No DDNQR figures may be derived from, or mixed with, the revenue figures used in the rest of the report. The phase produces three discrete objects and concludes with a mandatory audit block.
 
-Step 2 — Aggregate per merchant from DDNQR subset only. For each merchant_group that appears in the DDNQR subset, sum their revenue ONLY from rows within the DDNQR subset (MID = EP142731 rows). Do NOT add revenue from other MIDs for the same merchant. The merchant's total revenue across all MIDs is irrelevant for DDNQR tables.
+---
 
-Step 3 — Compute period columns from DDNQR subset. For each merchant compute the following using DDNQR-only rows:
-- YTD DDNQR revenue: sum of DDNQR revenue from 1 Jan to TW_DATE
-- MTD DDNQR revenue: sum of DDNQR revenue from 1st of current month to TW_DATE (apply rollover rule if applicable)
-- LW DDNQR revenue: sum of DDNQR revenue for the prior week window
-- TW DDNQR revenue: sum of DDNQR revenue for the current week window
+### Object 1 — ddnqr_global_revenue
+
+**Purpose:** Produces all data for the Global DDNQR Top 10 table and its Total row.
+
+**Input:** Full dataset filtered to MID = EP142731 only. This filter is applied first, before any grouping or aggregation. Do not start from a pre-aggregated dataset.
+
+**Step 1 — Build DDNQR transaction subset.**
+From the full weekly dataset, isolate every row where MID = EP142731. This is the only input for all subsequent steps in this object. Rows with any other MID value are excluded and must not re-enter this calculation path.
+
+**Step 2 — Aggregate per merchant.**
+Group the DDNQR subset by merchant_group. For each merchant compute:
+- YTD DDNQR revenue: sum of revenue from DDNQR subset rows from 1 Jan to TW_DATE
+- MTD DDNQR revenue: sum of revenue from DDNQR subset rows from 1st of current month to TW_DATE (apply rollover rule if applicable)
+- LW DDNQR revenue: sum of revenue from DDNQR subset rows for the prior week window
+- TW DDNQR revenue: sum of revenue from DDNQR subset rows for the current week window
 - WoW RM: TW DDNQR revenue minus LW DDNQR revenue
-- WoW %: WoW RM / LW DDNQR revenue × 100 (display as ±X.X%). If LW DDNQR revenue = 0, display as N/A.
+- WoW %: WoW RM / LW DDNQR revenue × 100. If LW = 0, display as N/A.
 
-Step 4 — Sort by YTD DDNQR revenue descending. Rank merchants by their YTD DDNQR revenue (computed in Step 3). Show Top 10 globally or Top 5 per L3 category.
+**Step 3 — Rank and select top 10.**
+Sort all merchants by YTD DDNQR revenue descending. Take the top 10 for display. If fewer than 10 merchants exist, populate remaining rows with '-'.
 
-Step 5 — Add Total DDNQR Revenue row at the bottom of each table. After the last merchant data row, append a Total row that sums each column across ALL qualifying DDNQR merchants in scope — not just the displayed rows. For the Global Top 10, this means all merchants with MID=EP142731 across all commercial L2 pillars. For each per-L3 Top 5, this means all merchants with MID=EP142731 within that L3 category. Do not limit the total to only the top 10 or top 5 displayed rows.
-- Total YTD DDNQR = sum of YTD DDNQR revenue across ALL qualifying merchants in scope
-- Total MTD DDNQR = sum of MTD DDNQR revenue across ALL qualifying merchants in scope
-- Total LW DDNQR  = sum of LW DDNQR revenue across ALL qualifying merchants in scope
-- Total TW DDNQR  = sum of TW DDNQR revenue across ALL qualifying merchants in scope
-- Total WoW RM    = Total TW DDNQR minus Total LW DDNQR
-- Total WoW %     = Total WoW RM / Total LW DDNQR × 100. If Total LW DDNQR = 0, display as N/A.
+**Step 4 — Compute global totals across ALL merchants.**
+Do not limit totals to the top 10 displayed rows. Sum across every merchant in the full DDNQR subset:
+- Total YTD = sum of YTD DDNQR revenue across ALL merchants in DDNQR subset
+- Total MTD = sum of MTD DDNQR revenue across ALL merchants in DDNQR subset
+- Total LW  = sum of LW DDNQR revenue across ALL merchants in DDNQR subset
+- Total TW  = sum of TW DDNQR revenue across ALL merchants in DDNQR subset
+- Total WoW RM  = Total TW minus Total LW
+- Total WoW %   = Total WoW RM / Total LW × 100. If Total LW = 0, display as N/A.
 
-This logic applies identically to the Global DDNQR Top 10 (all commercial scope) and all per-L3 DDNQR Top 5 tables (scoped to that L3 category's DDNQR rows).
+**Output tokens:** `{{DDNQR_GLOBAL_R{N}_{COL}}}` (N=1–10), `{{DDNQR_GLOBAL_REV_TOTAL_{COL}}}` (COL = YTD|MTD|LW|TW|WOW_RM|WOW_PCT)
 
-**DDNQR Penetration Tracker (separate table)**
+---
 
-Immediately after the Global DDNQR Top 10 table, insert a separate standalone table titled "DDNQR Penetration Tracker". This table uses the same horizontal padding and spacing as the DDNQR Top 10 table. It contains 3 rows with the same column structure (Metric | YTD ↓ | MTD | LW | TW | WoW RM | WoW %):
+### Object 2 — ddnqr_l3_revenue
 
-**DDNQR Penetration Tracker — TPV Source Requirement**
+**Purpose:** Produces all data for the 7 per-L3 DDNQR Top 5 tables and their Total rows.
 
-All three summary footer rows (Total DDNQR TPV, Total Commercial TPV, DDNQR Migration %) must use Gross TPV (Gross Transaction Payment Volume) as the data source — not gross revenue. Gross TPV is a distinct field in the weekly data file from the revenue field used elsewhere in the report.
+**Input:** Same DDNQR transaction subset as Object 1 (MID = EP142731 rows only), further filtered to each L3 scope. The L3 filter is applied after the MID filter — never before.
 
-Row 1 — Total DDNQR TPV:
-Sum the Gross TPV field across all qualifying DDNQR merchants (MID = EP142731) for YTD, MTD, LW, and TW periods. Do not use the revenue field for this calculation.
-WoW RM = Total DDNQR TW minus Total DDNQR LW.
-WoW % = WoW RM / Total DDNQR LW × 100. Display as ±X.X%.
-If Total DDNQR LW = 0, display WoW % as -.
+**For each of the 7 L3 categories (prefixes: TELCO_PRE, MOB_INT, DL, MKTPL, DAILY, FNB, TRAVEL):**
 
-Row 2 — Total Category Management TPV:
-Filter the dataset to commercial_l2 = '04 Category Management' only. Sum the TPV field for all Category Management merchants across YTD, MTD, LW, and TW periods. This is a TPV figure — not revenue. Compute separately from any revenue-based Category Management figures used elsewhere in the report.
-WoW RM = Category Management TPV TW minus Category Management TPV LW.
-WoW % = WoW RM / Category Management TPV LW × 100. Display as ±X.X%.
+Step 1 — Filter DDNQR subset to the L3 scope. From the MID=EP142731 subset, keep only rows belonging to the target L3 category.
 
-Row 3 — DDNQR Migration %:
-Formula: DDNQR TPV (row 1) / Category Management TPV (row 2) × 100 for each period column.
-YTD Migration % = DDNQR_GLOBAL_TOTAL_YTD / CATMGMT_TPV_TOTAL_YTD × 100
-MTD Migration % = DDNQR_GLOBAL_TOTAL_MTD / CATMGMT_TPV_TOTAL_MTD × 100
-LW Migration %  = DDNQR_GLOBAL_TOTAL_LW  / CATMGMT_TPV_TOTAL_LW  × 100
-TW Migration %  = DDNQR_GLOBAL_TOTAL_TW  / CATMGMT_TPV_TOTAL_TW  × 100
-Display as X.X% (ratio — no ± sign). If any denominator = 0, display that cell as N/A.
-WoW RM column: leave blank — do not populate, do not insert a dash or placeholder.
-WoW % column: leave blank — do not populate, do not insert a dash or placeholder.
+Step 2 — Aggregate per merchant within that L3 scope. Apply the same period computations as Object 1 Step 2, using only rows from this L3-scoped DDNQR subset.
 
-If the Gross TPV field cannot be identified in the source data, flag this in the validation summary before generating the DDNQR Penetration Tracker and insert 'Gross TPV field not found' in all 3 footer rows.
+Step 3 — Rank and select top 5 within L3. Sort by YTD DDNQR revenue descending. Take top 5.
 
-The Penetration Tracker must always be present whenever the Global DDNQR Top 10 table is present. If the DDNQR Top 10 table is removed (empty), the Penetration Tracker is also removed with it as a single unit.
+Step 4 — Compute L3-scoped totals across ALL merchants in that L3. Do not limit to top 5:
+- Total YTD/MTD/LW/TW = sum across ALL merchants in this L3's DDNQR subset
+- Total WoW RM = Total TW minus Total LW
+- Total WoW % = Total WoW RM / Total LW × 100. If Total LW = 0, display as N/A.
+
+**Output tokens:** `{{{PREFIX}_DDNQR{N}_{COL}}}` (N=1–5), `{{{PREFIX}_DDNQR_TOTAL_{COL}}}`
+
+**Note — Daily Essentials petrol exclusion:** Within the DAILY L3 scope, petrol merchants (Petronas, Shell, Caltex, Petron, BHPetrol and any use-case identified petrol merchants) must be excluded from the ranked rows AND from the Total row. Petrol revenue is not DDNQR revenue for ranked table purposes.
+
+---
+
+### Object 3 — ddnqr_penetration_tpv
+
+**Purpose:** Produces the 3-row DDNQR Penetration Tracker table. This object uses Gross TPV — a completely different source field from the revenue field used in Objects 1 and 2. Do not mix revenue and TPV figures under any circumstance.
+
+**Input:** Full dataset (not the MID-filtered subset) for Row 2. MID=EP142731 subset (TPV field only) for Row 1.
+
+**Row 1 — Total DDNQR TPV:**
+Filter full dataset to MID = EP142731. Sum the Gross TPV field (not revenue) across all qualifying rows for each period (YTD, MTD, LW, TW).
+- WoW RM = TW Gross TPV minus LW Gross TPV
+- WoW % = WoW RM / LW Gross TPV × 100. If LW = 0, display as -.
+Tokens: `{{DDNQR_GLOBAL_TOTAL_{COL}}}`
+
+**Row 2 — Total Category Management TPV:**
+Filter full dataset to commercial_l2 = '04 Category Management'. Sum the Gross TPV field (not revenue) across all Category Management rows for each period (YTD, MTD, LW, TW). This figure is independent of Object 1 and Object 2 — it covers all Category Management merchants, not just DDNQR ones.
+- WoW RM = TW Gross TPV minus LW Gross TPV
+- WoW % = WoW RM / LW Gross TPV × 100
+Tokens: `{{CATMGMT_TPV_TOTAL_{COL}}}`
+
+**Row 3 — DDNQR Migration %:**
+Formula: Row 1 Gross TPV / Row 2 Gross TPV × 100 for each period.
+- YTD: `{{DDNQR_GLOBAL_TOTAL_YTD}}` / `{{CATMGMT_TPV_TOTAL_YTD}}` × 100
+- MTD: `{{DDNQR_GLOBAL_TOTAL_MTD}}` / `{{CATMGMT_TPV_TOTAL_MTD}}` × 100
+- LW:  `{{DDNQR_GLOBAL_TOTAL_LW}}`  / `{{CATMGMT_TPV_TOTAL_LW}}`  × 100
+- TW:  `{{DDNQR_GLOBAL_TOTAL_TW}}`  / `{{CATMGMT_TPV_TOTAL_TW}}`  × 100
+Display as X.X% (no ± sign). If any denominator = 0, display that cell as N/A.
+WoW RM cell: always blank — do not populate.
+WoW % cell: always blank — do not populate.
+Tokens: `{{DDNQR_MIGRATION_{COL}}}`
+
+**If Gross TPV field not found:** flag in validation summary, insert 'Gross TPV field not found' in all Penetration Tracker cells, and proceed with the rest of the report.
+
+---
+
+### DDNQR Audit Block (mandatory gate before HTML generation)
+
+Before beginning Chunk 7 (HTML generation), run the following checks and report all results in the chat. Do not proceed to HTML generation if any check fails — resolve with the user first.
+
+**Audit check 1 — Object completeness:**
+- Object 1 (ddnqr_global_revenue): confirm merchant count > 0, top 10 rows populated, Total row computed from ALL merchants
+- Object 2 (ddnqr_l3_revenue): confirm each of the 7 L3 scopes was processed; report merchant count per L3
+- Object 3 (ddnqr_penetration_tpv): confirm Gross TPV field was identified; confirm Row 1, Row 2, Row 3 are populated
+
+**Audit check 2 — Revenue isolation:**
+Confirm no revenue figures from outside the MID=EP142731 subset appear in Object 1 or Object 2. Confirm no Gross TPV figures appear in Object 1 or Object 2.
+
+**Audit check 3 — Total row scope:**
+For Object 1: confirm Total row merchant count ≥ top 10 display count (i.e. total covers more than just the displayed rows if more than 10 DDNQR merchants exist).
+For each L3 in Object 2: confirm Total row merchant count ≥ top 5 display count.
+
+**Audit check 4 — Migration % cross-check:**
+Recalculate TW Migration % = Object 3 Row 1 TW / Object 3 Row 2 TW × 100. Confirm this matches `{{DDNQR_MIGRATION_TW}}` to 1 decimal place.
+
+**Audit check 5 — TPV vs revenue separation:**
+Confirm Object 3 Row 1 (DDNQR TPV) ≠ Object 1 Total TW (DDNQR revenue). If they are equal, flag as a likely field-mapping error — Gross TPV and revenue are distinct fields and should not produce identical totals.
+
+Report audit results as:
+```
+DDNQR AUDIT SUMMARY
+────────────────────
+Object 1 — ddnqr_global_revenue:   [PASS / FAIL — detail]
+Object 2 — ddnqr_l3_revenue:       [PASS / FAIL — detail per L3]
+Object 3 — ddnqr_penetration_tpv:  [PASS / FAIL — detail]
+Revenue isolation:                  [PASS / FAIL]
+Total row scope:                    [PASS / FAIL]
+Migration % cross-check:            [PASS / FAIL — expected X.X%, got X.X%]
+TPV vs revenue separation:          [PASS / FLAG]
+```
+
+---
+
+**DDNQR Top 10 (Global) — HTML output:**
+After the Early Warning Signals block, populate the Global DDNQR Top 10 table using Object 1 output. Use `merchant_group` as the display name. Tokens: `{{DDNQR_GLOBAL_R{N}_{COL}}}` where N = 1–10. Populate Total row using `{{DDNQR_GLOBAL_REV_TOTAL_{COL}}}`.
+
+The Penetration Tracker must always appear immediately after the Global DDNQR Top 10 table using Object 3 output. If the DDNQR Top 10 table is removed (empty), the Penetration Tracker is also removed with it as a single unit.
 
 ---
 
