@@ -100,11 +100,11 @@ Every Early Warning Signal entry must identify the merchant's L3 category in par
 If the L3 category cannot be resolved from the data, write '(L3 Unknown)' and flag it in the validation output. Never suppress the signal entirely because of a missing L3 label — always include it with the Unknown tag.
 
 **G5.6 — DDNQR Penetration Tracker must use Gross TPV not revenue.**
-All three rows of the DDNQR Penetration Tracker (Total DDNQR TPV, Total Commercial TPV, DDNQR Migration %) must be computed from the Gross TPV field in the source data. Using the revenue field for any of these rows is a guardrail violation.
+All three rows of the DDNQR Penetration Tracker (Total DDNQR TPV, Total Category Management TPV, DDNQR Migration %) must be computed from the Gross TPV field in the source data. Using the revenue field for any of these rows is a guardrail violation.
 
-Total Commercial TPV is computed separately from the revenue-based Total Commercial figure used in Table 1B — they are different source fields and must not be conflated.
+Total Category Management TPV is the sum of Gross TPV for all rows where commercial_l2 = '04 Category Management'. It is computed separately from the revenue-based Total Commercial figure used in Table 1B — they are different source fields and must not be conflated.
 
-DDNQR Migration % = DDNQR Gross TPV / Total Commercial Gross TPV × 100. Using revenue in either the numerator or denominator is a guardrail violation.
+DDNQR Migration % = DDNQR Gross TPV / Total Category Management Gross TPV × 100. Using revenue in either the numerator or denominator is a guardrail violation. Using any scope wider than commercial_l2='04 Category Management' in the denominator is a guardrail violation.
 
 If the Gross TPV field is not identifiable in the source data, do not populate the 3 footer rows with revenue figures as a substitute. Flag as unavailable and insert 'Gross TPV field not found' in all cells.
 
@@ -198,7 +198,7 @@ Violation: any table removal that results in the grey separator bar being invisi
 The outermost <td> wrapper that provides the horizontal padding for each L3 category block (padding: 0 20px or equivalent) must never be removed from the HTML output. This element is structural — it controls section width alignment and must survive all table removal operations within its block. Removing this wrapper under any circumstance is a guardrail violation.
 
 **G9.7 — DDNQR Penetration Tracker is inseparable from the DDNQR Top 10 table.**
-The DDNQR Penetration Tracker (a separate standalone table immediately after the Global DDNQR Top 10, containing Total DDNQR TPV, Total Commercial TPV, and DDNQR Migration % rows) must always appear whenever the Global DDNQR Top 10 table is present. It must never be removed independently of the DDNQR Top 10 table. If the Global DDNQR Top 10 table is removed because it is empty, the Penetration Tracker is also removed with it as a single unit. Generating the DDNQR Top 10 table without the Penetration Tracker is a guardrail violation.
+The DDNQR Penetration Tracker (a separate standalone table immediately after the Global DDNQR Top 10, containing Total DDNQR TPV, Total Category Management TPV, and DDNQR Migration % rows) must always appear whenever the Global DDNQR Top 10 table is present. It must never be removed independently of the DDNQR Top 10 table. If the Global DDNQR Top 10 table is removed because it is empty, the Penetration Tracker is also removed with it as a single unit. Generating the DDNQR Top 10 table without the Penetration Tracker is a guardrail violation.
 
 **G9.8 — Pre-generation table removal assessment is mandatory.**
 Before HTML generation begins (before Chunk 7), the AI must explicitly assess every eligible removable table across all L3 blocks and global sections and produce a written removal plan in the chat. This plan must list: (1) all tables confirmed empty and marked for removal, (2) all tables confirmed non-empty and marked for retention. HTML generation must not start until this assessment is complete and confirmed. Beginning HTML generation without a completed table removal assessment is a guardrail violation.
@@ -226,17 +226,32 @@ The HTML template must not be populated until all data processing chunks are com
 
 ## G11 — Encoding Integrity
 
-**G11.1 — Scan for mojibake on every ingestion.**
-On every data ingestion, scan all text columns (particularly merchant_group, category fields, and descriptive labels) for mojibake patterns — character sequences produced when UTF-8 text has been misread as Latin-1. Common indicators: Ã, â€, Å, Â followed by unexpected characters. Failing to detect mojibake that is visible in the raw data is a guardrail violation.
+**G11.1 — Scan for mojibake on every ingestion using Tier 1 and Tier 2 detection.**
+On every data ingestion, scan all text columns (particularly merchant_group, category fields, and descriptive labels) for mojibake using both tiers:
 
-**G11.2 — Attempt automatic correction.**
-If mojibake is detected, attempt decoding by treating the affected string as Latin-1 bytes and re-reading as UTF-8. Apply corrections consistently across all affected rows and fields before any analysis or table population begins.
+Tier 1 — Explicit pattern matching: flag any row containing: Ã followed by any character; â€ followed by any character; Å followed by any character; ä» or æ or ç or è or é followed by unexpected characters; å followed by any character; Â followed by any character; Ð or Ñ followed by unexpected characters. A single Tier 1 match triggers the full decoding pipeline.
+
+Tier 2 — Structural pattern matching: flag any row where: three or more consecutive accented or non-ASCII characters appear in a field expected to be Latin-script; mixed encoding types appear in a single string; CJK Unicode characters (U+4E00–U+9FFF Chinese, U+3040–U+30FF Japanese, U+AC00–U+D7A3 Korean) appear in fields expected to contain Malay, English, or numeric content.
+
+Failing to detect Tier 1 mojibake that is visible in the raw data is a guardrail violation. Failing to report Tier 2 flags is also a guardrail violation.
+
+**G11.2 — Apply the 4-pass decoding pipeline.**
+If any Tier 1 or Tier 2 flag is triggered, apply these passes in order, stopping at the first accepted result:
+Pass 1 — Latin-1 → UTF-8: treat as Latin-1 bytes, decode as UTF-8.
+Pass 2 — Windows-1252 → UTF-8: treat as Windows-1252 bytes, decode as UTF-8.
+Pass 3 — Double-encoding correction: attempt to decode twice where text appears UTF-8 encoded twice.
+Pass 4 — Partial decode with flag: decode decodable subsequences, escape remaining bytes as hex, flag the row as 'partially decoded — manual review required'.
+
+Apply corrections consistently across all affected rows and fields before any analysis or table population begins. Skipping directly to Pass 4 without attempting Passes 1–3 is a guardrail violation.
+
+**G11.2a — Partial decodes must be used, not discarded.**
+A row that reaches Pass 4 (partially decoded) must still be included in analysis using its best-available decoded value. Do not drop partially decoded rows. Flag them individually in the validation summary using format: '[row identifier]: original=[garbled value] | partial decode=[result] | status=manual review required'.
 
 **G11.3 — Always report corrections explicitly.**
-Mojibake corrections must never be silent. Report in the validation summary: which columns were affected, how many rows were corrected, and at least one before/after example. Do not proceed to analysis chunks without surfacing this finding.
+Mojibake corrections must never be silent. Report in the validation summary: which columns were affected; how many rows were corrected at each pass (Pass 1 / Pass 2 / Pass 3 / Pass 4); at least one before/after example per pass that corrected at least one row. Do not proceed to analysis chunks without surfacing this finding and receiving user acknowledgement.
 
-**G11.4 — Escalate unresolvable encoding errors.**
-If the decoding attempt produces a result that is still garbled or raises an encoding error, do not guess or substitute the value. Flag the affected row(s) with the original garbled value and alert the user before proceeding.
+**G11.4 — Escalate rows where all passes fail.**
+If all four passes fail to produce an accepted result, preserve the original garbled value, flag the row explicitly in the validation summary, and await user instruction before using that row in any ranked table or calculation.
 
 ---
 
@@ -314,3 +329,19 @@ The reclassification of eSIM from Crossborder to a standalone row must not chang
 
 **G15.4 — eSIM row position is fixed.**
 The eSIM row must always appear between Crossborder (excl. eSIM) and Foreign Worker Segment in Table 1B. It must never be moved, merged with another row, or omitted even if eSIM revenue is zero for the week (display zero with - for WoW % if LW is also zero).
+
+---
+
+## G16 — DDNQR Revenue Must Be MID-Scoped
+
+**G16.1 — DDNQR revenue figures must come only from MID=EP142731 rows.**
+When computing any DDNQR revenue metric — YTD, MTD, LW, TW, WoW RM, WoW % — the source rows must be filtered to MID = EP142731 before any aggregation. Using a merchant's total revenue across all MIDs as a proxy for its DDNQR revenue is a guardrail violation.
+
+**G16.2 — MID filter is applied before merchant identification, not after.**
+The correct processing order is: (1) filter all rows to MID = EP142731, (2) group the resulting rows by merchant_group, (3) sum revenue within each group. Applying merchant identification first and then attempting to extract DDNQR revenue is a guardrail violation.
+
+**G16.3 — DDNQR total rows must sum only MID-scoped revenue.**
+The Total DDNQR Revenue footer rows in the Global Top 10 and each per-L3 Top 5 DDNQR table must reflect the sum of DDNQR-scoped revenue for the displayed merchants only. Using any broader revenue aggregate (e.g. total L3 revenue or total commercial revenue) in the Total DDNQR Revenue row is a guardrail violation.
+
+**G16.4 — DDNQR sort order must use MID-scoped YTD revenue.**
+Merchants in all DDNQR tables must be ranked by their MID=EP142731 YTD revenue, descending. Ranking by total merchant YTD revenue or by any other metric is a guardrail violation.

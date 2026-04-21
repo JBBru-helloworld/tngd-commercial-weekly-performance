@@ -137,7 +137,33 @@ Never write 'Category Management' in the parentheses — that is the L2 pillar n
 **Materiality threshold:** The minimum absolute revenue threshold for Early Warning Signals is the same as the noise filter threshold already calculated during validation for the relevant L3 category. Merchants whose current-week revenue falls below this threshold are excluded from Early Warning Signals entirely — even if they show a qualifying pattern. The threshold is dynamic and will differ by L3 category and week. Document the exact RM value applied as {{EARLY_WARNING_THRESHOLD}} in the HTML template subtitle.
 
 **DDNQR Top 10 (Global):**
-After the Early Warning Signals block, insert a table of the top 10 DDNQR merchants across ALL commercial L2 pillars. Apply MID filter EP142731 to identify DDNQR merchants in the source data, then rank by YTD revenue descending. Use `merchant_group` as the display name. Columns: Merchant | YTD ↓ | MTD | LW | TW | WoW RM | WoW %. Tokens: `{{DDNQR_GLOBAL_R{N}_{COL}}}` where N = 1–10 and COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT. If MID EP142731 returns fewer than 10 merchants, populate the remaining rows with '-'.
+After the Early Warning Signals block, insert a table of the top 10 DDNQR merchants across ALL commercial L2 pillars. Use `merchant_group` as the display name. Columns: Merchant | YTD ↓ | MTD | LW | TW | WoW RM | WoW %. Tokens: `{{DDNQR_GLOBAL_R{N}_{COL}}}` where N = 1–10 and COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT. If MID EP142731 returns fewer than 10 merchants, populate the remaining rows with '-'. After the 10th merchant row, append a Total DDNQR Revenue row (tokens: `{{DDNQR_GLOBAL_REV_TOTAL_{COL}}}` for COL = YTD|MTD|LW|TW|WOW_RM|WOW_PCT).
+
+**DDNQR Revenue Computation — Correct Logic**
+
+Step 1 — Filter by MID = EP142731. From the full dataset, isolate all transaction rows where MID = EP142731. This produces the DDNQR transaction subset.
+
+Step 2 — Aggregate per merchant from DDNQR subset only. For each merchant_group that appears in the DDNQR subset, sum their revenue ONLY from rows within the DDNQR subset (MID = EP142731 rows). Do NOT add revenue from other MIDs for the same merchant. The merchant's total revenue across all MIDs is irrelevant for DDNQR tables.
+
+Step 3 — Compute period columns from DDNQR subset. For each merchant compute the following using DDNQR-only rows:
+- YTD DDNQR revenue: sum of DDNQR revenue from 1 Jan to TW_DATE
+- MTD DDNQR revenue: sum of DDNQR revenue from 1st of current month to TW_DATE (apply rollover rule if applicable)
+- LW DDNQR revenue: sum of DDNQR revenue for the prior week window
+- TW DDNQR revenue: sum of DDNQR revenue for the current week window
+- WoW RM: TW DDNQR revenue minus LW DDNQR revenue
+- WoW %: WoW RM / LW DDNQR revenue × 100 (display as ±X.X%). If LW DDNQR revenue = 0, display as N/A.
+
+Step 4 — Sort by YTD DDNQR revenue descending. Rank merchants by their YTD DDNQR revenue (computed in Step 3). Show Top 10 globally or Top 5 per L3 category.
+
+Step 5 — Add Total DDNQR Revenue row at the bottom of each table. After the last merchant data row, append a Total row that sums each column across all displayed merchant rows:
+- Total YTD DDNQR = sum of all displayed merchant YTD DDNQR values
+- Total MTD DDNQR = sum of all displayed merchant MTD DDNQR values
+- Total LW DDNQR  = sum of all displayed merchant LW DDNQR values
+- Total TW DDNQR  = sum of all displayed merchant TW DDNQR values
+- Total WoW RM    = Total TW DDNQR minus Total LW DDNQR
+- Total WoW %     = Total WoW RM / Total LW DDNQR × 100. If Total LW DDNQR = 0, display as N/A.
+
+This logic applies identically to the Global DDNQR Top 10 (all commercial scope) and all per-L3 DDNQR Top 5 tables (scoped to that L3 category's DDNQR rows).
 
 **DDNQR Penetration Tracker (separate table)**
 
@@ -153,14 +179,18 @@ WoW RM = Total DDNQR TW minus Total DDNQR LW.
 WoW % = WoW RM / Total DDNQR LW × 100. Display as ±X.X%.
 If Total DDNQR LW = 0, display WoW % as -.
 
-Row 2 — Total Commercial TPV:
-Sum the Gross TPV field across all commercial merchants for YTD, MTD, LW, and TW periods. This figure is computed separately from the revenue-based Total Commercial used in Table 1B — they are different fields and will likely differ in value.
-WoW RM = Total Commercial TW minus Total Commercial LW.
-WoW % = WoW RM / Total Commercial LW × 100. Display as ±X.X%.
+Row 2 — Total Category Management TPV:
+Filter the dataset to commercial_l2 = '04 Category Management' only. Sum the TPV field for all Category Management merchants across YTD, MTD, LW, and TW periods. This is a TPV figure — not revenue. Compute separately from any revenue-based Category Management figures used elsewhere in the report.
+WoW RM = Category Management TPV TW minus Category Management TPV LW.
+WoW % = WoW RM / Category Management TPV LW × 100. Display as ±X.X%.
 
 Row 3 — DDNQR Migration %:
-For each column (YTD, MTD, LW, TW): DDNQR Gross TPV / Total Commercial Gross TPV × 100. Both numerator and denominator must be Gross TPV.
-Display as X.X% (ratio — no ± sign). If any denominator is zero, display that cell as -.
+Formula: DDNQR TPV (row 1) / Category Management TPV (row 2) × 100 for each period column.
+YTD Migration % = DDNQR_GLOBAL_TOTAL_YTD / CATMGMT_TPV_TOTAL_YTD × 100
+MTD Migration % = DDNQR_GLOBAL_TOTAL_MTD / CATMGMT_TPV_TOTAL_MTD × 100
+LW Migration %  = DDNQR_GLOBAL_TOTAL_LW  / CATMGMT_TPV_TOTAL_LW  × 100
+TW Migration %  = DDNQR_GLOBAL_TOTAL_TW  / CATMGMT_TPV_TOTAL_TW  × 100
+Display as X.X% (ratio — no ± sign). If any denominator = 0, display that cell as N/A.
 WoW RM column: leave blank — do not populate, do not insert a dash or placeholder.
 WoW % column: leave blank — do not populate, do not insert a dash or placeholder.
 
@@ -220,7 +250,7 @@ The Penetration Tracker must always be present whenever the Global DDNQR Top 10 
 
 If fewer than 3 weeks of data: omit Rising/Declining Momentum and state: _"Momentum signals unavailable — minimum 3 weeks of data required."_
 
-**D. DDNQR Top 5** — Always present regardless of week count. Apply MID filter EP142731 first, then filter to this L3 category, then sort by YTD revenue descending. Use `merchant_group` as the display name. Tokens: `{{[PREFIX]_DDNQR{N}_{COL}}}` where N = 1–5 and COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT. Prefixes: TELCO_PRE, MOB_INT, DL, MKTPL, DAILY, FNB, TRAVEL.
+**D. DDNQR Top 5** — Always present regardless of week count. Apply the DDNQR Revenue Computation logic defined in Section 3 (filter to MID = EP142731 rows first, aggregate DDNQR-only revenue per merchant, sort by YTD DDNQR revenue descending, scope to this L3 category). Use `merchant_group` as the display name. Tokens: `{{[PREFIX]_DDNQR{N}_{COL}}}` where N = 1–5 and COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT. After the 5th merchant row, append a Total DDNQR Revenue row using tokens `{{[PREFIX]_DDNQR_TOTAL_{COL}}}`. Prefixes: TELCO_PRE, MOB_INT, DL, MKTPL, DAILY, FNB, TRAVEL.
 
 ---
 
@@ -423,15 +453,57 @@ If only one file is available (first week of the year): note this and confirm YT
 
 ### Mojibake Detection and Decoding
 
-Mojibake refers to garbled characters that result from text originally encoded as UTF-8 being misread as Latin-1 (ISO-8859-1) or a similar single-byte encoding. Common symptoms include sequences such as Ã©, â€™, Ã¢, Å" appearing in merchant names or category labels in the source data.
+Mojibake refers to garbled characters that result from text originally encoded as UTF-8 being misread as Latin-1 (ISO-8859-1), Windows-1252, or a similar single-byte encoding. It also occurs when UTF-8 text is encoded twice (double-encoded). Common outputs include Latin-script garble (Ã©, â€™, Ã¢, Å") and CJK characters (Chinese, Japanese, Korean) appearing in merchant names where they do not belong.
 
-Detection: during schema reading (Chunk 1), scan all text columns — particularly merchant_group, category hierarchy fields, and any descriptive label columns — for character sequences that are recognisable mojibake patterns (e.g. Ã, â€, Å, Â followed by unexpected characters).
+**Detection — Tier 1 (explicit pattern matching):**
+During schema reading (Chunk 1), scan all text columns — particularly merchant_group, category hierarchy fields, and any descriptive label columns — for any of the following sequences:
+- Ã followed by any character
+- â€ followed by any character
+- Å followed by any character
+- ä» or æ or ç or è or é followed by unexpected characters
+- å followed by any character
+- Â followed by any character
+- Ð or Ñ followed by unexpected characters
 
-Decoding: if mojibake is detected, attempt automatic correction by treating the affected string as Latin-1 bytes and re-decoding as UTF-8. Apply this correction consistently across all affected fields before any downstream processing or analysis begins.
+A single match in any row of any text column is sufficient to trigger the decoding pipeline for all affected rows.
 
-Reporting: always report in the validation summary which columns were affected, how many rows were corrected, and at least one before/after example for an affected value. Do not silently fix mojibake — the correction must be explicitly surfaced to the user.
+**Detection — Tier 2 (structural pattern matching):**
+In addition to Tier 1, flag rows containing any of the following structural signals:
+- Three or more consecutive accented or non-ASCII characters in a string that is expected to be a Latin-script merchant name
+- Mixed encoding types in a single string (e.g. a mix of valid ASCII, valid UTF-8, and high-byte Latin-1 characters)
+- CJK Unicode characters (U+4E00–U+9FFF Chinese, U+3040–U+30FF Japanese kana, U+AC00–U+D7A3 Korean Hangul) appearing in fields that are expected to contain Malay, English, or numeric content
 
-Escalation: if the decoding attempt fails (i.e. the result is still garbled or produces an encoding error), do not guess or substitute the value. Flag the affected rows with the original garbled value intact and alert the user before proceeding.
+Tier 2 flags must be reported in the validation summary even if no Tier 1 patterns are detected.
+
+**Decoding — 4-pass pipeline:**
+When any Tier 1 or Tier 2 flag is triggered, apply the following passes in order, stopping at the first pass that produces an accepted result:
+
+Pass 1 — Latin-1 → UTF-8: treat the string's bytes as Latin-1 (ISO-8859-1) and decode as UTF-8. Accept the result if it contains no further Tier 1 patterns and no unexpected CJK characters.
+
+Pass 2 — Windows-1252 → UTF-8: treat the string's bytes as Windows-1252 and decode as UTF-8. Apply if Pass 1 fails or produces a still-garbled result. Accept under the same criteria.
+
+Pass 3 — Double-encoding correction: if the string appears to be UTF-8 encoded twice (e.g. the bytes represent a UTF-8 string that was itself encoded as UTF-8 a second time), attempt to decode twice. Accept under the same criteria.
+
+Pass 4 — Partial decode with flag: decode all decodable subsequences, leave remaining bytes as escaped hex (e.g. \xc3\xa9), and flag the row as "partially decoded — manual review required". Do not discard the row.
+
+**Acceptance criteria:**
+A decoded string is accepted if:
+- It contains only expected character sets for the field (Latin script, digits, common punctuation for merchant names; Malay and English words for category labels)
+- No Tier 1 patterns remain
+- No unexpected CJK characters remain
+- The result is not blank or identical to the input
+
+**Reporting:**
+Always report in the validation summary:
+- Which columns were affected by Tier 1 or Tier 2 detection
+- How many rows were corrected at each pass (Pass 1 / Pass 2 / Pass 3 / Pass 4)
+- At least one before/after example for each pass that corrected at least one row
+- Any rows that reached Pass 4 (partial decode), listed by row identifier with original garbled value intact
+
+Do not silently fix mojibake — every correction must be explicitly surfaced. Do not proceed with downstream processing until the user has acknowledged the mojibake report.
+
+**Escalation:**
+If all four passes fail to produce an accepted result for a given row, do not guess or substitute the value. Preserve the original garbled value, flag the row explicitly in the validation summary, and await user instruction before using that row in any ranked table or calculation.
 
 ---
 

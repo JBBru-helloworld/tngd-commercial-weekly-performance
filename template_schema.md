@@ -84,10 +84,21 @@ This file defines every token in JSON for machine-readability, with a legend bel
       },
       {
         "token": "MOJIBAKE_DECODING",
-        "value": "detect_and_correct",
+        "value": "detect_and_correct_4pass",
         "source": "system",
         "required": true,
-        "notes": "On every ingestion, scan all text columns for mojibake patterns (Ã, â€, Å, Â sequences indicating UTF-8 text misread as Latin-1). If detected, attempt auto-correction by re-decoding from Latin-1 bytes as UTF-8. Report all corrections in the validation summary with at least one before/after example. Escalate unresolvable cases to the user — do not substitute or silently skip."
+        "tier_1_patterns": ["Ã+any", "â€+any", "Å+any", "ä»|æ|ç|è|é+unexpected", "å+any", "Â+any", "Ð|Ñ+unexpected"],
+        "tier_2_patterns": ["3+ consecutive accented chars in Latin-script field", "mixed encoding types in single string", "CJK U+4E00–U+9FFF / U+3040–U+30FF / U+AC00–U+D7A3 in Malay/English field"],
+        "decoding_passes": [
+          "Pass 1: Latin-1 bytes → UTF-8 decode",
+          "Pass 2: Windows-1252 bytes → UTF-8 decode",
+          "Pass 3: double-encoding correction (UTF-8 encoded twice)",
+          "Pass 4: partial decode + hex-escape remainder + flag as 'manual review required'"
+        ],
+        "acceptance_criteria": "Result contains only expected character set for field; no Tier 1 patterns remain; no unexpected CJK; result is not blank or identical to input",
+        "reporting": "Per-pass counts; at least one before/after example per corrective pass; Pass 4 rows listed individually with original garbled value",
+        "escalation": "If all 4 passes fail: preserve original, flag row, await user instruction before using in ranked tables",
+        "notes": "Expanded from single-pass Latin-1 decoding as of April 2026. Tier 2 covers CJK mojibake, Windows-1252 variants, and double-encoding. Partial decodes (Pass 4) must be used not discarded."
       },
       {
         "rule": "YTD_ACCUMULATION",
@@ -494,26 +505,31 @@ This file defines every token in JSON for machine-readability, with a legend bel
             "code": "DDNQR",
             "label": "DDNQR Top 5",
             "eligibility": "Merchants filtered by MID = EP142731 within the L3 category scope",
-            "sort": "primary: YTD descending",
+            "sort": "primary: YTD DDNQR revenue descending (MID=EP142731 scoped YTD only)",
             "columns": "NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
             "token_pattern": "{PREFIX}_DDNQR{N}_{COL} where N=1-5",
-            "note": "Apply MID filter EP142731 first, then filter to L3 category, then sort by YTD descending. Use merchant_group as the display name."
+            "note": "Apply MID filter EP142731 first, then filter to L3 category, then sort by DDNQR-specific YTD revenue descending. All revenue values (YTD/MTD/LW/TW/WoW) must be sourced only from rows where MID=EP142731. Never use the merchant's total revenue across all MIDs. Use merchant_group as the display name.",
+            "total_row_token_pattern": "{PREFIX}_DDNQR_TOTAL_{COL} where COL = YTD|MTD|LW|TW|WOW_RM|WOW_PCT"
           }
         ]
       }
     },
 
     "section_2_ddnqr_global": {
-      "note": "Top 10 DDNQR merchants across all Commercial L2 pillars. Filter: MID = EP142731. Sort: YTD descending.",
+      "note": "Top 10 DDNQR merchants across all Commercial L2 pillars. Filter: MID = EP142731. Sort: YTD DDNQR revenue descending. Revenue figures are DDNQR-specific: sum only rows where MID=EP142731 for each merchant. Never use the merchant's total revenue across all MIDs.",
       "token_pattern": "DDNQR_GLOBAL_R{N}_{COL} where N=1-10, COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
       "source": "excel + calculated",
       "required": true,
       "mtd_note": "MTD rollover rule applies to all MTD values in this table: in weeks spanning two calendar months, MTD includes only current-month days (from 1st of TW month to TW_DATE). Prior-month days within the reporting week are excluded at merchant level.",
-      "ytd_note": "YTD values in this table are AI-computed sums across all weekly files from 1 Jan to TW_DATE inclusive, computed as a separate pass from MTD. Full current week always included."
+      "ytd_note": "YTD values in this table are AI-computed sums across all weekly files from 1 Jan to TW_DATE inclusive, computed as a separate pass from MTD. Full current week always included. YTD must also be MID=EP142731 scoped.",
+      "total_row": {
+        "token_pattern": "DDNQR_GLOBAL_REV_TOTAL_{COL} where COL = YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
+        "notes": "Footer row summing DDNQR-scoped revenue for all displayed merchants in the Global Top 10. Styled teal (#0e7490) background, white bold text."
+      }
     },
 
     "section_2_ddnqr_penetration_tracker": {
-      "note": "Standalone table titled 'DDNQR Penetration Tracker' placed immediately after the Global DDNQR Top 10 table. Contains 3 rows: Total DDNQR TPV, Total Commercial TPV, and DDNQR Migration %. Always present when the DDNQR Top 10 table is present; removed with it as a single unit if the table is empty.",
+      "note": "Standalone table titled 'DDNQR Penetration Tracker' placed immediately after the Global DDNQR Top 10 table. Contains 3 rows: Total DDNQR TPV, Total Category Management TPV, and DDNQR Migration %. Always present when the DDNQR Top 10 table is present; removed with it as a single unit if the table is empty.",
       "tokens": [
         {
           "token": "DDNQR_GLOBAL_TOTAL_{COL}",
@@ -524,12 +540,19 @@ This file defines every token in JSON for machine-readability, with a legend bel
           "notes": "Sum of Gross TPV (not revenue) across all qualifying DDNQR merchants (MID = EP142731) for each column. Source field: Gross TPV field in the weekly data file."
         },
         {
-          "token": "COMMERCIAL_TOTAL_{COL}",
+          "token": "CATMGMT_TPV_TOTAL_{COL}",
           "col_values": "YTD | MTD | LW | TW | WOW_RM | WOW_PCT",
-          "source": "calculated — Gross TPV field, computed separately from revenue-based Table 1B figures",
+          "source": "calculated — Gross TPV field, filter: commercial_l2 = '04 Category Management'",
           "format": "RM X.XM or RM X,XXX for YTD/MTD/LW/TW | ±RM X.XM for WOW_RM | ±X.X% for WOW_PCT",
           "required": true,
-          "notes": "Total commercial Gross TPV (not revenue) across all L2 pillars for each column. Source field: Gross TPV field in the weekly data file. Must be computed from Gross TPV separately from the revenue-based Total Commercial figures used in Table 1B."
+          "notes": "Total Gross TPV (not revenue) for all rows where commercial_l2 = '04 Category Management', for each column. Must be computed from Gross TPV separately from the revenue-based Table 1B figures. Replaces deprecated COMMERCIAL_TOTAL_{COL} tokens as of April 2026."
+        },
+        {
+          "token": "COMMERCIAL_TOTAL_{COL}",
+          "col_values": "YTD | MTD | LW | TW | WOW_RM | WOW_PCT",
+          "source": "DEPRECATED",
+          "required": false,
+          "notes": "DEPRECATED as of April 2026. Replaced by CATMGMT_TPV_TOTAL_{COL}. Do not use."
         },
         {
           "token": "DDNQR_MIGRATION_{COL}",
@@ -538,9 +561,16 @@ This file defines every token in JSON for machine-readability, with a legend bel
           "source": "calculated",
           "format": "X.X% for YTD/MTD/LW/TW | WOW_RM and WOW_PCT cells are blank",
           "required": true,
-          "notes": "DDNQR Gross TPV / Total Commercial Gross TPV × 100 for each column. Both numerator and denominator must be Gross TPV figures — not revenue. WoW RM and WoW % cells for this row must always be left empty — do not populate, do not insert a placeholder or dash. If any denominator for YTD/MTD/LW/TW is zero, display that specific cell as -."
+          "notes": "DDNQR Gross TPV / Category Management Gross TPV × 100 for each column. Numerator: DDNQR Gross TPV (MID=EP142731). Denominator: CATMGMT_TPV_TOTAL (commercial_l2='04 Category Management'). Both must be Gross TPV — not revenue. WoW RM and WoW % cells for this row must always be left empty. If any denominator for YTD/MTD/LW/TW is zero, display that specific cell as -."
         }
       ]
+    },
+
+    "ddnqr_revenue_totals": {
+      "note": "Footer rows added to each DDNQR table (1 global + 7 per-L3) to show the sum of DDNQR-scoped revenue for displayed merchants. All revenue values are MID=EP142731 scoped only.",
+      "global_token_pattern": "DDNQR_GLOBAL_REV_TOTAL_{COL} where COL = YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
+      "per_l3_token_pattern": "{PREFIX}_DDNQR_TOTAL_{COL} where PREFIX = TELCO_PRE|MOB_INT|DL|MKTPL|DAILY|FNB|TRAVEL and COL = YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
+      "styling": "background-color:#0e7490 (teal), color:#ffffff, font-weight:700, font-size:8.5px, border-top:2px solid #0a5a6e"
     },
 
     "section_3_risky_business": [
