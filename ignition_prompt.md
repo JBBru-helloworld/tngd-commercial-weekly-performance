@@ -181,7 +181,8 @@ For each file in the full source set, validate and report all of the following:
   - YTD file coverage: list all weekly files available for the current year. Confirm date range coverage from 1 Jan to TW_DATE. Flag any overlaps (use more recent file) or gaps (flag understatement risk). Confirm YTD will be computed as a separate pass from the unfiltered dataset — not from the MTD-filtered dataset.
   - Mojibake scan: scan all text columns in each ingested file for mojibake patterns (sequences such as Ã, â€, Å, Â indicating UTF-8 text misread as Latin-1). If detected, attempt auto-correction by re-decoding from Latin-1 bytes as UTF-8. Report findings before proceeding — state which columns were affected, how many rows were corrected, and provide a before/after example. If correction fails, flag the row with the original value and do not substitute.
   - Confirm L3 category is resolvable for all merchants. This is required for correct attribution in the Concentration Risk table (L3 Category column) and Early Warning Signals entries. Flag any merchant where L3 cannot be determined.
-  - Confirm Telco can be split into Prepaid and Postpaid using the commercial_l3 field. Report the merchant count for each sub-category before proceeding.
+  - Confirm Telco Prepaid merchants are identifiable via the commercial_l3 field. Report the merchant count before proceeding.
+  - Confirm Mobile Internet merchants are identifiable via the commercial_l4 field (look for values such as '05. Mobile Internet'). Report the merchant count before proceeding. Both Telco Prepaid and Mobile Internet use a fixed noise filter of RM 12,500 — do not compute a dynamic threshold for either.
   - Daily Essentials petrol exclusion: identify all petrol merchants within Daily Essentials & Retail using merchant_group name matching (Petronas, Shell, Caltex, Petron, BHPetrol) and use-case field. List identified merchants and confirm their revenue will be excluded from ranked tables but retained in Total L3 figures.
   - eSIM extraction from Crossborder: identify eSIM merchants via commercial_l3 = eSIM filter. Report eSIM merchant count, combined LW and TW revenue. Confirm Crossborder (excl. eSIM) and eSIM row values. Confirm Total Commercial is unchanged after the split.
   - DDNQR Penetration Tracker: identify the Gross TPV field in the source data. Confirm it is distinct from the revenue field used elsewhere in the report. Note: the WoW RM and WoW % cells for the DDNQR Migration % row (row 3) must always be left blank — do not populate with any value.
@@ -409,7 +410,7 @@ Narrative
 
 Cover all 7 L3 categories in this exact order:
 i. Telco Prepaid
-ii. Telco Postpaid
+ii. Mobile Internet
 iii. Digital Lifestyle
 iv. Online Marketplaces & Fast Fashion
 v. Daily Essentials & Retail

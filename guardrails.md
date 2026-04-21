@@ -39,8 +39,8 @@ Do not generate Section 3 without first applying the noise filter and stating th
 **G2.5 — Always use merchant_group as the merchant identifier.**
 The source data contains a field called merchant_group which is the standardised and consistent naming for all merchants across weeks. Always use merchant_group as the merchant name displayed in all tables, bucket lists, and narrative text. Do not use any other merchant name field (such as merchant_name, merchant_id, or trade_name) as the display name unless merchant_group is absent, in which case flag the issue to the user before proceeding. Never mix merchant identifiers across the same report.
 
-**G2.6 — Telco Prepaid and Telco Postpaid must never be mixed.**
-Merchants identified as Telco Prepaid must only appear in the Telco Prepaid L3 block. Merchants identified as Telco Postpaid must only appear in the Telco Postpaid L3 block. A merchant appearing in both blocks in the same report is a guardrail violation. The Total L3 row for each block must reflect only that block's merchants.
+**G2.6 — Telco Prepaid and Mobile Internet must never be mixed.**
+Merchants identified as Telco Prepaid (via commercial_l3 field) must only appear in the Telco Prepaid L3 block. Merchants identified as Mobile Internet (via commercial_l4 field, e.g. '05. Mobile Internet') must only appear in the Mobile Internet L3 block. A merchant appearing in both blocks in the same report is a guardrail violation. The Total L3 row for each block must reflect only that block's merchants.
 
 ---
 
@@ -86,10 +86,10 @@ These thresholds may be overridden by the user but any override must be explicit
 **G5.1a — Contribution % and Top 5 Cumulative % are distinct calculations.**
 Contribution % is a standalone per-merchant figure (merchant TW revenue / total commercial TW revenue × 100). Top 5 Cumulative % is the sum of all 5 merchants' Contribution % values, displayed as a totals row. Never use any single merchant's Contribution % to trigger a risk flag — only {{CONCENTRATION_TOP5_CUMULATIVE_PCT}} determines the flag.
 
-The L3 Category column in the Concentration Risk table must always be populated with the merchant's specific L3 category name (Telco, Digital Lifestyle, Online Marketplaces & Fast Fashion, Daily Essentials & Retail, Everyday F&B and Lifestyle, Travel). Writing 'Category Management' in this column is a guardrail violation — that is the L2 label. Always resolve to the L3 level.
+The L3 Category column in the Concentration Risk table must always be populated with the merchant's specific L3 category name (Telco Prepaid, Mobile Internet, Digital Lifestyle, Online Marketplaces & Fast Fashion, Daily Essentials & Retail, Everyday F&B and Lifestyle, Travel). Writing 'Category Management' in this column is a guardrail violation — that is the L2 label. Always resolve to the L3 level.
 
 **G5.2 — Early Warning Signals must respect the materiality threshold.**
-The minimum revenue threshold for Early Warning Signals is the noise filter threshold for the relevant L3 category, as calculated during the validation step. Do not flag merchants whose current-week revenue falls below this threshold — the signal is statistically immaterial. The threshold is dynamic, differs by L3 and by week, and must be documented as {{EARLY_WARNING_THRESHOLD}} in the report output.
+The minimum revenue threshold for Early Warning Signals is the noise filter threshold for the relevant L3 category. For Telco Prepaid and Mobile Internet, this is the fixed threshold of RM 12,500. For all other L3 categories, this is the dynamic threshold calculated during the validation step. Do not flag merchants whose current-week revenue falls below this threshold — the signal is statistically immaterial. Document the applicable RM value as {{EARLY_WARNING_THRESHOLD}} in the report output.
 
 **G5.3 — Early Warning Signals are observational only.**
 Do not speculate on the cause of an early warning signal. Describe the pattern factually. Example: "Merchant X has declined WoW for 2 consecutive weeks (RM –45K total)" — not "Merchant X may be losing market share due to competition."

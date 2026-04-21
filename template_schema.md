@@ -315,17 +315,17 @@ This file defines every token in JSON for machine-readability, with a legend bel
     "section_3_l3_noise_thresholds": [
       {
         "token": "TELCO_PRE_NOISE_THRESHOLD",
-        "source": "calculated",
-        "format": "RM X,XXX",
-        "required": true,
-        "notes": "Dynamic noise filter threshold for Telco Prepaid L3 category. Calculated as the lower of: 1% of total L3 weekly revenue or the 25th percentile of active merchant weekly revenues within this L3."
+        "source": "fixed",
+        "format": "12,500",
+        "required": false,
+        "notes": "Fixed noise filter of RM 12,500 for Telco Prepaid. This value is hardcoded in the HTML template — do not populate this token. Exclude merchants with weekly revenue below RM 12,500 during data processing."
       },
       {
-        "token": "TELCO_POST_NOISE_THRESHOLD",
-        "source": "calculated",
-        "format": "RM X,XXX",
-        "required": true,
-        "notes": "Dynamic noise filter threshold for Telco Postpaid L3 category. Calculated as the lower of: 1% of total L3 weekly revenue or the 25th percentile of active merchant weekly revenues within this L3."
+        "token": "MOB_INT_NOISE_THRESHOLD",
+        "source": "fixed",
+        "format": "12,500",
+        "required": false,
+        "notes": "Fixed noise filter of RM 12,500 for Mobile Internet. This value is hardcoded in the HTML template — do not populate this token. Mobile Internet merchants are identified via commercial_l4 field (e.g. '05. Mobile Internet'). Exclude merchants with weekly revenue below RM 12,500 during data processing."
       },
       {
         "token": "DL_NOISE_THRESHOLD",
@@ -365,7 +365,7 @@ This file defines every token in JSON for machine-readability, with a legend bel
     ],
 
     "section_2_l3_blocks": {
-      "note": "Identical token structure for all 7 L3 categories. Replace PREFIX with: TELCO_PRE, TELCO_POST, DL, MKTPL, DAILY, FNB, TRAVEL",
+      "note": "Identical token structure for all 7 L3 categories. Replace PREFIX with: TELCO_PRE, MOB_INT, DL, MKTPL, DAILY, FNB, TRAVEL",
       "l3_categories": [
         {
           "prefix": "TELCO_PRE",
@@ -373,9 +373,11 @@ This file defines every token in JSON for machine-readability, with a legend bel
           "anchor": "l3-telco-prepaid"
         },
         {
-          "prefix": "TELCO_POST",
-          "full_name": "Telco Postpaid",
-          "anchor": "l3-telco-postpaid"
+          "prefix": "MOB_INT",
+          "full_name": "Mobile Internet",
+          "anchor": "l3-mobile-internet",
+          "identification": "commercial_l4 field, e.g. '05. Mobile Internet'",
+          "noise_filter": "Fixed RM 12,500 (hardcoded in HTML — do not populate token)"
         },
         {
           "prefix": "DL",

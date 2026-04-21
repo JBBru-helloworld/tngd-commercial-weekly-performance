@@ -130,7 +130,7 @@ Each merchant signal must appear on its own separate line. Never combine multipl
 
 **Cap:** No more than 10 merchants may appear in the Early Warning Signals block. If more than 10 qualify after applying the materiality threshold, apply this priority order: (1) single-week drop >20% WoW, (2) 2 consecutive WoW declines, (3) re-entry after ≥3 weeks absent. Within each priority tier, rank by absolute WoW revenue decline (largest first) and take the top entries until the 10-merchant limit is reached.
 
-The text in parentheses must always be the merchant's specific L3 category (Telco Prepaid, Telco Postpaid, Digital Lifestyle, Online Marketplaces & Fast Fashion, Daily Essentials & Retail, Everyday F&B and Lifestyle, or Travel).
+The text in parentheses must always be the merchant's specific L3 category (Telco Prepaid, Mobile Internet, Digital Lifestyle, Online Marketplaces & Fast Fashion, Daily Essentials & Retail, Everyday F&B and Lifestyle, or Travel).
 
 Never write 'Category Management' in the parentheses — that is the L2 pillar name, not the L3 category. Always look up the merchant's L3 category from the source data hierarchy before generating the signal entry. If the L3 category cannot be determined, write 'L3 Unknown' and flag it in the validation summary.
 
@@ -174,19 +174,24 @@ The Penetration Tracker must always be present whenever the Global DDNQR Top 10 
 
 **Scope:** L2 category code "04 Category Management" only. Section header is simply "Category Deep Dive" — do not include "04 Category Management" in the heading.
 
-**Noise filter:** Apply a dynamic minimum revenue threshold per L3 category independently. For each L3, exclude merchants whose weekly revenue falls below 1% of that L3's total weekly revenue OR below the 25th percentile of active merchant weekly revenues within that L3 — whichever threshold is lower. State the threshold for each L3 individually inside that L3's block using the token {{[PREFIX]_NOISE_THRESHOLD}}. Do not use a single global threshold across all L3 categories.
+**Noise filter:** Two tiers apply:
+
+- **Telco Prepaid and Mobile Internet — fixed threshold:** RM 12,500 per week (hardcoded). Do not calculate dynamically. Exclude merchants with weekly revenue below RM 12,500 in these two L3 blocks. The noise filter display in these blocks is hardcoded in the HTML template — do not overwrite it.
+- **All other L3 categories (Digital Lifestyle, Online Marketplaces & Fast Fashion, Daily Essentials & Retail, Everyday F&B and Lifestyle, Travel) — dynamic threshold:** Exclude merchants whose weekly revenue falls below 1% of that L3's total weekly revenue OR below the 25th percentile of active merchant weekly revenues within that L3 — whichever is lower. State the dynamic threshold for each of these 5 L3 categories inside their respective blocks using the token {{[PREFIX]_NOISE_THRESHOLD}}.
 
 **The 7 fixed L3 categories (always present, always in this order):**
 
 1. Telco Prepaid
-2. Telco Postpaid
+2. Mobile Internet
 3. Digital Lifestyle
 4. Online Marketplaces & Fast Fashion
 5. Daily Essentials & Retail
 6. Everyday F&B and Lifestyle
 7. Travel
 
-**Telco Prepaid vs Telco Postpaid:** identify prepaid and postpaid merchants within the Telco L3 category using the commercial_l3 or equivalent sub-category field in the source data. Prepaid and Postpaid must be treated as entirely separate L3 blocks with independent noise filters, independent merchant rankings, and independent bucket analysis. Do not mix prepaid and postpaid merchants across the two blocks. The Total L3 row in each block reflects only that sub-category's merchants.
+**Telco Prepaid:** identify prepaid merchants using the commercial_l3 or equivalent sub-category field in the source data.
+
+**Mobile Internet:** identify merchants using the commercial_l4 field — look for values such as '05. Mobile Internet' or equivalent. Mobile Internet must be treated as a fully independent L3 block with its own noise filter (fixed RM 12,500), its own merchant rankings, and its own bucket analysis. Do not mix Mobile Internet merchants into the Telco Prepaid block or any other block. The Total L3 row reflects only Mobile Internet merchants.
 
 **For each L3, produce in order:**
 
@@ -215,7 +220,7 @@ The Penetration Tracker must always be present whenever the Global DDNQR Top 10 
 
 If fewer than 3 weeks of data: omit Rising/Declining Momentum and state: _"Momentum signals unavailable — minimum 3 weeks of data required."_
 
-**D. DDNQR Top 5** — Always present regardless of week count. Apply MID filter EP142731 first, then filter to this L3 category, then sort by YTD revenue descending. Use `merchant_group` as the display name. Tokens: `{{[PREFIX]_DDNQR{N}_{COL}}}` where N = 1–5 and COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT. Prefixes: TELCO_PRE, TELCO_POST, DL, MKTPL, DAILY, FNB, TRAVEL.
+**D. DDNQR Top 5** — Always present regardless of week count. Apply MID filter EP142731 first, then filter to this L3 category, then sort by YTD revenue descending. Use `merchant_group` as the display name. Tokens: `{{[PREFIX]_DDNQR{N}_{COL}}}` where N = 1–5 and COL = NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT. Prefixes: TELCO_PRE, MOB_INT, DL, MKTPL, DAILY, FNB, TRAVEL.
 
 ---
 
