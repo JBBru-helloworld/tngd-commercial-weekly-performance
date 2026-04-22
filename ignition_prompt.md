@@ -65,7 +65,7 @@ Report all YTD and MTD figures with variances before proceeding to Chunk 4.
 
 Chunk 4 — Category Management L3 filtering: filter to L2 = 04 Category Management only. Apply per-L3 noise thresholds. Confirm qualifying merchant counts per L3 and report before proceeding.
 
-Chunk 5 — Per-L3 merchant analysis: process each of the 7 L3 categories one at a time. For each L3 compute: Top Merchants, Winners, Losers, Momentum, Reactivated, New Entrants. For each L3's DDNQR Top 5 (Object 2 — ddnqr_l3_revenue): filter all rows to MID = EP142731 first, then filter to the L3 scope, then group by merchant_group and sum revenue from MID=EP142731 rows only. Sort by DDNQR-specific YTD revenue descending. The Total DDNQR Revenue footer row sums ALL qualifying MID=EP142731 merchants within that L3 — not just the top 5 displayed rows. Confirm completion of each L3 before moving to the next.
+Chunk 5 — Per-L3 merchant analysis: process each of the 7 L3 categories one at a time. For each L3 compute: Top Merchants, Winners, Losers, Momentum, Reactivated, New Entrants. For each L3's DDNQR Top 5 (Object 2 — ddnqr_l3_revenue): filter all rows to MID = EP142731 first, then filter to the L3 scope, then group by merchant_group and sum revenue from MID=EP142731 rows only. Sort by DDNQR-specific YTD revenue descending. No Total row in per-L3 DDNQR Top 5 tables. Confirm completion of each L3 before moving to the next.
 
 Chunk 6 — Global DDNQR isolated calculation path and Risky Business:
 
@@ -81,7 +81,7 @@ DDNQR Audit Block (mandatory — must complete before Chunk 7):
 Run and report all 5 audit checks:
 1. Object completeness: Objects 1, 2, 3 all populated; merchant counts reported.
 2. Revenue isolation: confirm no non-DDNQR revenue in Objects 1/2; no TPV in Objects 1/2.
-3. Total row scope: Object 1 total covers ALL DDNQR merchants; each L3 in Object 2 covers ALL DDNQR merchants in that L3.
+3. Total row scope: Object 1 global total covers ALL DDNQR merchants (not just top 10). Object 2 per-L3 tables have no Total row.
 4. Migration % cross-check: recalculate TW Migration % from raw figures and confirm it matches {{DDNQR_MIGRATION_TW}} to 1 decimal place.
 5. TPV vs revenue separation: confirm Object 3 Row 1 TW ≠ Object 1 Total TW (if equal, flag as likely field-mapping error).
 Report as DDNQR AUDIT SUMMARY block. Do not proceed to Chunk 7 if any check fails.

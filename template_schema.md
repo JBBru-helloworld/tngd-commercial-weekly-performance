@@ -509,8 +509,6 @@ This file defines every token in JSON for machine-readability, with a legend bel
             "columns": "NAME|YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
             "token_pattern": "{PREFIX}_DDNQR{N}_{COL} where N=1-5",
             "note": "Apply MID filter EP142731 first, then filter to L3 category, then sort by DDNQR-specific YTD revenue descending. All revenue values (YTD/MTD/LW/TW/WoW) must be sourced only from rows where MID=EP142731. Never use the merchant's total revenue across all MIDs. Use merchant_group as the display name.",
-            "total_row_token_pattern": "{PREFIX}_DDNQR_TOTAL_{COL} where COL = YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
-            "total_row_note": "Sums ALL MID=EP142731 merchants within this L3 category — not just the top 5 displayed rows."
           }
         ]
       }
@@ -570,7 +568,6 @@ This file defines every token in JSON for machine-readability, with a legend bel
     "ddnqr_revenue_totals": {
       "note": "Footer rows added to each DDNQR table (1 global + 7 per-L3) to show the sum of DDNQR-scoped revenue for displayed merchants. All revenue values are MID=EP142731 scoped only.",
       "global_token_pattern": "DDNQR_GLOBAL_REV_TOTAL_{COL} where COL = YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
-      "per_l3_token_pattern": "{PREFIX}_DDNQR_TOTAL_{COL} where PREFIX = TELCO_PRE|MOB_INT|DL|MKTPL|DAILY|FNB|TRAVEL and COL = YTD|MTD|LW|TW|WOW_RM|WOW_PCT",
       "styling": "background-color:#0e7490 (teal), color:#ffffff, font-weight:700, font-size:8.5px, border-top:2px solid #0a5a6e"
     },
 

@@ -192,14 +192,9 @@ Step 2 — Aggregate per merchant within that L3 scope. Apply the same period co
 
 Step 3 — Rank and select top 5 within L3. Sort by YTD DDNQR revenue descending. Take top 5.
 
-Step 4 — Compute L3-scoped totals across ALL merchants in that L3. Do not limit to top 5:
-- Total YTD/MTD/LW/TW = sum across ALL merchants in this L3's DDNQR subset
-- Total WoW RM = Total TW minus Total LW
-- Total WoW % = Total WoW RM / Total LW × 100. If Total LW = 0, display as N/A.
+**Output tokens:** `{{{PREFIX}_DDNQR{N}_{COL}}}` (N=1–5)
 
-**Output tokens:** `{{{PREFIX}_DDNQR{N}_{COL}}}` (N=1–5), `{{{PREFIX}_DDNQR_TOTAL_{COL}}}`
-
-**Note — Daily Essentials petrol exclusion:** Within the DAILY L3 scope, petrol merchants (Petronas, Shell, Caltex, Petron, BHPetrol and any use-case identified petrol merchants) must be excluded from the ranked rows AND from the Total row. Petrol revenue is not DDNQR revenue for ranked table purposes.
+**Note — Daily Essentials petrol exclusion:** Within the DAILY L3 scope, petrol merchants (Petronas, Shell, Caltex, Petron, BHPetrol and any use-case identified petrol merchants) must be excluded from all ranked rows. Petrol revenue is not DDNQR revenue for ranked table purposes.
 
 ---
 
@@ -249,8 +244,7 @@ Before beginning Chunk 7 (HTML generation), run the following checks and report 
 Confirm no revenue figures from outside the MID=EP142731 subset appear in Object 1 or Object 2. Confirm no Gross TPV figures appear in Object 1 or Object 2.
 
 **Audit check 3 — Total row scope:**
-For Object 1: confirm Total row merchant count ≥ top 10 display count (i.e. total covers more than just the displayed rows if more than 10 DDNQR merchants exist).
-For each L3 in Object 2: confirm Total row merchant count ≥ top 5 display count.
+For Object 1: confirm Total row merchant count ≥ top 10 display count (i.e. total covers more than just the displayed rows if more than 10 DDNQR merchants exist). Object 2 per-L3 tables have no Total row — no check required.
 
 **Audit check 4 — Migration % cross-check:**
 Recalculate TW Migration % = Object 3 Row 1 TW / Object 3 Row 2 TW × 100. Confirm this matches `{{DDNQR_MIGRATION_TW}}` to 1 decimal place.
